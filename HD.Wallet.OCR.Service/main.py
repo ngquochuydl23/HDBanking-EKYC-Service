@@ -47,6 +47,13 @@ app = FastAPI(title="Tensorflow FastAPI Start Pack")
 async def index():
     return RedirectResponse(url="/docs")
 
+@app.get("/id-card/")
+async def get_idcard_by_no():
+    return JSONResponse(content={
+                "filename": file.filename,
+                "result": result
+            })      
+
 @app.post("/id-card/extract")
 async def predict_api(file: UploadFile = File(...)):
     
@@ -61,21 +68,22 @@ async def predict_api(file: UploadFile = File(...)):
 
         result = readInfo.get_all_info(save_path)
 
-        # mongo insert data
-        # insert doc 
-        # {
-        #    phoneNumber: 0868684961
-        #    email: nguyenquochuydl123@gmail.com
-        #    path: uploads/identity-cart/
-        #    extract_result: {
-        #
-        #    }
-        #        
-        # }
-        return JSONResponse(content={
-            "filename": file.filename,
-            "result": result
-        })          
+        if result:
+            # mongo insert data
+            # insert doc 
+            # {
+            #    phoneNumber: 0868684961
+            #    email: nguyenquochuydl123@gmail.com
+            #    path: uploads/identity-cart/
+            #    extract_result: {
+            #
+            #    }
+            #        
+            # }
+            return JSONResponse(content={
+                "filename": file.filename,
+                "result": result
+            })          
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})

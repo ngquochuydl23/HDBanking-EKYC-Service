@@ -1,13 +1,13 @@
 version: '3.4'
 services:
-  ocr.identity-card.service:
-    image: ocr.identity-card.service
-    container_name: ocr.identity-card.service
+  hd-wallet.ocr.service:
+    image: hd-wallet.ocr.service
+    container_name: hd-wallet.ocr.service
     build:
-      context: ./OCR.IdentityCard.Service
+      context: ./HD.Wallet.OCR.Service
       dockerfile: Dockerfile
     volumes:
-      - ./OCR.IdentityCard.Service/uploads:/app/uploads  
+      - ./HD.Wallet.OCR.Service/uploads:/app/uploads  
     ports:
       - 8000:8000
     restart: always
