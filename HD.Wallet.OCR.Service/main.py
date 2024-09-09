@@ -40,7 +40,7 @@ imgsz, stride, device, half, model, names = getDictionary.load_model(scan_weight
 readInfo = ReadInfo(imgsz, stride, device, half, model, names, opt, ocrPredictor)
 os.makedirs('uploads/identity-cart/', exist_ok=True)
 
-app = FastAPI(title="Tensorflow FastAPI Start Pack")
+app = FastAPI(title="OCR Identity Cart Service")
 
 
 @app.get("/", include_in_schema=False)

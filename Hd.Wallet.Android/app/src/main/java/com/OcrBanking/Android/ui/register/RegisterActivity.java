@@ -9,8 +9,8 @@ import androidx.cardview.widget.CardView;
 
 import com.OcrBanking.Android.R;
 
-public class MainActivity extends AppCompatActivity {
-    private CardView mCardViewSignUP;
+public class RegisterActivity extends AppCompatActivity {
+    private CardView mSignUpCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,12 +19,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        mCardViewSignUP = findViewById(R.id.cardViewSignUP);
+        mSignUpCardView = findViewById(R.id.signUpCardView);
 
 
-        mCardViewSignUP.setOnClickListener(v -> {
+        mSignUpCardView.setOnClickListener(v -> {
 
-            Intent intent = new Intent(MainActivity.this, OtpScreen.class);
+            Intent intent = new Intent(RegisterActivity.this, OtpScreen.class);
             startActivity(intent); // Chuyển sang trang khác
 
 

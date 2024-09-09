@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">OCR-Banking_MobileApp</string>
 
-        <string name="consent_text">Bằng cách nhấn <b>Tiếp tục</b>, bạn đồng ý sử dụng mã OPT của Techcombank là <font color="#2196F3">chữ ký điện tử</font></string>
+    <string name="consent_text">Bằng cách nhấn <b>Tiếp tục</b>, bạn đồng ý sử dụng mã OPT của Techcombank là <font color="#2196F3">chữ ký điện tử</font></string>
 
 
 </resources>

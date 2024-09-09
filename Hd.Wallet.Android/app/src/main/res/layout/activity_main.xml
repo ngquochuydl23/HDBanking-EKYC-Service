@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.register.MainActivity">
+    tools:context=".ui.register.RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Xin Chào !"
+            android:fontFamily="@font/bold_font"
             android:textColor="@color/black"
             android:textSize="28sp"
             android:textStyle="bold" />
@@ -26,6 +27,7 @@
         <TextView
             android:layout_width="320dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/bold_font"
             android:text="Cùng thực hiện bước đầu tiên nhé"
             android:textColor="@color/black"
             android:textSize="28sp"
@@ -33,9 +35,9 @@
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewSignUP"
+        android:id="@+id/signUpCardView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="70dp"
         app:cardBackgroundColor="#A4BECA"
@@ -59,17 +61,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Mở tài khoản"
+                android:fontFamily="@font/semibold_font"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:fontFamily="@font/regular_font"
                 android:text="Sở hữu ngay tài khoản thanh toán Techcombank cùng nhiều ưu đãi hấp dẫn"
                 android:textColor="#4A4A4A"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -80,7 +84,8 @@
         android:layout_marginTop="10dp"
         app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
+        android:elevation="2dp"
+        app:cardElevation="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,6 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/semibold_font"
                 android:text="Bạn có mã giới thiệu ?"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -101,9 +107,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:fontFamily="@font/regular_font"
                 android:text="Quét tại đây nếu bạn có mã QR các chương trình mở tài khoản (Ví dụ: Winlife)"
                 android:textColor="#4A4A4A"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
