@@ -11,8 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.socialv2.wechat.R;
-
+import com.OcrBanking.Android.R;
 
 public class BackdropLoading extends ConstraintLayout {
 
