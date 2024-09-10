@@ -50,14 +50,14 @@ dependencies {
     implementation(libs.lottie.v280)
     implementation("com.robertlevonyan.view:MaterialChipView:3.0.8")
 
-    val cameraxVersion = "1.3.4"
+    val cameraxVersion = "1.3.0"
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
     implementation("androidx.camera:camera-camera2:$cameraxVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
     implementation("androidx.camera:camera-core:$cameraxVersion")
     implementation("androidx.camera:camera-video:$cameraxVersion")
     implementation("androidx.camera:camera-view:$cameraxVersion")
-    implementation("androidx.camera:camera-mlkit-vision:$cameraxVersion")
+    implementation("androidx.camera:camera-mlkit-vision:1.5.0-alpha01")
     implementation("androidx.camera:camera-extensions:$cameraxVersion")
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
