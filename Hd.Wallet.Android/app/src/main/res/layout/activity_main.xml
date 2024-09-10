@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Xin Chào !"
             android:fontFamily="@font/bold_font"
-            android:textColor="@color/black"
+            android:textColor="@color/textColorPrimary"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/bold_font"
             android:text="Cùng thực hiện bước đầu tiên nhé"
-            android:textColor="@color/black"
+            android:textColor="@color/textColorPrimary"
             android:textSize="28sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -61,8 +61,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Mở tài khoản"
+                android:includeFontPadding="false"
                 android:fontFamily="@font/semibold_font"
-                android:textColor="@color/black"
+                android:textColor="@color/textColorPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -72,7 +73,7 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/regular_font"
                 android:text="Sở hữu ngay tài khoản thanh toán Techcombank cùng nhiều ưu đãi hấp dẫn"
-                android:textColor="#4A4A4A"
+                android:textColor="@color/textColorSecondary"
                 android:textSize="14sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -99,7 +100,8 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/semibold_font"
                 android:text="Bạn có mã giới thiệu ?"
-                android:textColor="@color/black"
+                android:includeFontPadding="false"
+                android:textColor="@color/textColorPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -109,7 +111,7 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/regular_font"
                 android:text="Quét tại đây nếu bạn có mã QR các chương trình mở tài khoản (Ví dụ: Winlife)"
-                android:textColor="#4A4A4A"
+                android:textColor="@color/textColorSecondary"
                 android:textSize="14sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -5,8 +5,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 
-import com.socialv2.wechat.R;
-import com.socialv2.wechat.sharedReferences.SaveTokenSharedPreference;
+import com.OcrBanking.Android.R;
+import com.OcrBanking.Android.sharedReferences.SaveTokenSharedPreference;
 
 import java.io.IOException;
 

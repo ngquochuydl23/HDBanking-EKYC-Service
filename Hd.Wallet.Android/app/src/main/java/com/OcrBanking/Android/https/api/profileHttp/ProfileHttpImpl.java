@@ -2,11 +2,8 @@ package com.OcrBanking.Android.https.api.profileHttp;
 
 import android.content.Context;
 
-import com.socialv2.wechat.dtos.HttpResponseDto;
-import com.socialv2.wechat.dtos.UserDto;
-import com.socialv2.wechat.dtos.response.ResponseProfileDto;
-import com.socialv2.wechat.https.HttpSettingImpl;
-import com.socialv2.wechat.https.IHttpSetting;
+import com.OcrBanking.Android.https.HttpSettingImpl;
+import com.OcrBanking.Android.https.IHttpSetting;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -27,10 +24,10 @@ public class ProfileHttpImpl implements IHttpProfile {
     }
 
 
-    @Override
-    public Observable<HttpResponseDto<ResponseProfileDto>> getProfile() {
-        return mHttpProfile.getProfile()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io());
-    }
+//    @Override
+//    public Observable<HttpResponseDto<ResponseProfileDto>> getProfile() {
+//        return mHttpProfile.getProfile()
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io());
+//    }
 }
