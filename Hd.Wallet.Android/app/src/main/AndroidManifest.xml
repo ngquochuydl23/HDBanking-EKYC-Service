@@ -10,16 +10,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".Application"
         android:theme="@style/Theme.OCRBanking_MobileApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.register.OcrVerifyScreen"
-            android:exported="false" />
-        <activity
-            android:name=".ui.register.OtpScreen"
+            android:name=".ui.register.GettingTakenIdCardActivity"
             android:exported="false" />
         <activity
             android:name=".ui.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.WelcomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

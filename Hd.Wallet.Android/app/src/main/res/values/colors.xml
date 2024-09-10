@@ -5,7 +5,7 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primaryColor">#06C167</color>
+    <color name="primaryColor">#121212</color>
     <color name="foregroundColor">#fff</color>
     <color name="backgroundColor">#f5f5f5</color>
     <color name="inputBackgroundColor">#f5f5f5</color>
