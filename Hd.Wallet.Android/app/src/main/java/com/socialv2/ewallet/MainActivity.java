@@ -9,6 +9,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.socialv2.ewallet.ui.WelcomeActivity;
+import com.socialv2.ewallet.ui.idCardTaken.IdCardTakenAcitivity;
+import com.socialv2.ewallet.ui.register.GettingTakenIdCardActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +26,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        NavigateUtil.navigateTo(this, WelcomeActivity.class);
+        NavigateUtil.navigateTo(this, IdCardTakenAcitivity.class);
     }
 }
