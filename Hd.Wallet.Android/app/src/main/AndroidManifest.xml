@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".Application"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -10,9 +11,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".Application"
         android:theme="@style/Theme.OCRBanking_MobileApp"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.transfer.SuccessfulTransactionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.register.DetailedAddressAtivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.register.FacialRecognitionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.register.ConfirmInformationActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.register.GettingTakenIdCardActivity"
             android:exported="false" />

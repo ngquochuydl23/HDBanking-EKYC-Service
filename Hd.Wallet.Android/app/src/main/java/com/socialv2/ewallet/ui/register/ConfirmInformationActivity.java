@@ -12,15 +12,14 @@ import androidx.core.view.WindowInsetsCompat;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.utils.NavigateUtil;
 
-
-public class GettingTakenIdCardActivity extends AppCompatActivity {
+public class ConfirmInformationActivity extends AppCompatActivity {
 
     private Button mContinueButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_getting_take_idcard);
+        setContentView(R.layout.activity_confirm_information);
         mContinueButton = findViewById(R.id.btn_continue);
         initView();
     }
@@ -33,7 +32,7 @@ public class GettingTakenIdCardActivity extends AppCompatActivity {
         });
 
         mContinueButton.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(this, FacialRecognitionActivity.class);
+            NavigateUtil.navigateTo(this, DetailedAddressAtivity.class);
         });
     }
 }

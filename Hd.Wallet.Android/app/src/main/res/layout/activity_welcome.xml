@@ -8,10 +8,12 @@
     android:orientation="vertical"
     tools:context=".ui.WelcomeActivity">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
         android:padding="20dp">
 
@@ -39,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="40dp"
         app:cardBackgroundColor="#A4BECA"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp">
@@ -114,5 +116,16 @@
                 android:textColor="@color/textColorSecondary"
                 android:textSize="14sp" />
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
 </LinearLayout>
+
+
