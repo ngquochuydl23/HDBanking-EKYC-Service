@@ -78,6 +78,7 @@ public class IdCardTakenAcitivity extends AppCompatActivity {
             mIdCardFrameOverlayView.setLayoutParams(overlayLayoutParams);
             return insets;
         });
+        rectFuture = mIdCardFrameOverlayView.getIdCardRectAsync();
 
         mIdCardFrameOverlayView.setOnButtonCameraPressListener(new IdCardFrameOverlayView.OnButtonCameraPressListener() {
             @Override
@@ -86,7 +87,19 @@ public class IdCardTakenAcitivity extends AppCompatActivity {
             }
         });
 
-        rectFuture = mIdCardFrameOverlayView.getIdCardRectAsync();
+        mUserCheckIdCardBottomSheet.setContinueButtonClick(new UserCheckIdCardBottomSheet.ContinueButtonClick() {
+            @Override
+            public void onContinue(Bitmap bitmap) {
+
+            }
+        });
+
+        mUserCheckIdCardBottomSheet.setRetryButtonClick(new UserCheckIdCardBottomSheet.RetryButtonClick() {
+            @Override
+            public void onClick() {
+
+            }
+        });
     }
 
     private void requestPermissions() {
@@ -188,7 +201,6 @@ public class IdCardTakenAcitivity extends AppCompatActivity {
                 Rect rect = rectFuture.get();
                 Bitmap bitmap = ImageToBitmap.convert(image);
                 Bitmap croppedBitmap = CropImageUtils.crop(bitmap, mPreviewView, rect);
-
 
                 mUserCheckIdCardBottomSheet.show(getSupportFragmentManager(), mUserCheckIdCardBottomSheet.getTag());
                 mUserCheckIdCardBottomSheet.setIdCard(croppedBitmap);

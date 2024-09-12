@@ -15,6 +15,10 @@ public class UserCheckIdCardBottomSheet extends BaseBottomSheetDialog {
 
     private ImageView mUserIdCardImageView;
     private Bitmap mBitmap;
+
+    private ContinueButtonClick mContinueButtonClick;
+    private RetryButtonClick mRetryButtonClick;
+
     public UserCheckIdCardBottomSheet() {
         super(R.layout.bottomsheet_user_check_idcard);
     }
@@ -29,5 +33,23 @@ public class UserCheckIdCardBottomSheet extends BaseBottomSheetDialog {
 
     public void setIdCard(Bitmap bitmap) {
         this.mBitmap = bitmap;
+    }
+
+    @FunctionalInterface
+    public interface ContinueButtonClick {
+        void onContinue(Bitmap bitmap);
+    }
+
+    @FunctionalInterface
+    public interface RetryButtonClick {
+        void onClick();
+    }
+
+    public void setContinueButtonClick(ContinueButtonClick continueButtonClick) {
+        mContinueButtonClick = continueButtonClick;
+    }
+
+    public void setRetryButtonClick(RetryButtonClick retryButtonClick) {
+        mRetryButtonClick = retryButtonClick;
     }
 }
