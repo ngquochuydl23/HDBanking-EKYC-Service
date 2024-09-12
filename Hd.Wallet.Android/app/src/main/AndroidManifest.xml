@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature android:name="android.hardware.camera.any" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -16,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OCRBanking_MobileApp"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.signIn.SignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.register.EnterOtpActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.transfer.SuccessfulTransactionActivity"
             android:exported="false" />

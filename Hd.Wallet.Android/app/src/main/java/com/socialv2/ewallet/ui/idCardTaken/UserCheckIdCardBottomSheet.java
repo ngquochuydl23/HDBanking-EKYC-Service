@@ -3,6 +3,8 @@ package com.socialv2.ewallet.ui.idCardTaken;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,10 @@ public class UserCheckIdCardBottomSheet extends BaseBottomSheetDialog {
     private ContinueButtonClick mContinueButtonClick;
     private RetryButtonClick mRetryButtonClick;
 
+    private ImageButton continueButton;
+    private ImageButton retryButton;
+
+
     public UserCheckIdCardBottomSheet() {
         super(R.layout.bottomsheet_user_check_idcard);
     }
@@ -30,10 +36,18 @@ public class UserCheckIdCardBottomSheet extends BaseBottomSheetDialog {
         mUserIdCardImageView = view.findViewById(R.id.userIdCardImageView);
         mUserIdCardImageView.setImageBitmap(mBitmap);
 
+        continueButton = view.findViewById(R.id.continueButton);
+        retryButton = view.findViewById(R.id.retryButton);
 
-        //xu li su kien
-      //  mContinueButtonClick.onContinue(mBitmap);
-        //mRetryButtonClick
+        continueButton.setOnClickListener(v ->{
+
+            mContinueButtonClick.onContinue(mBitmap);
+
+        });
+
+
+
+
     }
 
     public void setIdCard(Bitmap bitmap) {
