@@ -10,6 +10,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.ui.idCardTaken.IdCardFrameOverlayView;
+import com.socialv2.ewallet.ui.idCardTaken.IdCardTakenAcitivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 
 
@@ -33,7 +35,7 @@ public class GettingTakenIdCardActivity extends AppCompatActivity {
         });
 
         mContinueButton.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(this, FacialRecognitionActivity.class);
+            NavigateUtil.navigateTo(this, IdCardTakenAcitivity.class);
         });
     }
 }
