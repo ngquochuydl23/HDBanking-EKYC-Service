@@ -1,14 +1,12 @@
 package com.socialv2.ewallet.ui.idCardTaken;
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.Rect;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -37,12 +35,16 @@ import com.socialv2.ewallet.utils.CropImageUtils;
 import com.socialv2.ewallet.utils.ImageToBitmap;
 import com.socialv2.ewallet.utils.NavigateUtil;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-public class IdCardTakenAcitivity extends AppCompatActivity {
+public class IdCardTakenActivity extends AppCompatActivity {
 
-    private final String TAG = IdCardTakenAcitivity.class.getName();
+    private final String TAG = IdCardTakenActivity.class.getName();
+
+    private ListenableFuture<ProcessCameraProvider> mCameraProviderListenableFuture;
 
     private UserCheckIdCardBottomSheet mUserCheckIdCardBottomSheet;
     private IdCardFrameOverlayView mIdCardFrameOverlayView;
@@ -52,12 +54,16 @@ public class IdCardTakenAcitivity extends AppCompatActivity {
     private Permissions appPermission;
     private CompletableFuture<Rect> rectFuture;
 
+    private Set<Bitmap> mBitmaps;
+    private int mStep = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_id_card_taken);
 
+        mBitmaps = new HashSet<>();
         mIdCardFrameOverlayView = findViewById(R.id.idCardFrameOverlayView);
         mToolbar = findViewById(R.id.toolbar);
         mPreviewView = findViewById(R.id.previewView);
@@ -65,6 +71,18 @@ public class IdCardTakenAcitivity extends AppCompatActivity {
 
         initView();
         requestPermissions();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Log.i(TAG, "onRestart");
+        mBitmaps.clear();
+        mStep = 1;
+
+        mIdCardFrameOverlayView.setStep(mStep);
+        startCamera();
     }
 
     private void initView() {
@@ -80,6 +98,7 @@ public class IdCardTakenAcitivity extends AppCompatActivity {
             mIdCardFrameOverlayView.setLayoutParams(overlayLayoutParams);
             return insets;
         });
+
         rectFuture = mIdCardFrameOverlayView.getIdCardRectAsync();
 
         mIdCardFrameOverlayView.setOnButtonCameraPressListener(new IdCardFrameOverlayView.OnButtonCameraPressListener() {
@@ -92,14 +111,29 @@ public class IdCardTakenAcitivity extends AppCompatActivity {
         mUserCheckIdCardBottomSheet.setContinueButtonClick(new UserCheckIdCardBottomSheet.ContinueButtonClick() {
             @Override
             public void onContinue(Bitmap bitmap) {
-                NavigateUtil.navigateTo(IdCardTakenAcitivity.this, ConfirmInformationActivity.class);
+                if (mStep == 1) {
+                    resumeCamera();
+
+                    mStep++;
+                    mBitmaps.add(bitmap);
+                    mIdCardFrameOverlayView.setStep(mStep);
+                    mUserCheckIdCardBottomSheet.dismiss();
+                } else {
+
+                    mBitmaps.add(bitmap);
+                    extractIdCardInfo();
+                }
             }
         });
 
         mUserCheckIdCardBottomSheet.setRetryButtonClick(new UserCheckIdCardBottomSheet.RetryButtonClick() {
             @Override
             public void onClick() {
+                mUserCheckIdCardBottomSheet.clearState();
+                mUserCheckIdCardBottomSheet.dismiss();
 
+                mStep = 1;
+                mBitmaps.clear();
             }
         });
     }
@@ -129,11 +163,10 @@ public class IdCardTakenAcitivity extends AppCompatActivity {
     private void startCamera() {
         Log.i(TAG, "Start running camera");
 
-        ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);
-
-        cameraProviderFuture.addListener(() -> {
+        mCameraProviderListenableFuture = ProcessCameraProvider.getInstance(this);
+        mCameraProviderListenableFuture.addListener(() -> {
             try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                ProcessCameraProvider cameraProvider = mCameraProviderListenableFuture.get();
                 bindPreview(cameraProvider);
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
@@ -180,7 +213,7 @@ public class IdCardTakenAcitivity extends AppCompatActivity {
             public void onCaptureSuccess(@NonNull ImageProxy image) {
                 Log.i(TAG, "Captured image");
 
-
+                pauseCamera();
                 processImage(image);
                 image.close();
             }
@@ -195,7 +228,6 @@ public class IdCardTakenAcitivity extends AppCompatActivity {
 
     @OptIn(markerClass = ExperimentalGetImage.class)
     private void processImage(@NonNull ImageProxy image) {
-        //try {
         try {
 
             if (rectFuture.isDone()) {
@@ -212,5 +244,56 @@ public class IdCardTakenAcitivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void pauseCamera() {
+        mCameraProviderListenableFuture.addListener(() -> {
+            try {
+                ProcessCameraProvider cameraProvider = mCameraProviderListenableFuture.get();
+                cameraProvider.unbindAll();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, ContextCompat.getMainExecutor(this));
+    }
+
+    private void resumeCamera() {
+        mCameraProviderListenableFuture.addListener(() -> {
+            try {
+                ProcessCameraProvider cameraProvider = mCameraProviderListenableFuture.get();
+                bindPreview(cameraProvider);
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, ContextCompat.getMainExecutor(this));
+    }
+
+    private void extractIdCardInfo() {
+        // success
+        mUserCheckIdCardBottomSheet.clearState();
+        mUserCheckIdCardBottomSheet.dismiss();
+
+
+        if (mBitmaps.size() == 2) {
+
+        }
+        String json = "{\n" +
+                "  \"idCard\": {\n" +
+                "    \"id\": \"068203012123\",\n" +
+                "    \"full_name\": \"NGUYỄN QUỐC HUY\",\n" +
+                "    \"date_of_birth\": \"14/02/2003\",\n" +
+                "    \"sex\": \"Nam\",\n" +
+                "    \"nationality\": \"Việt Nam\",\n" +
+                "    \"place_of_origin\": \"Thừa Thiên Huế\",\n" +
+                "    \"place_of_residence\": \"41A Xô Viết Nghệ Tĩnh, P7, Thành phố Đà Lạt, Lâm Đồng\",\n" +
+                "    \"date_of_expiry\": \"14/02/2028\"\n" +
+                "  },\n" +
+                "  \"url\": \"uploads/identity-cart/z5819645441411_c2ee0d7af23a416f9cbe080460e90e09.jpg\",\n" +
+                "  \"type\": \"CCCD\"\n" +
+                "}";
+
+        Intent intent = new Intent(this, ConfirmInformationActivity.class);
+        intent.putExtra("IdCardExtract", json);
+        startActivity(intent);
     }
 }

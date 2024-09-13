@@ -36,7 +36,7 @@
             android:name=".ui.register.ConfirmInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.idCardTaken.IdCardTakenAcitivity"
+            android:name=".ui.idCardTaken.IdCardTakenActivity"
             android:exported="false"
             android:theme="@style/CameraActivityStyle" />
         <activity

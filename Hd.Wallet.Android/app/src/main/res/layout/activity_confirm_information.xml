@@ -27,8 +27,8 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Xác nhận thông tin"
                 android:fontFamily="@font/semibold_font"
+                android:text="Xác nhận thông tin"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -43,34 +43,36 @@
                 android:textColor="@color/textColorPrimary"
                 android:textSize="16sp" />
         </LinearLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/genderFieldView"
             android:padding="15dp">
 
             <TextView
                 android:id="@+id/genderLabelTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semibold_font"
                 android:text="Giới tính"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/genderTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nữ"
                 android:fontFamily="@font/semibold_font"
+                android:text="Nữ"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -84,9 +86,9 @@
                 android:id="@+id/idInfoLabelTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/semibold_font"
                 android:text="Thông tin CMND/CCCD"
                 android:textColor="@color/textColorPrimary"
-                android:fontFamily="@font/semibold_font"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -99,27 +101,27 @@
 
             <TextView
                 android:id="@+id/nameLabelTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semibold_font"
                 android:text="Họ và tên"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/nameTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 android:layout_width="wrap_content"
-                android:fontFamily="@font/semibold_font"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/semibold_font"
                 android:text="Trần Ái Vân"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -129,27 +131,27 @@
 
             <TextView
                 android:id="@+id/birthdayLabelTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semibold_font"
                 android:text="Ngày sinh"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/birthdayTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="08/09/2003"
                 android:fontFamily="@font/semibold_font"
+                android:text="08/09/2003"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -159,27 +161,27 @@
 
             <TextView
                 android:id="@+id/idNumberLabelTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semibold_font"
                 android:text="Số CMND/CCCD"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/idNumberTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semibold_font"
                 android:text="21065771"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -189,28 +191,28 @@
 
             <TextView
                 android:id="@+id/issuePlaceLabelTextView"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="wrap_content"
 
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/semibold_font"
+                android:text="Nơi cấp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_width="wrap_content"
-                android:fontFamily="@font/semibold_font"
-                android:layout_height="wrap_content"
-                android:text="Nơi cấp"
-                android:textSize="14sp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/issuePlaceTextView"
-                android:fontFamily="@font/semibold_font"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/placeOfOriginTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/semibold_font"
                 android:text="Hà Nội"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -220,42 +222,42 @@
 
             <TextView
                 android:id="@+id/addressLabelTextView"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/semibold_font"
+                android:text="Địa chỉ thường trú"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_width="wrap_content"
-                android:fontFamily="@font/semibold_font"
-                android:layout_height="wrap_content"
-                android:text="Địa chỉ thường trú"
-                android:textSize="14sp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/addressTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/placeOfResidenceTextView"
                 android:layout_width="200dp"
-                android:fontFamily="@font/semibold_font"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/semibold_font"
                 android:text="191 Ba Triệu, Lê Đại Hành, Hai Bà Trưng, Hà Nội"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-            android:id="@+id/btn_continue"
+            android:id="@+id/continueButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
-            android:text="Xác nhận"
-            android:textAllCaps="false"
-
             android:background="@drawable/drawable_filled_r15"
             android:backgroundTint="@color/primaryColor"
+            android:fontFamily="@font/medium_font"
+            android:text="Xác nhận"
+            android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <Button
@@ -264,11 +266,12 @@
             android:layout_height="50dp"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/drawable_outline_r15"
+            android:fontFamily="@font/medium_font"
             android:text="Chụp lại"
             android:textAllCaps="false"
-            android:background="@drawable/drawable_filled_r15_blackborder"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>
 </ScrollView>

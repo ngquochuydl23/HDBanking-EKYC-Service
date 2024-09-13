@@ -24,7 +24,6 @@ public class BaseBottomSheetDialog extends BottomSheetDialogFragment {
         return viewResource;
     }
 
-
     @Nullable
     @Override
     public View onCreateView(
@@ -43,5 +42,9 @@ public class BaseBottomSheetDialog extends BottomSheetDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         return new BottomSheetDialog(requireContext(), getTheme());
+    }
+
+    public Boolean isShowing() {
+        return isVisible();
     }
 }

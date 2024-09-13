@@ -2,10 +2,13 @@ package com.socialv2.ewallet.ui.idCardTaken;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.media.AudioAttributes;
+import android.media.SoundPool;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.socialv2.ewallet.R;
 
@@ -16,6 +19,13 @@ public class IdCardFrameOverlayView extends FrameLayout {
     private Context context;
     private Button mCameraButton;
     private View mOverlayView;
+
+    private TextView mTitleTextView;
+    private TextView mStepTextView;
+    private SoundPool mSoundPool;
+
+    private int soundId;
+
     private OnButtonCameraPressListener onButtonCameraPressListener;
 
     public IdCardFrameOverlayView(Context context) {
@@ -41,11 +51,19 @@ public class IdCardFrameOverlayView extends FrameLayout {
 
         mOverlayView = findViewById(R.id.overlayView);
         mCameraButton = findViewById(R.id.cameraButton);
+
+        mTitleTextView = findViewById(R.id.titleTextView);
+        mStepTextView = findViewById(R.id.stepTextView);
+
+        setupSoundEffect();
+
         mCameraButton.setOnClickListener(view -> {
+            mSoundPool.play(soundId, 0.5f, 0.5f, 0, 0, 1);
             if (onButtonCameraPressListener != null) {
                 onButtonCameraPressListener.onPress();
             }
         });
+
     }
 
     public void setOnButtonCameraPressListener(OnButtonCameraPressListener onButtonCameraPressListener) {
@@ -73,6 +91,39 @@ public class IdCardFrameOverlayView extends FrameLayout {
             }
         });
         return future;
+    }
+
+    public void setStep(int step) {
+        if (step == 1) {
+            mStepTextView.setText("1/2");
+            mTitleTextView.setText("Quý khách vui lòng chụp ảnh mặt trước của CMND/CCCD trong khung hình này.");
+        } else {
+            mStepTextView.setText("2/2");
+            mTitleTextView.setText("Quý khách vui lòng chụp ảnh mặt sau của CMND/CCCD trong khung hình này.");
+        }
+    }
+
+    private void setupSoundEffect() {
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .build();
+
+        mSoundPool = new SoundPool.Builder()
+                .setMaxStreams(1) // Maximum number of sounds that can be played at once
+                .setAudioAttributes(audioAttributes)
+                .build();
+
+        soundId = mSoundPool.load(getContext(), R.raw.taken_picture_sound_effect, 1);
+    }
+
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        // Release SoundPool resources
+        if (mSoundPool != null) {
+            mSoundPool.release();
+            mSoundPool = null;
+        }
     }
 
     @FunctionalInterface

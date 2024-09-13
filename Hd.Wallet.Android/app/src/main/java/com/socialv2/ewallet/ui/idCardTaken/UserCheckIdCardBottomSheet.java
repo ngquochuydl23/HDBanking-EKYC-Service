@@ -21,8 +21,8 @@ public class UserCheckIdCardBottomSheet extends BaseBottomSheetDialog {
     private ContinueButtonClick mContinueButtonClick;
     private RetryButtonClick mRetryButtonClick;
 
-    private ImageButton continueButton;
-    private ImageButton retryButton;
+    private View mContinueButton;
+    private View mRetryButton;
 
 
     public UserCheckIdCardBottomSheet() {
@@ -36,16 +36,16 @@ public class UserCheckIdCardBottomSheet extends BaseBottomSheetDialog {
         mUserIdCardImageView = view.findViewById(R.id.userIdCardImageView);
         mUserIdCardImageView.setImageBitmap(mBitmap);
 
-        continueButton = view.findViewById(R.id.continueButton);
-        retryButton = view.findViewById(R.id.retryButton);
+        mContinueButton = view.findViewById(R.id.continueButton);
+        mRetryButton = view.findViewById(R.id.retryButton);
 
-        continueButton.setOnClickListener(v ->{
-
+        mContinueButton.setOnClickListener(v -> {
             mContinueButtonClick.onContinue(mBitmap);
-
         });
 
-
+        mRetryButton.setOnClickListener(v -> {
+            mRetryButtonClick.onClick();
+        });
 
 
     }
@@ -53,6 +53,7 @@ public class UserCheckIdCardBottomSheet extends BaseBottomSheetDialog {
     public void setIdCard(Bitmap bitmap) {
         this.mBitmap = bitmap;
     }
+
 
     @FunctionalInterface
     public interface ContinueButtonClick {
@@ -70,5 +71,9 @@ public class UserCheckIdCardBottomSheet extends BaseBottomSheetDialog {
 
     public void setRetryButtonClick(RetryButtonClick retryButtonClick) {
         mRetryButtonClick = retryButtonClick;
+    }
+
+    public void clearState() {
+        mBitmap = null;
     }
 }

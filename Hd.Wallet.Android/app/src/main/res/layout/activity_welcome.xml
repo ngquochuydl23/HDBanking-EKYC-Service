@@ -8,8 +8,6 @@
     android:orientation="vertical"
     tools:context=".ui.WelcomeActivity">
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="40dp"
-        app:cardBackgroundColor="#A4BECA"
+        app:cardBackgroundColor="#dae3e8"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp">
 
@@ -53,9 +51,10 @@
             android:padding="15dp">
 
             <ImageView
-                android:layout_width="match_parent"
+                android:src="@drawable/image_welcome_register"
+                android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_gravity="center"
+                android:layout_gravity="left"
                 android:scaleType="centerCrop" />
 
             <TextView

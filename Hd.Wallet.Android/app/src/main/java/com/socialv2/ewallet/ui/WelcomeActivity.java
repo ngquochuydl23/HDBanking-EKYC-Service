@@ -12,9 +12,11 @@ import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.ui.register.RegisterActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
+import com.socialv2.ewallet.utils.WindowUtils;
 
 
 public class WelcomeActivity extends BaseActivity {
+
     private CardView mSignUpCardView;
 
     public WelcomeActivity() {
@@ -26,16 +28,11 @@ public class WelcomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         mSignUpCardView = findViewById(R.id.signUpCardView);
-
         initView();
     }
 
     private void initView() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        WindowUtils.applyTopPadding(findViewById(R.id.main));
 
         mSignUpCardView.setOnClickListener(v -> {
 
