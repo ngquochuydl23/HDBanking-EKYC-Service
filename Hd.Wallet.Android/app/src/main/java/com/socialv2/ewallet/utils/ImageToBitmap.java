@@ -22,4 +22,10 @@ public class ImageToBitmap {
         byte[] clonedBytes = bytes.clone();
         return BitmapFactory.decodeByteArray(clonedBytes, 0, clonedBytes.length);
     }
+
+    public static byte[] bitmapToByte(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);  // Compress Bitmap to PNG or JPEG
+        return stream.toByteArray();
+    }
 }

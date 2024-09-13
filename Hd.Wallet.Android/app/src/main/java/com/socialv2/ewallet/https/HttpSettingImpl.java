@@ -65,7 +65,6 @@ public class HttpSettingImpl implements IHttpSetting {
                         Request newRequest = originalRequest.newBuilder()
                                 .cacheControl(CacheControl.FORCE_CACHE)
                                 .headers(headers)
-                                .method(originalRequest.method(), null)
                                 .build();
                         return chain.proceed(newRequest);
                     }

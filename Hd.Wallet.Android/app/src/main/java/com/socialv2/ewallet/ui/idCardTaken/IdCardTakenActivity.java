@@ -1,6 +1,7 @@
 package com.socialv2.ewallet.ui.idCardTaken;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -28,15 +29,19 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.gson.Gson;
+import com.socialv2.ewallet.components.BackdropLoadingDialog;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.dtos.idCard.IdCardExtractDto;
+import com.socialv2.ewallet.https.api.ocrHttp.IOcrIdCardService;
+import com.socialv2.ewallet.https.api.ocrHttp.OcrIdCardServiceImpl;
 import com.socialv2.ewallet.permissions.Permissions;
 import com.socialv2.ewallet.ui.register.ConfirmInformationActivity;
 import com.socialv2.ewallet.utils.CropImageUtils;
 import com.socialv2.ewallet.utils.ImageToBitmap;
-import com.socialv2.ewallet.utils.NavigateUtil;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -46,15 +51,19 @@ public class IdCardTakenActivity extends AppCompatActivity {
 
     private ListenableFuture<ProcessCameraProvider> mCameraProviderListenableFuture;
 
+    private IOcrIdCardService mOcrCardService;
+
     private UserCheckIdCardBottomSheet mUserCheckIdCardBottomSheet;
     private IdCardFrameOverlayView mIdCardFrameOverlayView;
     private Toolbar mToolbar;
     private ImageCapture mImageCapture;
     private PreviewView mPreviewView;
     private Permissions appPermission;
+    private BackdropLoadingDialog mLoadingBackdropDialog;
+
     private CompletableFuture<Rect> rectFuture;
 
-    private Set<Bitmap> mBitmaps;
+    private List<Bitmap> mBitmaps;
     private int mStep = 1;
 
     @Override
@@ -63,11 +72,15 @@ public class IdCardTakenActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_id_card_taken);
 
-        mBitmaps = new HashSet<>();
+        mOcrCardService = new OcrIdCardServiceImpl(this);
+        mBitmaps = new ArrayList<>();
         mIdCardFrameOverlayView = findViewById(R.id.idCardFrameOverlayView);
         mToolbar = findViewById(R.id.toolbar);
         mPreviewView = findViewById(R.id.previewView);
+
         mUserCheckIdCardBottomSheet = new UserCheckIdCardBottomSheet();
+        mLoadingBackdropDialog = new BackdropLoadingDialog(this);
+
 
         initView();
         requestPermissions();
@@ -76,8 +89,9 @@ public class IdCardTakenActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-
         Log.i(TAG, "onRestart");
+
+        mLoadingBackdropDialog.setLoading(false);
         mBitmaps.clear();
         mStep = 1;
 
@@ -88,6 +102,8 @@ public class IdCardTakenActivity extends AppCompatActivity {
     private void initView() {
         ViewGroup.MarginLayoutParams toolbarLayoutParams = (ViewGroup.MarginLayoutParams) mToolbar.getLayoutParams();
         ViewGroup.MarginLayoutParams overlayLayoutParams = (ViewGroup.MarginLayoutParams) mIdCardFrameOverlayView.getLayoutParams();
+
+        mLoadingBackdropDialog.setLoading(false);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -268,32 +284,35 @@ public class IdCardTakenActivity extends AppCompatActivity {
         }, ContextCompat.getMainExecutor(this));
     }
 
+    @SuppressLint("CheckResult")
     private void extractIdCardInfo() {
-        // success
-        mUserCheckIdCardBottomSheet.clearState();
-        mUserCheckIdCardBottomSheet.dismiss();
 
 
         if (mBitmaps.size() == 2) {
 
-        }
-        String json = "{\n" +
-                "  \"idCard\": {\n" +
-                "    \"id\": \"068203012123\",\n" +
-                "    \"full_name\": \"NGUYỄN QUỐC HUY\",\n" +
-                "    \"date_of_birth\": \"14/02/2003\",\n" +
-                "    \"sex\": \"Nam\",\n" +
-                "    \"nationality\": \"Việt Nam\",\n" +
-                "    \"place_of_origin\": \"Thừa Thiên Huế\",\n" +
-                "    \"place_of_residence\": \"41A Xô Viết Nghệ Tĩnh, P7, Thành phố Đà Lạt, Lâm Đồng\",\n" +
-                "    \"date_of_expiry\": \"14/02/2028\"\n" +
-                "  },\n" +
-                "  \"url\": \"uploads/identity-cart/z5819645441411_c2ee0d7af23a416f9cbe080460e90e09.jpg\",\n" +
-                "  \"type\": \"CCCD\"\n" +
-                "}";
+            mLoadingBackdropDialog.setLoading(true);
+            mOcrCardService.extractIdCard(mBitmaps.get(0), mBitmaps.get(1), "abc")
+                    .subscribe(idCardExtractDtoHttpResponseDto -> {
 
-        Intent intent = new Intent(this, ConfirmInformationActivity.class);
-        intent.putExtra("IdCardExtract", json);
-        startActivity(intent);
+                        IdCardExtractDto idCardExtract = idCardExtractDtoHttpResponseDto.getResult();
+
+                        Gson gson = new Gson();
+                        String json = gson.toJson(idCardExtract);
+
+                        mUserCheckIdCardBottomSheet.clearState();
+                        mUserCheckIdCardBottomSheet.dismiss();
+
+                        Intent intent = new Intent(this, ConfirmInformationActivity.class);
+                        intent.putExtra("IdCardExtract", json);
+                        startActivity(intent);
+                        
+                    }, throwable -> {
+                       // throwable.printStackTrace();
+                        Log.e(TAG, throwable.getMessage());
+                    }, () -> {
+                        mLoadingBackdropDialog.setLoading(false);
+                    });
+        }
+
     }
 }

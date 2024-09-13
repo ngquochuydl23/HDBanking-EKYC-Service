@@ -40,7 +40,7 @@ imgsz, stride, device, half, model, names = getDictionary.load_model(scan_weight
 readInfo = ReadInfo(imgsz, stride, device, half, model, names, opt, ocrPredictor)
 os.makedirs('uploads/identity-cart/', exist_ok=True)
 
-app = FastAPI(title="OCR Identity Cart Service")
+app = FastAPI(title="OCR Identity Card Service")
 
 
 @app.get("/", include_in_schema=False)
@@ -53,6 +53,7 @@ async def get_idcard_by_no():
                 "filename": file.filename,
                 "result": result
             })      
+
 
 @app.post("/id-card/extract")
 async def predict_api(file: UploadFile = File(...)):
@@ -68,7 +69,23 @@ async def predict_api(file: UploadFile = File(...)):
 
         result = readInfo.get_all_info(save_path)
 
-        # check result:
+        required_fields = ['id', 'full_name', 'date_of_birth', 'place_of_origin', 'place_of_residence']
+        for field in required_fields:
+            if not result.get(field):
+
+                os.remove(save_path)
+                return JSONResponse(status_code=400, content={
+                    "statusCode": 400,
+                    "error": "Cannot recognize id-card. Please try again."
+                })
+
+        cccd_fields = ['sex', 'nationality', 'date_of_expiry']
+
+        # Check each field
+        is_cccd = True
+        for field in cccd_fields:
+            if not result.get(field):  # Check if the field is empty or None
+                is_cccd = False
 
         if result:
             # mongo insert data
@@ -83,8 +100,12 @@ async def predict_api(file: UploadFile = File(...)):
             #        
             # }
             return JSONResponse(content={
-                "filename": file.filename,
-                "result": result
+                "statusCode": 200,
+                "result": {
+                    "idCard": result,
+                    "url": save_path,
+                    "type": "CCCD" if is_cccd else "CMND",
+                }
             })          
 
     except Exception as e:
