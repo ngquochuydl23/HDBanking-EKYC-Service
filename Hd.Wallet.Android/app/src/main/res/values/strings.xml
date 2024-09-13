@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">OCR-Banking_MobileApp</string>
-
     <string name="consent_text">Bằng cách nhấn <b>Tiếp tục</b>, bạn đồng ý sử dụng mã OPT của Techcombank là <font color="#2196F3">chữ ký điện tử</font></string>
     <string name="storage_host" />
+    <string name="confirm_text">Tôi xác nhận không thuộc đối tượng có <font color="#2196F3"><b><u>Dấu hiệu Hoa Kỳ theo FATCA</u></b></font></string>
+    <string name="confirm1_text">Tôi đồng ý với <font color="#2196F3"><b><u>Điều khoản và Điều kiện Dịch vụ Ngân hàng điện tử của HdBank</u></b></font></string>
+
+
 
 
 </resources>

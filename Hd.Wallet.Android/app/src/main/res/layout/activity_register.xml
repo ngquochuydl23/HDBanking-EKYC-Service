@@ -14,41 +14,38 @@
         android:layout_height="wrap_content" />
 
     <!-- ScrollView for the content -->
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
+            android:paddingTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="15dp">
-
-            <!-- Image View for user avatar or logo -->
-            <ImageView
-                android:id="@+id/imageLogo"
-                android:layout_width="100dp"
-                android:layout_height="100dp" />
+            android:paddingHorizontal="15dp">
 
             <!-- Header Text -->
             <TextView
                 android:id="@+id/textHeader"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/bold_font"
                 android:text="Vui lòng nhập số điện thoại của bạn"
                 android:textColor="#000000"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal" />
 
             <!-- Phone Number Input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phoneNumberTextInput"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-
-                android:layout_marginTop="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:hint="Nhập số điện thoại"
                 app:boxStrokeColor="#2196F3"
                 app:boxStrokeWidth="2dp"
@@ -58,7 +55,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextPhoneNumber"
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/regular_font"
                     android:importantForAccessibility="yes"
                     android:inputType="phone"
@@ -74,12 +71,13 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/regular_font"
                 android:text="@string/consent_text" />
+
             <!-- Continue Button -->
             <Button
                 android:id="@+id/continueButton"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/drawable_filled_r10"
                 android:backgroundTint="@color/primaryColor"
                 android:fontFamily="@font/medium_font"
@@ -89,5 +87,5 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

@@ -43,7 +43,7 @@ public class HdWalletToolbar extends Toolbar {
         setContentInsetStartWithNavigation(0);
         setTitleTextAppearance(mContext, R.style.OCRMainToolbar_TitleTextAppearance);
 
-        setOnClickListener(v -> {
+        setNavigationOnClickListener(v -> {
             onBackClick();
         });
     }
