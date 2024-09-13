@@ -68,6 +68,8 @@ async def predict_api(file: UploadFile = File(...)):
 
         result = readInfo.get_all_info(save_path)
 
+        # check result:
+
         if result:
             # mongo insert data
             # insert doc 
