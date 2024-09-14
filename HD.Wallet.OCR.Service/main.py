@@ -5,17 +5,24 @@ import time
 import uvicorn
 import io
 import shutil
+import logging
 
-import numpy as np
+
 from readInfoIdCard import ReadInfo
 from DetecInfoBoxes.GetBoxes import GetDictionary
 from core.tool.predictor import Predictor
 from core.tool.config import Cfg as Cfg_vietocr
 
 from starlette.responses import RedirectResponse
-from PIL import Image
 from fastapi.responses import JSONResponse
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Form
+from app.utils.uploaded_file_utils import check_file_extension
+from app.db.mongodb import lifespan
+from contextlib import asynccontextmanager
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 getDictionary = GetDictionary()
 sys.path.insert(0, 'DetecInfoBoxes')
@@ -40,40 +47,53 @@ imgsz, stride, device, half, model, names = getDictionary.load_model(scan_weight
 readInfo = ReadInfo(imgsz, stride, device, half, model, names, opt, ocrPredictor)
 os.makedirs('uploads/identity-cart/', exist_ok=True)
 
-app = FastAPI(title="OCR Identity Card Service")
+
+app = FastAPI(title="OCR Identity Card Service", lifespan=lifespan)
 
 
 @app.get("/", include_in_schema=False)
 async def index():
     return RedirectResponse(url="/docs")
 
+
 @app.get("/id-card/")
 async def get_idcard_by_no():
     return JSONResponse(content={
-                "filename": file.filename,
-                "result": result
-            })      
+        "filename": file.filename,
+        "result": result
+    })
 
 
 @app.post("/id-card/extract")
-async def predict_api(file: UploadFile = File(...)):
-    
-    extension = file.filename.split(".")[-1] in ("jpg", "jpeg", "png", "webp")
-    if not extension:
-        return "Image must be jpg or png format!"
+async def predict_api(
+        front_id_card: UploadFile = File(...),
+        back_id_card: UploadFile = File(...),
+        phone: str = Form(...)
+):
+    if not check_file_extension(front_id_card):
+        return "Front IdCard must be jpg or png format!"
+
+    if not check_file_extension(back_id_card):
+        return "Back IdCard must be jpg or png format!"
 
     try:
-        save_path = os.path.join('uploads/identity-cart/', file.filename)
-        with open(save_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        front_save_path = os.path.join('uploads/identity-cart/', front_id_card.filename)
+        back_save_path = os.path.join('uploads/identity-cart/', back_id_card.filename)
 
-        result = readInfo.get_all_info(save_path)
+        with open(front_save_path, "wb") as buffer:
+            shutil.copyfileobj(front_id_card.file, buffer)
+
+        with open(back_save_path, "wb") as buffer:
+            shutil.copyfileobj(back_id_card.file, buffer)
+
+        result = readInfo.get_all_info(front_save_path)
 
         required_fields = ['id', 'full_name', 'date_of_birth', 'place_of_origin', 'place_of_residence']
         for field in required_fields:
             if not result.get(field):
+                os.remove(front_save_path)
+                os.remove(back_save_path)
 
-                os.remove(save_path)
                 return JSONResponse(status_code=400, content={
                     "statusCode": 400,
                     "error": "Cannot recognize id-card. Please try again."
@@ -81,7 +101,6 @@ async def predict_api(file: UploadFile = File(...)):
 
         cccd_fields = ['sex', 'nationality', 'date_of_expiry']
 
-        # Check each field
         is_cccd = True
         for field in cccd_fields:
             if not result.get(field):  # Check if the field is empty or None
@@ -89,7 +108,7 @@ async def predict_api(file: UploadFile = File(...)):
 
         if result:
             # mongo insert data
-            # insert doc 
+            # insert doc
             # {
             #    phoneNumber: 0868684961
             #    email: nguyenquochuydl123@gmail.com
@@ -97,23 +116,24 @@ async def predict_api(file: UploadFile = File(...)):
             #    extract_result: {
             #
             #    }
-            #        
+            #
             # }
             return JSONResponse(content={
                 "statusCode": 200,
                 "result": {
-                    "idCard": result,
-                    "url": save_path,
+                    "id-card": result,
+                    "front-url": '/' + front_save_path,
+                    "back-url": '/' + back_save_path,
                     "type": "CCCD" if is_cccd else "CMND",
                 }
-            })          
+            })
 
     except Exception as e:
-        return JSONResponse(status_code=500, content={"error": str(e)})
-
+        return JSONResponse(status_code=500, content={
+            "statusCode": 500,
+            "error": str(e)
+        })
 
 
 if __name__ == "__main__":
     uvicorn.run(app, port=8000, log_level="debug")
-
-

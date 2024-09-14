@@ -56,3 +56,5 @@ scipy
 einops
 fastapi
 tqdm
+pymongo
+motor
