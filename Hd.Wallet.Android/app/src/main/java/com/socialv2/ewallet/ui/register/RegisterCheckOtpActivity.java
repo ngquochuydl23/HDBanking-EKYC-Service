@@ -10,13 +10,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.socialv2.ewallet.R;
 
-public class EnterOtpActivity extends AppCompatActivity {
+public class RegisterCheckOtpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_enter_otp);
+        setContentView(R.layout.activity_register_check_otp);
 
         initView();
     }
