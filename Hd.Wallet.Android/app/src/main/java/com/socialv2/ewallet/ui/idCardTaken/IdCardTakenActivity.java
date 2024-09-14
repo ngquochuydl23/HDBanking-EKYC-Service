@@ -129,6 +129,10 @@ public class IdCardTakenActivity extends AppCompatActivity {
             }
         });
 
+        mToolbar.setNavigationOnClickListener(view -> {
+            finish();
+        });
+
         mUserCheckIdCardBottomSheet.setContinueButtonClick(new UserCheckIdCardBottomSheet.ContinueButtonClick() {
             @Override
             public void onContinue(Bitmap bitmap) {
