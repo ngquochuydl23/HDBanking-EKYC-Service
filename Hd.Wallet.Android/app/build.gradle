@@ -24,6 +24,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.guava:guava:32.1.2-android'
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
     implementation 'com.airbnb.android:lottie:2.8.0'
     implementation 'com.robertlevonyan.view:MaterialChipView:3.0.8'

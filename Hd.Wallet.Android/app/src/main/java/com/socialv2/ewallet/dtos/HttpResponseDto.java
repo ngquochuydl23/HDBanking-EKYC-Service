@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public class HttpResponseDto<T> implements Serializable {
 
-
     @SerializedName("statusCode")
     @Expose
     private int statusCode;
@@ -21,6 +20,9 @@ public class HttpResponseDto<T> implements Serializable {
     @Expose
     private T result;
 
+    @SerializedName("error")
+    @Expose
+    private String error;
 
     public HttpResponseDto() {
 
@@ -40,6 +42,13 @@ public class HttpResponseDto<T> implements Serializable {
         this.statusCode = statusCode;
         this.msg = msg;
         this.result = result;
+    }
+
+    public HttpResponseDto(int statusCode, String msg, T result, String error) {
+        this.statusCode = statusCode;
+        this.msg = msg;
+        this.result = result;
+        this.error = error;
     }
 
     public int getStatusCode() {
@@ -66,6 +75,14 @@ public class HttpResponseDto<T> implements Serializable {
         this.result = result;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,6 +102,7 @@ public class HttpResponseDto<T> implements Serializable {
                 "statusCode=" + statusCode +
                 ", msg='" + msg + '\'' +
                 ", result=" + result +
+                ", error='" + error + '\'' +
                 '}';
     }
 }

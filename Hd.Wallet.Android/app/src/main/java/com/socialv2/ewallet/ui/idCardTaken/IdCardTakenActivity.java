@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -30,8 +31,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
-import com.socialv2.ewallet.components.BackdropLoadingDialog;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.components.BackdropLoadingDialogFragment;
+import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.idCard.IdCardExtractDto;
 import com.socialv2.ewallet.https.api.ocrHttp.IOcrIdCardService;
 import com.socialv2.ewallet.https.api.ocrHttp.OcrIdCardServiceImpl;
@@ -39,11 +41,14 @@ import com.socialv2.ewallet.permissions.Permissions;
 import com.socialv2.ewallet.ui.register.ConfirmInformationActivity;
 import com.socialv2.ewallet.utils.CropImageUtils;
 import com.socialv2.ewallet.utils.ImageToBitmap;
+import com.socialv2.ewallet.utils.ParseHttpError;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
+import retrofit2.HttpException;
 
 public class IdCardTakenActivity extends AppCompatActivity {
 
@@ -59,7 +64,7 @@ public class IdCardTakenActivity extends AppCompatActivity {
     private ImageCapture mImageCapture;
     private PreviewView mPreviewView;
     private Permissions appPermission;
-    private BackdropLoadingDialog mLoadingBackdropDialog;
+    private BackdropLoadingDialogFragment mLoadingBackdropDialog;
 
     private CompletableFuture<Rect> rectFuture;
 
@@ -79,8 +84,8 @@ public class IdCardTakenActivity extends AppCompatActivity {
         mPreviewView = findViewById(R.id.previewView);
 
         mUserCheckIdCardBottomSheet = new UserCheckIdCardBottomSheet();
-        mLoadingBackdropDialog = new BackdropLoadingDialog(this);
-
+        mLoadingBackdropDialog = new BackdropLoadingDialogFragment();
+        mLoadingBackdropDialog.setFragmentManager(getSupportFragmentManager());
 
         initView();
         requestPermissions();
@@ -129,15 +134,21 @@ public class IdCardTakenActivity extends AppCompatActivity {
             public void onContinue(Bitmap bitmap) {
                 if (mStep == 1) {
                     resumeCamera();
+                    runOnUiThread(() -> {
+                        mStep++;
+                        mBitmaps.add(bitmap);
+                        mIdCardFrameOverlayView.setStep(mStep);
+                        mUserCheckIdCardBottomSheet.dismiss();
+                    });
 
-                    mStep++;
-                    mBitmaps.add(bitmap);
-                    mIdCardFrameOverlayView.setStep(mStep);
-                    mUserCheckIdCardBottomSheet.dismiss();
-                } else {
+                } else if (mStep == 2){
+                    runOnUiThread(() -> mLoadingBackdropDialog.setLoading(true));
 
                     mBitmaps.add(bitmap);
-                    extractIdCardInfo();
+
+                    new Thread(() -> {
+                        extractIdCardInfo();
+                    }).start();
                 }
             }
         });
@@ -145,11 +156,15 @@ public class IdCardTakenActivity extends AppCompatActivity {
         mUserCheckIdCardBottomSheet.setRetryButtonClick(new UserCheckIdCardBottomSheet.RetryButtonClick() {
             @Override
             public void onClick() {
-                mUserCheckIdCardBottomSheet.clearState();
-                mUserCheckIdCardBottomSheet.dismiss();
+                resumeCamera();
+                runOnUiThread(() -> {
+                    mUserCheckIdCardBottomSheet.clearState();
+                    mUserCheckIdCardBottomSheet.dismiss();
 
-                mStep = 1;
-                mBitmaps.clear();
+                    mStep = 1;
+                    mIdCardFrameOverlayView.setStep(mStep);
+                    mBitmaps.clear();
+                });
             }
         });
     }
@@ -274,23 +289,22 @@ public class IdCardTakenActivity extends AppCompatActivity {
     }
 
     private void resumeCamera() {
+        mLoadingBackdropDialog.setLoading(true);
         mCameraProviderListenableFuture.addListener(() -> {
             try {
                 ProcessCameraProvider cameraProvider = mCameraProviderListenableFuture.get();
                 bindPreview(cameraProvider);
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
+            } finally {
+                mLoadingBackdropDialog.setLoading(false);
             }
         }, ContextCompat.getMainExecutor(this));
     }
 
     @SuppressLint("CheckResult")
     private void extractIdCardInfo() {
-
-
         if (mBitmaps.size() == 2) {
-
-            mLoadingBackdropDialog.setLoading(true);
             mOcrCardService.extractIdCard(mBitmaps.get(0), mBitmaps.get(1), "abc")
                     .subscribe(idCardExtractDtoHttpResponseDto -> {
 
@@ -305,14 +319,44 @@ public class IdCardTakenActivity extends AppCompatActivity {
                         Intent intent = new Intent(this, ConfirmInformationActivity.class);
                         intent.putExtra("IdCardExtract", json);
                         startActivity(intent);
-                        
+
                     }, throwable -> {
-                       // throwable.printStackTrace();
-                        Log.e(TAG, throwable.getMessage());
+                        if (throwable instanceof HttpException) {
+
+                            HttpResponseDto<?> errorResponse =  ParseHttpError.parse(throwable);
+                            int statusCode = ParseHttpError.getStatusCode(throwable);
+
+                            Log.e(TAG, errorResponse.toString());
+                            String errorMsg = errorResponse.getError();
+
+                            if (statusCode== 400) {
+                                if (errorMsg.equals(getString(R.string.cannot_recognize_idcard))) {
+                                    runOnUiThread(() -> Toast.makeText(this, "Nhận dạng thất bại", Toast.LENGTH_LONG).show());
+                                }
+                            } else if (statusCode == 500) {
+
+
+                            } else if (statusCode == 502) {
+
+                            }
+                        } else {
+                            Log.e(TAG, throwable.getMessage());
+                            runOnUiThread(() -> Toast.makeText(this, "Không có kết nối Internet", Toast.LENGTH_LONG).show());
+                        }
+                        runOnUiThread(() -> mLoadingBackdropDialog.setLoading(false));
                     }, () -> {
-                        mLoadingBackdropDialog.setLoading(false);
+                        runOnUiThread(() -> mLoadingBackdropDialog.setLoading(false));
                     });
         }
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (mLoadingBackdropDialog != null && mLoadingBackdropDialog.isLoading()) {
+            Log.d(TAG, "Backdrop loading dialog is visible, back press is ignored");
+            // Do nothing to prevent the dialog from being dismissed
+        } else {
+            super.onBackPressed(); // Call the super method if the dialog is not visible
+        }
     }
 }
