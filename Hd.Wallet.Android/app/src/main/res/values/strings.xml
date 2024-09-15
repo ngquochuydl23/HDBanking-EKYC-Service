@@ -5,7 +5,6 @@
     <string name="confirm_text">Tôi xác nhận không thuộc đối tượng có <font color="#2196F3"><b><u>Dấu hiệu Hoa Kỳ theo FATCA</u></b></font></string>
     <string name="confirm1_text">Tôi đồng ý với <font color="#2196F3"><b><u>Điều khoản và Điều kiện Dịch vụ Ngân hàng điện tử của HdBank</u></b></font></string>
     <string name="cannot_recognize_idcard">Cannot recognize id-card. Please try again.</string>
-
-
+    <string name="confirm_text_resetpassword">Tôi đã đọc,hiểu,đồng ý với <font color="#2196F3"><b><u>Điều khoản,điều kiện dịch vụ </u></b></font> của Ngân hàng HdBank</string>
 
 </resources>
