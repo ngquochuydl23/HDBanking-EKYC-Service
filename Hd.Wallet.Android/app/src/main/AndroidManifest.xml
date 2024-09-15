@@ -16,7 +16,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OCRBanking_MobileApp"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".ui.facialRecognition.SuccessRecognitionActivity"
+            android:exported="false" />
+
+        <service
+            android:name=".backgroundServices.FcmMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".ui.facialRecognition.FacialRecognitionActivity"
+            android:exported="false"
+            android:theme="@style/CameraActivityStyle" />
+        <activity
+            android:name=".ui.MainHome.MainHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.ResetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.LoginPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.register.SignUpAccountActivity"
             android:exported="false" />
@@ -56,8 +84,8 @@
             android:name=".ui.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true" >
+            android:name=".ui.Main1Activity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

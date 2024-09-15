@@ -5,7 +5,7 @@
     <string name="confirm_text">Tôi xác nhận không thuộc đối tượng có <font color="#2196F3"><b><u>Dấu hiệu Hoa Kỳ theo FATCA</u></b></font></string>
     <string name="confirm1_text">Tôi đồng ý với <font color="#2196F3"><b><u>Điều khoản và Điều kiện Dịch vụ Ngân hàng điện tử của HdBank</u></b></font></string>
     <string name="cannot_recognize_idcard">Cannot recognize id-card. Please try again.</string>
-<<<<<<< HEAD
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -49,8 +49,5 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
 
-=======
     <string name="confirm_text_resetpassword">Tôi đã đọc,hiểu,đồng ý với <font color="#2196F3"><b><u>Điều khoản,điều kiện dịch vụ </u></b></font> của Ngân hàng HdBank</string>
->>>>>>> ee6e317166453ffe11f3a52cc0576f76852549b9
-
 </resources>

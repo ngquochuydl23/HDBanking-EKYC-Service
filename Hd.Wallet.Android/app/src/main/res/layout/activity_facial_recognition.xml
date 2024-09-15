@@ -18,10 +18,7 @@
             android:layout_height="match_parent">
 
         </androidx.camera.view.PreviewView>
-        <ImageView
-            android:src="@drawable/hotram"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,7 +27,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#70000000">
+                android:background="#80000000">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -41,14 +38,11 @@
                     app:titleTextAppearance="@style/OCRCameraToolbar_TitleTextAppearance" />
             </FrameLayout>
 
-            <include
-                layout="@layout/layout_face_overlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-            <!--            <com.socialv2.ewallet.ui.idCardTaken.IdCardFrameOverlayView-->
-            <!--                android:id="@+id/idCardFrameOverlayView"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="match_parent" />-->
+        <com.socialv2.ewallet.ui.facialRecognition.FacialRecognitionOverlayView
+            android:id="@+id/facialFrameOverlayView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         </LinearLayout>
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
