@@ -11,10 +11,12 @@ MONGODB_URL = "mongodb+srv://root:d23ca9b3-7e83-46b2-8419-0e8fafadf4e6@cloudmong
 
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     client = AsyncIOMotorClient(MONGODB_URL)
-    app.state.database = client["HDIdCardOcr"]  # Replace with your database name
+    app.state.database = client["eWallet-IdCard"]  # Replace with your database name
 
+    collection = app.state.database["IDCards"]
     try:
         # Verify connection
+        await collection.create_index([("id_card.id", 1)], unique=True)
         await app.state.database.list_collection_names()
         logging.info("Database connected successfully")
         yield

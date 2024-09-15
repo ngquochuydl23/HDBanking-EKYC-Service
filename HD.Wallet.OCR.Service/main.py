@@ -1,12 +1,9 @@
-import random
 import os
 import sys
-import time
 import uvicorn
 import io
 import shutil
 import logging
-
 
 from readInfoIdCard import ReadInfo
 from DetecInfoBoxes.GetBoxes import GetDictionary
@@ -15,10 +12,10 @@ from core.tool.config import Cfg as Cfg_vietocr
 
 from starlette.responses import RedirectResponse
 from fastapi.responses import JSONResponse
-from fastapi import FastAPI, File, UploadFile, Form
+from fastapi import FastAPI, File, UploadFile, Request, Query, HTTPException
 from app.utils.uploaded_file_utils import check_file_extension
 from app.db.mongodb import lifespan
-from contextlib import asynccontextmanager
+from pymongo.errors import DuplicateKeyError
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -47,7 +44,6 @@ imgsz, stride, device, half, model, names = getDictionary.load_model(scan_weight
 readInfo = ReadInfo(imgsz, stride, device, half, model, names, opt, ocrPredictor)
 os.makedirs('uploads/identity-cart/', exist_ok=True)
 
-
 app = FastAPI(title="OCR Identity Card Service", lifespan=lifespan)
 
 
@@ -57,18 +53,40 @@ async def index():
 
 
 @app.get("/id-card/")
-async def get_idcard_by_no():
-    return JSONResponse(content={
-        "filename": file.filename,
-        "result": result
-    })
+async def get_idcard_by_no(request: Request, id_card_no: str = Query(...)):
+    database = request.app.state.database
+    try:
+        if database is None:
+            raise HTTPException(status_code=500, detail="Database connection not available")
+
+        collection = database["IDCards"]  # Access the collection
+
+        id_card = await collection.find_one({"id_card.id": id_card_no})
+        if id_card:
+            if "_id" in id_card:
+                id_card["_id"] = str(id_card["_id"])
+            return JSONResponse(content={
+                "statusCode": 200,
+                "result": id_card
+            })
+
+        return JSONResponse(status_code=404, content={
+            "statusCode": 404,
+            "error": f"ID card with number {id_card_no} not found"
+        })
+
+    except Exception as e:
+        return JSONResponse(status_code=500, content={
+            "statusCode": 500,
+            "error": str(e)
+        })
 
 
 @app.post("/id-card/extract")
 async def predict_api(
+        request: Request,
         front_id_card: UploadFile = File(...),
-        back_id_card: UploadFile = File(...),
-        phone: str = Form(...)
+        back_id_card: UploadFile = File(...)
 ):
     if not check_file_extension(front_id_card):
         return "Front IdCard must be jpg or png format!"
@@ -77,6 +95,12 @@ async def predict_api(
         return "Back IdCard must be jpg or png format!"
 
     try:
+        database = request.app.state.database
+        # if database is None:
+        #     return JSONResponse(status_code=500, content={"error": "Database connection not available"})
+
+        collection = database["IDCards"]  # Get the collection
+
         front_save_path = os.path.join('uploads/identity-cart/', front_id_card.filename)
         back_save_path = os.path.join('uploads/identity-cart/', back_id_card.filename)
 
@@ -107,26 +131,27 @@ async def predict_api(
                 is_cccd = False
 
         if result:
-            # mongo insert data
-            # insert doc
-            # {
-            #    phoneNumber: 0868684961
-            #    email: nguyenquochuydl123@gmail.com
-            #    path: uploads/identity-cart/
-            #    extract_result: {
-            #
-            #    }
-            #
-            # }
+            id_card_result = {
+                "id_card": result,
+                "front-url": '/' + front_save_path,
+                "back-url": '/' + back_save_path,
+                "type": "CCCD" if is_cccd else "CMND",
+            }
+
+            update_result = await collection.update_one(
+                {"id_card.id": result["id"]},  # Query to find the document
+                {"$ setOnInsert": id_card_result},  # Set the document fields
+                upsert=True  # Upsert: insert if not exists, update if exists
+            )
+
             return JSONResponse(content={
                 "statusCode": 200,
-                "result": {
-                    "id-card": result,
-                    "front-url": '/' + front_save_path,
-                    "back-url": '/' + back_save_path,
-                    "type": "CCCD" if is_cccd else "CMND",
-                }
+                "result": id_card_result
             })
+
+    except DuplicateKeyError:
+        # Handle the case when the 'id_card.id' is not unique
+        raise HTTPException(status_code=400, detail="ID card with this 'id_card.id' already exists")
 
     except Exception as e:
         return JSONResponse(status_code=500, content={
