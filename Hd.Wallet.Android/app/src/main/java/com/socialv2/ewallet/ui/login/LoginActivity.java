@@ -10,9 +10,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.socialv2.ewallet.R;
-import com.socialv2.ewallet.ui.register.DetailedAddressAtivity;
-import com.socialv2.ewallet.ui.register.RegisterActivity;
-import com.socialv2.ewallet.ui.register.SignUpAccountActivity;
+import com.socialv2.ewallet.ui.WelcomeActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 
 public class LoginActivity extends AppCompatActivity {
@@ -39,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mSignIn.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(this, RegisterActivity.class);
+            NavigateUtil.navigateTo(this, WelcomeActivity.class);
         });
 
 

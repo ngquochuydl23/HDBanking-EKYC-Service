@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "423916550237",
+    "project_id": "ocrbanking",
+    "storage_bucket": "ocrbanking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423916550237:android:ff3fe0d056cdf3cc80f5b4",
+        "android_client_info": {
+          "package_name": "com.socialv2.ewallet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoPrzBR-f8wJJdBNYYTUPPRUoWytW41wM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
