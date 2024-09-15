@@ -3,9 +3,6 @@ package com.socialv2.ewallet.ui.register;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Patterns;
-import android.view.WindowInsets;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
@@ -19,7 +16,7 @@ import com.socialv2.ewallet.utils.NavigateUtil;
 
 import java.util.regex.Pattern;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterEnterPhoneActivity extends AppCompatActivity {
 
     private Button mContinueButton;
     private TextInputEditText editTextPhoneNumber;
@@ -31,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register_enter_phone);
 
         mContinueButton = findViewById(R.id.continueButton);
         editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
@@ -50,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         mContinueButton.setOnClickListener(view -> {
             String phoneNumber = editTextPhoneNumber.getText().toString();
             if (isValidVietnamPhoneNumber(phoneNumber)) {
-                NavigateUtil.navigateTo(this, GettingTakenIdCardActivity.class);
+                NavigateUtil.navigateTo(this, RegisterCheckOtpActivity.class);
             } else {
                 Toast.makeText(this, "Số điện thoại không hợp lệ!", Toast.LENGTH_SHORT).show();
             }

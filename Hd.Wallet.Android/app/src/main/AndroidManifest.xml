@@ -36,7 +36,7 @@
             android:name=".ui.signIn.SignInActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.register.EnterOtpActivity"
+            android:name=".ui.register.RegisterCheckOtpActivity"
             android:exported="false" />
         <activity
             android:name=".ui.transfer.SuccessfulTransactionActivity"
@@ -58,7 +58,7 @@
             android:name=".ui.register.GettingTakenIdCardActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.register.RegisterActivity"
+            android:name=".ui.register.RegisterEnterPhoneActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize" />
