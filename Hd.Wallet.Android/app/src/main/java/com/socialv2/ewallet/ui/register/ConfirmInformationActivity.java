@@ -6,18 +6,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.gson.Gson;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.idCard.IdCardDto;
 import com.socialv2.ewallet.dtos.idCard.IdCardExtractDto;
+import com.socialv2.ewallet.ui.facialRecognition.IntroduceFacialRecognitionActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.WindowUtils;
 
@@ -60,7 +56,7 @@ public class ConfirmInformationActivity extends BaseActivity {
         WindowUtils.applyPadding(findViewById(R.id.main));
 
         mContinueButton.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(this, DetailedAddressAtivity.class);
+            NavigateUtil.navigateTo(this, IntroduceFacialRecognitionActivity.class);
         });
 
         mRetakeButton.setOnClickListener(view -> {

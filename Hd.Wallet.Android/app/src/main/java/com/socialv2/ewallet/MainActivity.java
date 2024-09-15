@@ -8,6 +8,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.socialv2.ewallet.ui.WelcomeActivity;
+import com.socialv2.ewallet.ui.facialRecognition.IntroduceFacialRecognitionActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +24,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        NavigateUtil.navigateTo(this, WelcomeActivity.class);
+        NavigateUtil.navigateTo(this, IntroduceFacialRecognitionActivity.class);
     }
 }

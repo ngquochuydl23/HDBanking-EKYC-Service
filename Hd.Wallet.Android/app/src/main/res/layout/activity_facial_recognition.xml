@@ -1,159 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.register.FacialRecognitionActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.facialRecognition.FacialRecognitionActivity">
 
-    <!-- Custom toolbar component -->
-    <com.socialv2.ewallet.components.HdWalletToolbar
-        android:id="@+id/toolbar"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
-    <!-- ScrollView for scrolling content -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <androidx.camera.view.PreviewView
+            android:id="@+id/previewView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.camera.view.PreviewView>
+        <ImageView
+            android:src="@drawable/hotram"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="15dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <!-- Title for facial recognition -->
-            <TextView
-                android:id="@+id/tv_facial_recognition_title"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:fontFamily="@font/semibold_font"
-                android:text="Nhận diện khuôn mặt"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:background="#70000000">
 
-            <!-- Image for facial recognition -->
-            <ImageView
-                android:id="@+id/iv_facial_image"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:background="@color/black" />
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    app:navigationIcon="@drawable/ic_back_navigation_white"
+                    app:title="Chụp ảnh khuôn mặt"
+                    app:titleTextAppearance="@style/OCRCameraToolbar_TitleTextAppearance" />
+            </FrameLayout>
 
-            <!-- Horizontal layout for facial recognition options -->
-            <LinearLayout
+            <include
+                layout="@layout/layout_face_overlay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp"
-                android:gravity="center">
-
-                <!-- First option -->
-                <LinearLayout
-                    android:id="@+id/option_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/iv_option_1"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/black" />
-                    <TextView
-                        android:id="@+id/tv_option_1"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:fontFamily="@font/semibold_font"
-                        android:text="Nhận diện khuôn mặt"
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <!-- Second option -->
-                <LinearLayout
-                    android:id="@+id/option_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/iv_option_2"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/black" />
-                    <TextView
-                        android:id="@+id/tv_option_2"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:fontFamily="@font/semibold_font"
-                        android:text="Nhận diện khuôn mặt"
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <!-- Third option -->
-                <LinearLayout
-                    android:id="@+id/option_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/iv_option_3"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/black" />
-                    <TextView
-                        android:id="@+id/tv_option_3"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:fontFamily="@font/semibold_font"
-                        android:text="Nhận diện khuôn mặt"
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Instruction text -->
-            <TextView
-                android:id="@+id/tv_instruction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:fontFamily="@font/semibold_font"
-                android:text="Bật âm thanh điện thoại để nghe hướng dẫn"
-                android:textColor="@color/textColorSecondary"
-                android:textSize="14sp" />
-
-            <!-- Start button -->
-            <Button
-                android:id="@+id/btn_start_recognition"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/drawable_filled_r15"
-                android:backgroundTint="@color/primaryColor"
-                android:text="Bắt đầu nhận diện"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent"/>
+            <!--            <com.socialv2.ewallet.ui.idCardTaken.IdCardFrameOverlayView-->
+            <!--                android:id="@+id/idCardFrameOverlayView"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent" />-->
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

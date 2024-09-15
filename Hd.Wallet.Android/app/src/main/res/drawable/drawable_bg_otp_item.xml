@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Focused state (when the PinView is selected or ready to type) -->
     <item android:state_focused="true">
         <shape android:shape="rectangle">
-            <solid android:color="#03DAC5" />
+            <solid android:color="@android:color/white" /> <!-- White background when focused -->
             <corners android:radius="8dp" />
             <stroke
                 android:width="2dp"
-                android:color="#3700B3" />
+                android:color="@color/black" /> <!-- Change border color if focused -->
         </shape>
     </item>
-    <item android:state_pressed="true">
+
+    <!-- Filled state (when the PinView item has text) -->
+    <item android:state_selected="true">
         <shape android:shape="rectangle">
-            <solid android:color="#6200EE" />
+            <solid android:color="@color/white" /> <!-- Background color when filled -->
             <corners android:radius="8dp" />
             <stroke
                 android:width="2dp"
-                android:color="#3700B3" />
+                android:color="@color/black" /> <!-- Border when filled -->
         </shape>
     </item>
+
+    <!-- Default state (when the PinView item is empty and not focused) -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@android:color/white" />
+            <solid android:color="@color/backgroundColor" /> <!-- Default background color -->
             <corners android:radius="8dp" />
             <stroke
-                android:width="1dp"
-                android:color="@android:color/darker_gray" />
+                android:width="2dp"
+                android:color="@color/borderWidthColor" /> <!-- Default border color -->
         </shape>
     </item>
 </selector>
