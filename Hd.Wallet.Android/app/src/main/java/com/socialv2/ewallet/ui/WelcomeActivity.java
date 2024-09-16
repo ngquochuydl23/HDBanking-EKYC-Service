@@ -23,16 +23,12 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mSignUpCardView = findViewById(R.id.signUpCardView);
         initView();
     }
-
     private void initView() {
         WindowUtils.applyTopPadding(findViewById(R.id.main));
-
         mSignUpCardView.setOnClickListener(v -> {
-
             NavigateUtil.navigateTo(this, RegisterEnterPhoneActivity.class);
 
         });
