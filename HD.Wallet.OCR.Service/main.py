@@ -4,18 +4,20 @@ import uvicorn
 import io
 import shutil
 import logging
-
+import mimetypes
 from readInfoIdCard import ReadInfo
 from DetecInfoBoxes.GetBoxes import GetDictionary
 from core.tool.predictor import Predictor
 from core.tool.config import Cfg as Cfg_vietocr
 
 from starlette.responses import RedirectResponse
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi import FastAPI, File, UploadFile, Request, Query, HTTPException
 from app.utils.uploaded_file_utils import check_file_extension
 from app.db.mongodb import lifespan
 from pymongo.errors import DuplicateKeyError
+from pathlib import Path
+from app.utils.unique_filename import create_unique_filename
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -82,6 +84,21 @@ async def get_idcard_by_no(request: Request, id_card_no: str = Query(...)):
         })
 
 
+@app.get("/files/{filename}")
+async def get_file(filename: str):
+    # Set the file directory where images are stored
+    file_path = os.path.join("uploads/identity-cart/", filename)
+    image_path = Path(file_path)
+
+    # Check if the file exists
+    if not image_path.is_file():
+        return JSONResponse(status_code=404, content={"error": "File not found"})
+    mime_type, _ = mimetypes.guess_type(file_path)
+
+    with image_path.open("rb") as image_file:
+        return StreamingResponse(image_file, media_type='image/jpeg')
+
+
 @app.post("/id-card/extract")
 async def predict_api(
         request: Request,
@@ -96,13 +113,10 @@ async def predict_api(
 
     try:
         database = request.app.state.database
-        # if database is None:
-        #     return JSONResponse(status_code=500, content={"error": "Database connection not available"})
+        collection = database["IDCards"]
 
-        collection = database["IDCards"]  # Get the collection
-
-        front_save_path = os.path.join('uploads/identity-cart/', front_id_card.filename)
-        back_save_path = os.path.join('uploads/identity-cart/', back_id_card.filename)
+        front_save_path = os.path.join('uploads/identity-cart/', create_unique_filename(front_id_card))
+        back_save_path = os.path.join('uploads/identity-cart/', create_unique_filename(back_id_card))
 
         with open(front_save_path, "wb") as buffer:
             shutil.copyfileobj(front_id_card.file, buffer)
@@ -140,7 +154,7 @@ async def predict_api(
 
             update_result = await collection.update_one(
                 {"id_card.id": result["id"]},  # Query to find the document
-                {"$ setOnInsert": id_card_result},  # Set the document fields
+                {"$setOnInsert": id_card_result},  # Set the document fields
                 upsert=True  # Upsert: insert if not exists, update if exists
             )
 
