@@ -46,8 +46,7 @@ public class OcrIdCardServiceImpl implements IOcrIdCardService {
         MultipartBody.Part backFile = MultipartBody.Part
                 .createFormData("file", "image1.png", backRequestBody);
 
-
-        return mHttpOcr.extractIdCard(frontFile)
+        return mHttpOcr.extractIdCard(frontFile, backFile)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }

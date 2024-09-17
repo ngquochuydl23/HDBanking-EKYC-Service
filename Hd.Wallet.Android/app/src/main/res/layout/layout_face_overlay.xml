@@ -52,10 +52,12 @@
 
         <Button
             android:id="@+id/cameraButton"
+            style="@style/CameraButtonStyle"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/drawable_camera_button"
+            android:backgroundTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />

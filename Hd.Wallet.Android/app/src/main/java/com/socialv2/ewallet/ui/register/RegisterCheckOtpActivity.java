@@ -59,6 +59,8 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
         mErrorTextView.setVisibility(View.GONE);
         mResendButton.setVisibility(View.GONE);
         mOtpTextView.setEnabled(true);
+        mContinueButton.setEnabled(false);
+        mOtpTextView.requestFocus();
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -69,13 +71,16 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
         mOtpTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                mContinueButton.setEnabled(s.length() + count == N_PIN_ITEMS);
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mContinueButton.setEnabled(s.length() == N_PIN_ITEMS);
                 if (s.length() == N_PIN_ITEMS) {
-                    onOtpCompleted();
+                    new Handler().postDelayed(() -> {
+                        onOtpCompleted();
+                    }, 500); // 500ms delay
                 }
             }
 
@@ -118,6 +123,8 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
                     mErrorTextView.setVisibility(View.VISIBLE);
                     mErrorTextView.setText("Xác thực OTP thất bại. Vui lòng thử lại");
 
+                    mOtpTextView.setEnabled(true);
+                    mContinueButton.setEnabled(false);
                     mOtpTextView.setText("");
                     mOtpTextView.setLineColor(ResourcesCompat.getColorStateList(getResources(), R.color.error, getTheme()));
                 }

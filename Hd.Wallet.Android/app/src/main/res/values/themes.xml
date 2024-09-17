@@ -1,13 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Base.Theme.OCRBanking_MobileApp" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Base.Theme.OCRBanking_MobileApp" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:fontFamily">@font/default_font</item>
         <item name="colorPrimary">@color/primaryColor</item>
     </style>
-    <style name="Theme.OCRBanking_MobileApp" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.OCRBanking_MobileApp" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:statusBarColor">@color/foregroundColor</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
+
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColor</item>
+        <item name="colorSecondary">@color/primaryColor</item>
+        <item name="android:windowBackground">@color/foregroundColor</item>
+
+    </style>
+
+    <style name="CameraButtonStyle" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/white</item> <!-- Override background tint -->
+        <item name="android:textColor">@color/white</item> <!-- Override text color -->
     </style>
 
     <style name="CameraActivityStyle" parent="Theme.OCRBanking_MobileApp">
@@ -103,4 +114,19 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
+
+    <style name="MaterialFieldLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="shapeAppearanceOverlay">@style/MaterialFieldShapeAppearance</item>
+    </style>
+
+    <style name="MaterialFieldShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
+
+    <style name="MaterialFieldErrorTextAppearance">
+        <item name="android:fontFamily">@font/regular_font</item>
+    </style>
+
 </resources>

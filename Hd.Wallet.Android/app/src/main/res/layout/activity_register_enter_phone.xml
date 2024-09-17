@@ -31,25 +31,30 @@
                 android:id="@+id/textHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/bold_font"
                 android:text="Vui lòng nhập số điện thoại của bạn"
                 android:textColor="#000000"
                 android:textSize="28sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal" />
+                android:textStyle="bold" />
 
             <!-- Phone Number Input -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phoneNumberTextInput"
+                android:id="@+id/phoneNumberTextInputLayout"
+                style="@style/MaterialFieldLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Nhập số điện thoại"
-                app:boxStrokeColor="#2196F3"
+                android:hint="Số điện thoại"
+                android:labelFor="@id/editTextPhoneNumber"
+                app:boxStrokeColor="@color/primaryColor"
                 app:boxStrokeWidth="2dp"
                 app:boxStrokeWidthFocused="3dp"
-                app:hintTextColor="#2196F3">
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/MaterialFieldErrorTextAppearance"
+                app:errorTextColor="@color/error"
+                app:hintTextColor="@color/primaryColor">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextPhoneNumber"
@@ -64,12 +69,12 @@
 
             <!-- Consent Text -->
             <TextView
-                android:id="@+id/textConsent"
+                android:id="@+id/textConsentTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:fontFamily="@font/regular_font"
-                android:text="@string/consent_text" />
+                android:text="@string/consent_text"
+                android:textSize="14sp" />
 
             <!-- Continue Button -->
             <Button

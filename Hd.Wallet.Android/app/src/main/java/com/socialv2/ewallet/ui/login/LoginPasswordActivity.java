@@ -11,8 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.socialv2.ewallet.R;
-import com.socialv2.ewallet.ui.MainHome.MainHomeActivity;
-import com.socialv2.ewallet.ui.register.DetailedAddressAtivity;
+import com.socialv2.ewallet.ui.home.MainHomeActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 
 public class LoginPasswordActivity extends AppCompatActivity {
