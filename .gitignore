@@ -1,4 +1,8 @@
 Hd.Wallet.Android/.idea
 Hd.Wallet.Android/.gradle
 
-Hd.Wallet.OCR.Service/.idea
+api/Hd.Wallet.OCR.Service/.idea
+api/Hd.Wallet.OCR.Service/uploads
+
+
+api/Hd.Wallet.BalanceTrackingService/node_modules

@@ -86,11 +86,9 @@ async def get_idcard_by_no(request: Request, id_card_no: str = Query(...)):
 
 @app.get("/files/{filename}")
 async def get_file(filename: str):
-    # Set the file directory where images are stored
     file_path = os.path.join("uploads/identity-cart/", filename)
     image_path = Path(file_path)
 
-    # Check if the file exists
     if not image_path.is_file():
         return JSONResponse(status_code=404, content={"error": "File not found"})
     mime_type, _ = mimetypes.guess_type(file_path)
