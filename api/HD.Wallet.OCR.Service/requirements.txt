@@ -58,3 +58,4 @@ fastapi
 tqdm
 pymongo
 motor
+mtcnn

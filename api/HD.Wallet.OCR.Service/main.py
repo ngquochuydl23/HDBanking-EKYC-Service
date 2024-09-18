@@ -83,7 +83,6 @@ async def get_idcard_by_no(request: Request, id_card_no: str = Query(...)):
             "error": str(e)
         })
 
-
 @app.get("/files/{filename}")
 async def get_file(filename: str):
     file_path = os.path.join("uploads/identity-cart/", filename)
@@ -95,7 +94,6 @@ async def get_file(filename: str):
 
     with image_path.open("rb") as image_file:
         return StreamingResponse(image_file, media_type='image/jpeg')
-
 
 @app.post("/id-card/extract")
 async def predict_api(
