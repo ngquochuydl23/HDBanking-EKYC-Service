@@ -50,4 +50,15 @@
     </string>
 
     <string name="confirm_text_resetpassword">Tôi đã đọc,hiểu,đồng ý với <font color="#2196F3"><b><u>Điều khoản,điều kiện dịch vụ </u></b></font> của Ngân hàng HdBank</string>
+
+    <string name="Home">Home</string>
+    <string name="TransactionHistory">Lịch sử GD</string>
+    <string name="Me">Tôi</string>
+    <string name="Chat">Tin nhắn</string>
+    <string name="QR">Quét QR</string>
+
+    <string name="GenQR">QR Thanh toán</string>
+    <string name="ScanQR">Quét mã QR</string>
+
+
 </resources>

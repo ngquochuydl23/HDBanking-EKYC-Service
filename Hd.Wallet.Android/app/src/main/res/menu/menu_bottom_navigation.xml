@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/ic_home_chat"
+        android:title="@string/Home" />
+    <item
+        android:id="@+id/bottom_transactionhistory"
+        android:icon="@drawable/ic_home_chat"
+        android:title="@string/TransactionHistory" />
+    <item
+        android:id="@+id/bottom_scanqr"
+        android:icon="@drawable/ic_home_chat"
+        android:title="@string/QR" />
+    <item
+        android:id="@+id/bottom_chat"
+        android:icon="@drawable/ic_home_chat"
+        android:title="@string/Chat" />
+    <item
+        android:id="@+id/bottom_profile"
+        android:icon="@drawable/ic_home_chat"
+        android:title="@string/Me" />
+</menu>

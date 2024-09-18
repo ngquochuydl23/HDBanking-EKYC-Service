@@ -18,6 +18,24 @@
         android:theme="@style/Theme.OCRBanking_MobileApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.customAdapter.MainActivitysdadssd"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.TransferMoneyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.DepositMoneyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.TransactionNotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.fragment.fragmentQR.ResultQrActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.facialRecognition.SuccessRecognitionActivity"
             android:exported="false" />
 
@@ -65,6 +83,13 @@
         <activity
             android:name=".ui.facialRecognition.IntroduceFacialRecognitionActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.mainHome.QRPaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.fragment.fragmentQR.CustomCaptureActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".ui.register.ConfirmInformationActivity"
             android:exported="false" />

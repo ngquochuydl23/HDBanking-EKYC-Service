@@ -11,7 +11,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.socialv2.ewallet.R;
-import com.socialv2.ewallet.ui.home.MainHomeActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 
 public class LoginPasswordActivity extends AppCompatActivity {
@@ -46,7 +45,7 @@ public class LoginPasswordActivity extends AppCompatActivity {
     private void navigateunti() {
 
         mContinue.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(this, MainHomeActivity.class);
+            NavigateUtil.navigateTo(this, com.socialv2.ewallet.ui.mainHome.MainHomeActivity.class);
         });
 
         tvForgetPassword.setOnClickListener(view -> {
