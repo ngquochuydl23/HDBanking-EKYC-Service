@@ -61,14 +61,3 @@ class FaceVerification:
         matching_result = self.face_matching(face1, face2, distance_metric_name=distance_metric_name, model_name=model_name)
 
         return matching_result
-
-
-if __name__ == '__main__':
-    filename1 = "C:\\Users\\admin\\Desktop\\z5840606231660_89a6b9e479bcf6f72206cfab4acfd1ec.jpg"
-    filename2 = "C:\\Users\\admin\\Desktop\\z5840597901060_0921ab67235de3e97695bb00a227f5bd.jpg"
-
-    image1 = get_image(filename1)
-    image2 = get_image(filename2)
-
-    face_verification = FaceVerification()
-    face_verification.verify(image1, image2)

@@ -173,7 +173,7 @@ async def extract_id_card(
 
 @app.get("/ekyc-api/files/{filename}", tags=["Files"])
 async def get_file(filename: str):
-    file_path = os.path.join("uploads/identity-cart/", filename)
+    file_path = os.path.join(filename)
     image_path = Path(file_path)
 
     if not image_path.is_file():
