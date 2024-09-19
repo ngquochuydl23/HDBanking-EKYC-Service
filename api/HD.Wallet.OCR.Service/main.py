@@ -1,14 +1,13 @@
 import os
 import sys
 import uvicorn
-import io
 import shutil
 import logging
 import mimetypes
 
 from ekyc.face_verification import FaceVerification
 from ekyc.utils.functions import get_image
-from readInfoIdCard import ReadInfo
+from ocr.readInfoIdCard import ReadInfo
 from DetecInfoBoxes.GetBoxes import GetDictionary
 from core.tool.predictor import Predictor
 from core.tool.config import Cfg as Cfg_vietocr
@@ -51,6 +50,7 @@ face_verification = FaceVerification()
 
 
 os.makedirs('uploads/identity-cart/', exist_ok=True)
+os.makedirs('uploads/faces/', exist_ok=True)
 
 app = FastAPI(title="OCR Identity Card Service", lifespan=lifespan)
 

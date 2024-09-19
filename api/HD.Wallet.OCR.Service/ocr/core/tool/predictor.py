@@ -1,4 +1,4 @@
-from core.tool.translate import build_model, translate, translate_beam_search, process_input
+from ocr.core.tool.translate import build_model, translate, translate_beam_search, process_input
 import torch
 from collections import defaultdict
 

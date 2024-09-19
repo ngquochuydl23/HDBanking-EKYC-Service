@@ -18,8 +18,8 @@ import yaml
 from PIL import Image, ImageDraw, ImageFont
 from scipy.signal import butter, filtfilt
 
-from DetecInfoBoxes.utils.general import xywh2xyxy, xyxy2xywh
-from DetecInfoBoxes.utils.metrics import fitness
+from ocr.DetecInfoBoxes.utils.general import xywh2xyxy, xyxy2xywh
+from ocr.DetecInfoBoxes.utils.metrics import fitness
 
 # Settings
 matplotlib.rc('font', **{'size': 11})

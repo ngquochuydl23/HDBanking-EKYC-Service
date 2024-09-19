@@ -6,7 +6,7 @@ import yaml
 from scipy.cluster.vq import kmeans
 from tqdm import tqdm
 
-from DetecInfoBoxes.utils.general import colorstr
+from ocr.DetecInfoBoxes.utils.general import colorstr
 
 
 def check_anchor_order(m):

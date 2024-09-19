@@ -2,9 +2,9 @@ import cv2
 import torch
 import numpy as np
 
-from DetecInfoBoxes.models.experimental import attempt_load
-from DetecInfoBoxes.utils.general import check_img_size, non_max_suppression, scale_coords, set_logging
-from DetecInfoBoxes.utils.torch_utils import select_device
+from ocr.DetecInfoBoxes.models.experimental import attempt_load
+from ocr.DetecInfoBoxes.utils.general import check_img_size, non_max_suppression, scale_coords, set_logging
+from ocr.DetecInfoBoxes.utils.torch_utils import select_device
 
 
 class GetDictionary:

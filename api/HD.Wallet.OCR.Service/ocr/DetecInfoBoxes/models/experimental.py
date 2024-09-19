@@ -3,8 +3,8 @@ import random
 import torch
 import torch.nn as nn
 
-from DetecInfoBoxes.models.common import Conv, DWConv
-from DetecInfoBoxes.utils.google_utils import attempt_download
+from ocr.DetecInfoBoxes.models.common import Conv, DWConv
+from ocr.DetecInfoBoxes.utils.google_utils import attempt_download
 
 
 class CrossConv(nn.Module):

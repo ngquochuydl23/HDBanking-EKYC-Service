@@ -6,13 +6,13 @@ from copy import deepcopy
 sys.path.append('/')  # to run '$ python *.py' files in subdirectories
 logger = logging.getLogger(__name__)
 import torch
-from DetecInfoBoxes.models.common import *
-from DetecInfoBoxes.models.experimental import *
-from DetecInfoBoxes.utils.autoanchor import check_anchor_order
-from DetecInfoBoxes.utils.general import make_divisible, check_file, set_logging
-from DetecInfoBoxes.utils.torch_utils import time_synchronized, fuse_conv_and_bn, model_info, scale_img, initialize_weights, \
+from ocr.DetecInfoBoxes.models.common import *
+from ocr.DetecInfoBoxes.models.experimental import *
+from ocr.DetecInfoBoxes.utils.autoanchor import check_anchor_order
+from ocr.DetecInfoBoxes.utils.general import make_divisible, check_file, set_logging
+from ocr.DetecInfoBoxes.utils.torch_utils import time_synchronized, fuse_conv_and_bn, model_info, scale_img, initialize_weights, \
     select_device, copy_attr
-from DetecInfoBoxes.utils.loss import SigmoidBin
+from ocr.DetecInfoBoxes.utils.loss import SigmoidBin
 
 try:
     import thop  # for FLOPS computation
