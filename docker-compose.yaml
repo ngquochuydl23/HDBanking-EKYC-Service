@@ -4,7 +4,7 @@ services:
     image: hd-wallet.ocr.service
     container_name: hd-wallet.ocr.service
     build:
-      context: ./HD.Wallet.OCR.Service
+      context: ./api/HD.Wallet.OCR.Service
       dockerfile: Dockerfile
     volumes:
       - ./api/HD.Wallet.OCR.Service/uploads:/app/uploads  
