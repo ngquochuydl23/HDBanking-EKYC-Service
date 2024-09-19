@@ -4,7 +4,7 @@ import os
 import time
 
 from PIL import Image
-from DetecInfoBoxes.GetBoxes import GetDictionary
+from ocr.DetecInfoBoxes.GetBoxes import GetDictionary
 
 getDictionary = GetDictionary()
 
@@ -33,10 +33,10 @@ class ReadInfo:
 
         crop_img = img[y_min:y_min + h, x_min:x_min + w]
         name = random.random()
-        cv2.imwrite('Img/OcrImg/' + str(name) + '.jpg', crop_img)
-        imagePill = Image.open('Img/OcrImg/' + str(name) + '.jpg')
+        cv2.imwrite('ocr/Img/OcrImg/' + str(name) + '.jpg', crop_img)
+        imagePill = Image.open('ocr/Img/OcrImg/' + str(name) + '.jpg')
         text = self.ocrPredictor.predict(imagePill)
-        os.remove('Img/OcrImg/' + str(name) + '.jpg')
+        os.remove('ocr/Img/OcrImg/' + str(name) + '.jpg')
 
         return text
 

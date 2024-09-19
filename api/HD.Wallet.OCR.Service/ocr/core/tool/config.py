@@ -14,7 +14,7 @@ class Cfg(dict):
         self.__dict__ = self
 
     @staticmethod
-    def load_config_from_file(fname, base_file='core/config/base.yml'):
+    def load_config_from_file(fname, base_file='ocr/core/config/base.yml'):
         base_config = load_config(base_file)
 
         with open(fname, encoding='utf-8') as f:
