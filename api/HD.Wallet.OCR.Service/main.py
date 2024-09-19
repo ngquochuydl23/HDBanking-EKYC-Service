@@ -7,10 +7,6 @@ import mimetypes
 
 from ekyc.face_verification import FaceVerification
 from ekyc.utils.functions import get_image
-from ocr.readInfoIdCard import ReadInfo
-from DetecInfoBoxes.GetBoxes import GetDictionary
-from core.tool.predictor import Predictor
-from core.tool.config import Cfg as Cfg_vietocr
 
 from starlette.responses import RedirectResponse
 from fastapi.responses import JSONResponse, StreamingResponse
@@ -20,48 +16,28 @@ from app.db.mongodb import lifespan
 from pymongo.errors import DuplicateKeyError
 from pathlib import Path
 from app.utils.unique_filename import create_unique_filename
+from ocr.ocr_extract_id_card import OcrExtractIdCard
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-getDictionary = GetDictionary()
-sys.path.insert(0, 'DetecInfoBoxes')
-
-opt = {
-    "img-size": 800,
-    "conf-thres": 0.5,
-    "iou-thres": 0.15,
-    "device": 'cpu',
-}
-
-# Load Ocr model
-config_vietocr = Cfg_vietocr.load_config_from_file('core/config/vgg-seq2seq.yml')
-config_vietocr['weights'] = 'models/seq2seqocr.pth'
-config_vietocr['device'] = 'cpu'
-ocrPredictor = Predictor(config_vietocr)
-
-# Load Yolo model
-scan_weight = 'models/cccdYoloV7.pt'
-imgsz, stride, device, half, model, names = getDictionary.load_model(scan_weight, opt)
-
-readInfo = ReadInfo(imgsz, stride, device, half, model, names, opt, ocrPredictor)
+id_card_extract = OcrExtractIdCard()
 face_verification = FaceVerification()
 
 
 os.makedirs('uploads/identity-cart/', exist_ok=True)
 os.makedirs('uploads/faces/', exist_ok=True)
 
-app = FastAPI(title="OCR Identity Card Service", lifespan=lifespan)
-
+app = FastAPI(title="EKYC Service", lifespan=lifespan)
 
 @app.get("/", include_in_schema=False)
 async def index():
     return RedirectResponse(url="/docs")
 
 
-@app.get("/id-card/")
-async def get_idcard_by_no(request: Request, id_card_no: str = Query(...)):
+@app.get("/ekyc-api/id-card/{id_card_no}/", tags=["IDCard"])
+async def get_idcard_by_no(request: Request, id_card_no: str):
     database = request.app.state.database
     try:
         if database is None:
@@ -89,19 +65,7 @@ async def get_idcard_by_no(request: Request, id_card_no: str = Query(...)):
             "error": str(e)
         })
 
-@app.get("/files/{filename}")
-async def get_file(filename: str):
-    file_path = os.path.join("uploads/identity-cart/", filename)
-    image_path = Path(file_path)
-
-    if not image_path.is_file():
-        return JSONResponse(status_code=404, content={"error": "File not found"})
-    mime_type, _ = mimetypes.guess_type(file_path)
-
-    with image_path.open("rb") as image_file:
-        return StreamingResponse(image_file, media_type='image/jpeg')
-
-@app.post("/face/verification")
+@app.post("/ekyc-api/face/verification", tags=["Face"])
 async def verification(
         id_card: UploadFile = File(...),
         face: UploadFile = File(...)
@@ -133,8 +97,8 @@ async def verification(
         }
     })
 
-@app.post("/id-card/extract")
-async def predict_api(
+@app.post("/ekyc-api/id-card/extract", tags=["IDCard"])
+async def extract_id_card(
         request: Request,
         front_id_card: UploadFile = File(...),
         back_id_card: UploadFile = File(...)
@@ -158,7 +122,7 @@ async def predict_api(
         with open(back_save_path, "wb") as buffer:
             shutil.copyfileobj(back_id_card.file, buffer)
 
-        result = readInfo.get_all_info(front_save_path)
+        result = id_card_extract.extract(front_save_path)
 
         required_fields = ['id', 'full_name', 'date_of_birth', 'place_of_origin', 'place_of_residence']
         for field in required_fields:
@@ -207,6 +171,17 @@ async def predict_api(
             "error": str(e)
         })
 
+@app.get("/ekyc-api/files/{filename}", tags=["Files"])
+async def get_file(filename: str):
+    file_path = os.path.join(filename)
+    image_path = Path(file_path)
+
+    if not image_path.is_file():
+        return JSONResponse(status_code=404, content={"error": "File not found"})
+    mime_type, _ = mimetypes.guess_type(file_path)
+
+    with image_path.open("rb") as image_file:
+        return StreamingResponse(image_file, media_type='image/jpeg')
 
 if __name__ == "__main__":
     uvicorn.run(app, port=8000, log_level="debug")

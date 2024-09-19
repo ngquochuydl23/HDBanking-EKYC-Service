@@ -223,10 +223,6 @@ class End2End(nn.Module):
         x = self.end2end(x)
         return x
 
-
-
-
-
 def attempt_load(weights, map_location=None):
     # Loads an ensemble of Models weights=[a,b,c] or a single model weights=[a] or weights=a
     model = Ensemble()
