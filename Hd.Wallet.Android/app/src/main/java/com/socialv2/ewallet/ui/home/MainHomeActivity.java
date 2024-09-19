@@ -1,4 +1,4 @@
-package com.socialv2.ewallet.ui.mainHome;
+package com.socialv2.ewallet.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;

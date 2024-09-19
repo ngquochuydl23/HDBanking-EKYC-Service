@@ -1,4 +1,4 @@
-package com.socialv2.ewallet.ui.mainHome;
+package com.socialv2.ewallet.ui.home;
 
 import android.os.Bundle;
 import android.view.MenuItem;

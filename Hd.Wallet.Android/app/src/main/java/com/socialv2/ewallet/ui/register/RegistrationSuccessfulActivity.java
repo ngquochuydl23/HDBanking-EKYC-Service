@@ -1,4 +1,4 @@
-package com.socialv2.ewallet.ui.home;
+package com.socialv2.ewallet.ui.register;
 
 import android.os.Bundle;
 
@@ -10,13 +10,17 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.socialv2.ewallet.R;
 
-public class TransferMoneyActivity extends AppCompatActivity {
+public class RegistrationSuccessfulActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_transfer_money);
+       initView();
+    }
+
+    private void initView() {
+        setContentView(R.layout.activity_registration_successful);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

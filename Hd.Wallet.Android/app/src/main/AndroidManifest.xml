@@ -18,6 +18,9 @@
         android:theme="@style/Theme.OCRBanking_MobileApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.register.RegistrationSuccessfulActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.customAdapter.MainActivitysdadssd"
             android:exported="false" />
         <activity

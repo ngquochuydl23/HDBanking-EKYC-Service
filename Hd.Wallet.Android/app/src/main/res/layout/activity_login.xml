@@ -51,15 +51,20 @@
 
             <!-- Phone Number Input -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phoneNumberTextInput"
+                android:id="@+id/phoneNumberTextInputLayout"
+                style="@style/MaterialFieldLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:hint="Nhập số điện thoại"
-                app:boxStrokeColor="#2196F3"
-                app:boxStrokeWidth="3dp"
+                android:layout_marginTop="16dp"
+                android:hint="Số điện thoại"
+                android:labelFor="@id/editTextPhoneNumber"
+                app:boxStrokeColor="@color/primaryColor"
+                app:boxStrokeWidth="2dp"
                 app:boxStrokeWidthFocused="3dp"
-                app:hintTextColor="#2196F3">
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/MaterialFieldErrorTextAppearance"
+                app:errorTextColor="@color/error"
+                app:hintTextColor="@color/primaryColor">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextPhoneNumber"
@@ -96,7 +101,6 @@
                 android:fontFamily="@font/medium_font"
                 android:text="Đăng kí mở tài khoản trực tuyến"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
