@@ -26,7 +26,7 @@ public class HttpSettingImpl implements IHttpSetting {
 
     public HttpSettingImpl(Context context) {
         this.context = context;
-        //baseUrl = context.getString(R.string.api_endpoint);
+        baseUrl = context.getString(R.string.base_api_url);
         builder = createRetrofitBuilder(baseUrl);
     }
 

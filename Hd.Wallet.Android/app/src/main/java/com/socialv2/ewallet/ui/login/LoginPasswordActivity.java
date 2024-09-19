@@ -45,7 +45,7 @@ public class LoginPasswordActivity extends AppCompatActivity {
     private void navigateunti() {
 
         mContinue.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(this, com.socialv2.ewallet.ui.mainHome.MainHomeActivity.class);
+            NavigateUtil.navigateTo(this, com.socialv2.ewallet.ui.home.MainHomeActivity.class);
         });
 
         tvForgetPassword.setOnClickListener(view -> {

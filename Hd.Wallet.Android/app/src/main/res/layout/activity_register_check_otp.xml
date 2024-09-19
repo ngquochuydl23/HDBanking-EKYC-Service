@@ -31,7 +31,17 @@
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/medium_font"
-                android:text="Vui lòng nhập mã xác thực được gửi tới số điện thoại ******4321"
+                android:text="Vui lòng nhập mã xác thực được gửi tới số điện thoại"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvNumberPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:fontFamily="@font/medium_font"
+                android:text="0795528073"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="28sp"
                 android:textStyle="bold" />

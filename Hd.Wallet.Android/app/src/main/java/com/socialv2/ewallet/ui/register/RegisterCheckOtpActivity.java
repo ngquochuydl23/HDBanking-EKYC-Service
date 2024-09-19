@@ -1,5 +1,6 @@
 package com.socialv2.ewallet.ui.register;
 
+import android.annotation.SuppressLint;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -7,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,9 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.chaos.view.PinView;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.https.api.phoneHttp.IHttpPhone;
+import com.socialv2.ewallet.https.api.phoneHttp.IPhoneService;
+import com.socialv2.ewallet.https.api.phoneHttp.PhoneServiceImpl;
 import com.socialv2.ewallet.ui.idCardTaken.GettingTakenIdCardActivity;
 import com.socialv2.ewallet.utils.DpToPx;
 import com.socialv2.ewallet.utils.NavigateUtil;
@@ -26,15 +31,20 @@ import com.socialv2.ewallet.utils.WindowUtils;
 
 public class RegisterCheckOtpActivity extends AppCompatActivity {
 
+    private final String TAG = RegisterCheckOtpActivity.class.getName();
     private final int N_PIN_ITEMS = 6;
 
     private PinView mOtpTextView;
     private Button mContinueButton;
     private ProgressBar mLoadingProgressBar;
-    private TextView mErrorTextView;
+    private TextView mErrorTextView ;
     private View mResendButton;
     private TextView mCountDownTextView;
     private CountDownTimer countDownTimer;
+    private TextView  mNumberPhoneTextView;
+
+    private IPhoneService mPhoneService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +52,23 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register_check_otp);
 
+        mPhoneService = new PhoneServiceImpl(this);
+
         mOtpTextView = findViewById(R.id.otpTextView);
         mContinueButton = findViewById(R.id.continueButton);
         mLoadingProgressBar = findViewById(R.id.loadingProgressBar);
         mErrorTextView = findViewById(R.id.errorTextView);
         mResendButton = findViewById(R.id.resendButton);
         mCountDownTextView = findViewById(R.id.countDownTextView);
+        mNumberPhoneTextView = findViewById(R.id.tvNumberPhone);
 
         initView();
+        getPhoneNumber();
         startResendOtpCountdown();
     }
+
+
+
 
     private void initView() {
         WindowUtils.applyPadding(findViewById(R.id.main));
@@ -96,6 +113,24 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
         mContinueButton.setOnClickListener(view -> {
             onOtpCompleted();
         });
+    }
+
+    private void getPhoneNumber() {
+        String phoneNumber = getIntent().getStringExtra("phone_number");
+        if (phoneNumber != null) {
+            // Mask the first 6 digits with asterisks
+            String maskedPhoneNumber = phoneNumber.replaceAll("\\d(?=\\d{3})", "*");
+            mNumberPhoneTextView.setText(maskedPhoneNumber); // Set the masked phone number to TextView
+
+
+            // loading
+            mPhoneService.checkValidPhoneNumber(phoneNumber)
+                    .subscribe(httpResponseDto -> {
+                        Log.i(TAG,  String.valueOf(httpResponseDto.getStatusCode()));
+                    }, throwable -> {
+                        throwable.printStackTrace();
+                    });
+        }
     }
 
     private void onOtpCompleted() {

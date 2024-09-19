@@ -1,5 +1,6 @@
 package com.socialv2.ewallet.ui.register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -41,7 +42,25 @@ public class RegisterEnterPhoneActivity extends AppCompatActivity {
         mTextConsentTextView = findViewById(R.id.textConsentTextView);
 
         initView();
+        getPhoneNumber();
         initPhoneNumberValidation();
+    }
+
+    private void getPhoneNumber() {
+        mContinueButton.setOnClickListener(view -> {
+            String phoneNumber = mEditTextPhoneNumber.getText().toString();
+
+            if (isValidVietnamPhoneNumber(phoneNumber)) {
+                Intent intent = new Intent(RegisterEnterPhoneActivity.this, RegisterCheckOtpActivity.class);
+                intent.putExtra("phone_number", phoneNumber); // Pass the phone number
+                startActivity(intent);
+
+                new KeyValueSharedPreferences(this, "PhoneNumberRegister").setData(phoneNumber);
+
+            } else {
+                Toast.makeText(this, "Số điện thoại không hợp lệ!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initView() {
