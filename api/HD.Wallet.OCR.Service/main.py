@@ -5,6 +5,9 @@ import io
 import shutil
 import logging
 import mimetypes
+
+from ekyc.face_verification import FaceVerification
+from ekyc.utils.functions import get_image
 from readInfoIdCard import ReadInfo
 from DetecInfoBoxes.GetBoxes import GetDictionary
 from core.tool.predictor import Predictor
@@ -44,6 +47,9 @@ scan_weight = 'models/cccdYoloV7.pt'
 imgsz, stride, device, half, model, names = getDictionary.load_model(scan_weight, opt)
 
 readInfo = ReadInfo(imgsz, stride, device, half, model, names, opt, ocrPredictor)
+face_verification = FaceVerification()
+
+
 os.makedirs('uploads/identity-cart/', exist_ok=True)
 
 app = FastAPI(title="OCR Identity Card Service", lifespan=lifespan)
@@ -94,6 +100,38 @@ async def get_file(filename: str):
 
     with image_path.open("rb") as image_file:
         return StreamingResponse(image_file, media_type='image/jpeg')
+
+@app.post("/face/verification")
+async def verification(
+        id_card: UploadFile = File(...),
+        face: UploadFile = File(...)
+):
+    id_card_path = os.path.join('uploads/identity-cart/', create_unique_filename(id_card))
+    face_path = os.path.join('uploads/faces/', create_unique_filename(face))
+
+    if not check_file_extension(id_card):
+        return "Front IdCard must be jpg or png format!"
+
+    if not check_file_extension(face):
+        return "Face must be jpg or png format!"
+
+    with open(id_card_path, "wb") as buffer:
+        shutil.copyfileobj(id_card.file, buffer)
+
+    with open(face_path, "wb") as buffer:
+        shutil.copyfileobj(face.file, buffer)
+
+    id_card = get_image(id_card_path)
+    face = get_image(face_path)
+
+    match_result = face_verification.verify(id_card, face)
+    return JSONResponse(status_code=200, content={
+        "statusCode": 200,
+        "result": {
+            "match_result": match_result,
+            "face_url": face_path
+        }
+    })
 
 @app.post("/id-card/extract")
 async def predict_api(

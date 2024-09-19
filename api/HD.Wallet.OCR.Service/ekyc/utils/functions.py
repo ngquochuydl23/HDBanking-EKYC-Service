@@ -3,7 +3,7 @@ import numpy as np
 import torch
 from PIL import Image
 
-from facenet.models.mtcnn import MTCNN
+from ekyc.facenet.models.mtcnn import MTCNN
 
 
 def padding_face(box: np.ndarray, padding = None):
