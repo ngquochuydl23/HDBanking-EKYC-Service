@@ -1,4 +1,4 @@
-package com.socialv2.ewallet.ui;
+package com.socialv2.ewallet.ui.register;
 
 import android.os.Bundle;
 
@@ -7,7 +7,6 @@ import androidx.cardview.widget.CardView;
 
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
-import com.socialv2.ewallet.ui.register.RegisterEnterPhoneActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.WindowUtils;
 

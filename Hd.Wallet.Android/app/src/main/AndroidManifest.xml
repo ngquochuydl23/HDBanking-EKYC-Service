@@ -109,7 +109,7 @@
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.WelcomeActivity"
+            android:name=".ui.register.WelcomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.Main1Activity"

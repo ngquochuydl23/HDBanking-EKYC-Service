@@ -1,44 +1,113 @@
 package com.socialv2.ewallet.ui.home;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.ui.home.tabs.HomeFragment;
+import com.socialv2.ewallet.ui.home.tabs.ProfileFragment;
+import com.socialv2.ewallet.ui.home.tabs.TransactionHistoryFragment;
 
-public class MainHomeActivity extends AppCompatActivity {
+public class MainHomeActivity extends BaseActivity {
 
     private BottomNavigationView mBottomNavigationView;
-    private ViewPager2 mViewPager2;
+    private Toolbar mToolbar;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main_home);
+    private FragmentManager mFragmentManager;
+    private FragmentTransaction mFragmentTransaction;
+    private Boolean doubleBackToExitPressedOnce;
 
 
-        initview();
+    private HomeFragment mHomeFragment;
+    private TransactionHistoryFragment mTransactionHistoryFragment;
+    private ProfileFragment mProfileFragment;
+
+
+    public MainHomeActivity() {
+        super(R.layout.activity_main_home);
+
+        doubleBackToExitPressedOnce = true;
+        mHomeFragment = new HomeFragment();
+        mProfileFragment = new ProfileFragment();
+        mTransactionHistoryFragment = new TransactionHistoryFragment();
     }
 
-    private void initview() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            mBottomNavigationView.setPadding(0, 0, 0, systemBars.bottom);
-            mViewPager2.setPadding(0, 0, 0, systemBars.bottom);
-            return insets;
-        });
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+        mToolbar = findViewById(R.id.toolbar);
+        mBottomNavigationView = findViewById(R.id.bottomNavigationView);
+        mFragmentManager = getSupportFragmentManager();
+
+        initView();
+    }
+
+    private void initView() {
+        navigateFragment(mHomeFragment);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.homeTab:
+                        navigateFragment(mHomeFragment);
+                        return true;
+                    case R.id.transactionTab:
+                        navigateFragment(mTransactionHistoryFragment);
+                        return true;
+                    case R.id.profileTab:
+                        navigateFragment(mProfileFragment);
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+
+    private void navigateFragment(Fragment fragment) {
+        doubleBackToExitPressedOnce = (fragment == mHomeFragment);
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+
+        String fragmentTag = fragment.getClass().getName();
+        Fragment current = mFragmentManager.getPrimaryNavigationFragment();
+        Fragment temp = mFragmentManager.findFragmentByTag(fragmentTag);
+
+        if (current != null) {
+            mFragmentTransaction.hide(current);
+        }
+
+        if (temp == null) {
+            temp = fragment;
+            mFragmentTransaction.add(R.id.fragmentContainer, temp, fragmentTag);
+        } else mFragmentTransaction.show(temp);
+
+        mFragmentTransaction.setPrimaryNavigationFragment(temp);
+        mFragmentTransaction.setReorderingAllowed(true);
+        mFragmentTransaction.commitNowAllowingStateLoss();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        mBottomNavigationView.setSelectedItemId(R.id.homeTab);
+        navigateFragment(mHomeFragment);
     }
 }

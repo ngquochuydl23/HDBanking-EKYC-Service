@@ -10,7 +10,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.socialv2.ewallet.R;
-import com.socialv2.ewallet.ui.WelcomeActivity;
+import com.socialv2.ewallet.ui.register.WelcomeActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 
 public class LoginActivity extends AppCompatActivity {

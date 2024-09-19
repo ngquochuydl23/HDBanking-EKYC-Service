@@ -7,8 +7,8 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.socialv2.ewallet.R;
-import com.socialv2.ewallet.ui.facialRecognition.IntroduceFacialRecognitionActivity;
 import com.socialv2.ewallet.ui.login.LoginActivity;
+import com.socialv2.ewallet.ui.register.WelcomeActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.WindowUtils;
 

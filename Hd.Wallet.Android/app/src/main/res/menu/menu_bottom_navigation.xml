@@ -2,23 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/bottom_home"
+        android:id="@+id/homeTab"
         android:icon="@drawable/ic_home_chat"
         android:title="@string/Home" />
     <item
-        android:id="@+id/bottom_transactionhistory"
+        android:id="@+id/transactionTab"
         android:icon="@drawable/ic_home_chat"
         android:title="@string/TransactionHistory" />
+
     <item
-        android:id="@+id/bottom_scanqr"
-        android:icon="@drawable/ic_home_chat"
-        android:title="@string/QR" />
-    <item
-        android:id="@+id/bottom_chat"
-        android:icon="@drawable/ic_home_chat"
-        android:title="@string/Chat" />
-    <item
-        android:id="@+id/bottom_profile"
+        android:id="@+id/profileTab"
         android:icon="@drawable/ic_home_chat"
         android:title="@string/Me" />
 </menu>
