@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.socialv2.ewallet.dtos.HttpResponseDto;
+import com.socialv2.ewallet.dtos.faceVerification.FaceVerificationDto;
 import com.socialv2.ewallet.dtos.idCard.IdCardExtractDto;
 import com.socialv2.ewallet.https.HttpSettingImpl;
 import com.socialv2.ewallet.https.IHttpSetting;
@@ -52,7 +53,7 @@ public class EkycServiceImpl implements IEkycService {
     }
 
     @Override
-    public Observable<HttpResponseDto<Object>> faceVerification(Bitmap face, String frontIdCardUrl) {
+    public Observable<HttpResponseDto<FaceVerificationDto>> faceVerification(Bitmap face, String frontIdCardUrl) {
 
         byte[] faceByte = ImageToBitmap.bitmapToByte(face);
         RequestBody faceRequestBody = RequestBody.create(MediaType.parse("image/jpeg"), faceByte);
@@ -68,6 +69,4 @@ public class EkycServiceImpl implements IEkycService {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }
-
-
 }
