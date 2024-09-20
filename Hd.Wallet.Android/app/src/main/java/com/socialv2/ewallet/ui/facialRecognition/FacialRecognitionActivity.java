@@ -265,7 +265,7 @@ public class FacialRecognitionActivity extends BaseActivity {
     @SuppressLint("CheckResult")
     private void faceVerification(Bitmap faceBitmap) throws Exception {
         IdCardExtractDto idCardExtract = getIdCardResult();
-
+        Log.i(TAG, idCardExtract.toString());
         mEkycService.faceVerification(faceBitmap, idCardExtract.getFrontUrl())
                 .subscribe(response -> {
                     Log.i(TAG, response.toString());

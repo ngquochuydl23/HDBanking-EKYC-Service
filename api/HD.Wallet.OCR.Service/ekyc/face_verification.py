@@ -16,7 +16,8 @@ class FaceVerification:
         result = DeepFace.verify(
             img1_path=img1_path,
             img2_path=img2_path,
-            model_name='VGG-Face'
+            model_name='VGG-Face',
+            enforce_detection=False
         )
         return {
             'verified': result['verified'],
