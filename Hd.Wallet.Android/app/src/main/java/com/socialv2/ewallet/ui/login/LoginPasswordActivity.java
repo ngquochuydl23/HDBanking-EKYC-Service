@@ -1,6 +1,7 @@
 package com.socialv2.ewallet.ui.login;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,8 +18,9 @@ public class LoginPasswordActivity extends AppCompatActivity {
 
     private Button mContinue, mForgetPassword;
     private TextView tvForgetPassword, tvChangeSdt;
+    private TextView mTvNumberPhone;
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -28,13 +30,26 @@ public class LoginPasswordActivity extends AppCompatActivity {
         tvForgetPassword = findViewById(R.id.textviewForgetPassword);
         tvChangeSdt = findViewById(R.id.textviewChangeSDT);
 
+        mTvNumberPhone = findViewById(R.id.tvNumberPhone);
+
         navigateunti();
+        getPhoneNumber();
         initview();
+    }
+
+    private void getPhoneNumber() {
+        String phoneNumber = getIntent().getStringExtra("phone_number_login");
+        if (phoneNumber != null) {
+            // Mask the first 6 digits with asterisks
+            String maskedPhoneNumber = phoneNumber.replaceAll("\\d(?=\\d{3})", "*");
+            mTvNumberPhone.setText(maskedPhoneNumber); // Set the masked phone number to TextView
+
+        }
     }
 
     private void initview() {
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;

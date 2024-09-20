@@ -22,9 +22,9 @@
 
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_okay_id_card"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:background="@drawable/ic_check_circle"
                 />
         </LinearLayout>
 
@@ -174,9 +174,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-         android:background="@color/black"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+         android:background="@drawable/image_gift"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
             />
@@ -196,7 +196,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/semibold_font"
             android:layout_margin="5dp"
-            android:text="để nhận những phần quà HDBank gửi tới bạn"
+            android:text="để nhận những phần quà HDWallet gửi tới bạn"
             android:textColor="@color/textColorSecondary"
             android:textSize="15sp"
             android:textStyle="bold" />
