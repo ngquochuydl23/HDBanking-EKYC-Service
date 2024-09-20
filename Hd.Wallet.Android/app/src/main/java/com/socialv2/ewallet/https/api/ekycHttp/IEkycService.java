@@ -7,6 +7,8 @@ import com.socialv2.ewallet.dtos.idCard.IdCardExtractDto;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public interface IOcrIdCardService {
+public interface IEkycService {
     Observable<HttpResponseDto<IdCardExtractDto>> extractIdCard(Bitmap front, Bitmap back, String phoneNumber);
+
+    Observable<HttpResponseDto<Object>> faceVerification(Bitmap face, String frontIdCardUrl);
 }

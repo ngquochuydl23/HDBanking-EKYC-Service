@@ -16,14 +16,14 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class OcrIdCardServiceImpl implements IOcrIdCardService {
+public class EkycServiceImpl implements IEkycService {
     private IHttpSetting mHttpSetting;
-    private IHttpEkyc mHttpOcr;
+    private IHttpEkyc mHttpEkyc;
 
-    public OcrIdCardServiceImpl(Context context) {
+    public EkycServiceImpl(Context context) {
 
         mHttpSetting = new HttpSettingImpl(context, "https://ocr-banking.pgonevn.com/ekyc-api/");
-        mHttpOcr = mHttpSetting
+        mHttpEkyc = mHttpSetting
                 .getRetrofitBuilder()
                 .create(IHttpEkyc.class);
     }
@@ -46,7 +46,25 @@ public class OcrIdCardServiceImpl implements IOcrIdCardService {
         MultipartBody.Part backFile = MultipartBody.Part
                 .createFormData("back_id_card", "image1.png", backRequestBody);
 
-        return mHttpOcr.extractIdCard(frontFile, backFile)
+        return mHttpEkyc.extractIdCard(frontFile, backFile)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<HttpResponseDto<Object>> faceVerification(Bitmap face, String frontIdCardUrl) {
+
+        byte[] faceByte = ImageToBitmap.bitmapToByte(face);
+        RequestBody faceRequestBody = RequestBody.create(MediaType.parse("image/jpeg"), faceByte);
+        MultipartBody.Part frontFile = MultipartBody.Part
+                .createFormData("face", "image.jpeg", faceRequestBody);
+
+        RequestBody frontIdCardRequestBody = RequestBody.create(
+                MediaType.parse("text/plain"),
+                frontIdCardUrl
+        );
+
+        return mHttpEkyc.faceVerfication(frontIdCardRequestBody, frontFile)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }
