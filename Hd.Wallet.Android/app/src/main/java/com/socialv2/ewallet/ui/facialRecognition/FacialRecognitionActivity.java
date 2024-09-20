@@ -267,8 +267,8 @@ public class FacialRecognitionActivity extends BaseActivity {
         IdCardExtractDto idCardExtract = getIdCardResult();
 
         mEkycService.faceVerification(faceBitmap, idCardExtract.getFrontUrl())
-                .subscribe(objectHttpResponseDto -> {
-                    Log.i(TAG, objectHttpResponseDto.toString());
+                .subscribe(response -> {
+                    Log.i(TAG, response.toString());
                 }, throwable -> {
                     throwable.printStackTrace();
                 });

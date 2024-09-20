@@ -6,8 +6,6 @@ import logging
 import mimetypes
 
 from ekyc.face_verification import FaceVerification
-from ekyc.utils.functions import get_image
-
 from starlette.responses import RedirectResponse
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi import FastAPI, File, UploadFile, Request, Form, HTTPException
@@ -85,10 +83,7 @@ async def verification_test(
     with open(face_path, "wb") as buffer:
         shutil.copyfileobj(face.file, buffer)
 
-    id_card = get_image(id_card_path)
-    face = get_image(face_path)
-
-    match_result = face_verification.verify(id_card, face)
+    match_result = face_verification.verify(id_card_path, face_path)
     return JSONResponse(status_code=200, content={
         "statusCode": 200,
         "result": {
@@ -96,6 +91,7 @@ async def verification_test(
             "face_url": face_path
         }
     })
+
 
 @app.post("/ekyc-api/face/verification", tags=["Face"])
 async def verification(
@@ -111,10 +107,7 @@ async def verification(
     with open(face_path, "wb") as buffer:
         shutil.copyfileobj(face.file, buffer)
 
-    id_card = get_image(id_card_path)
-    face = get_image(face_path)
-
-    match_result = face_verification.verify(id_card, face)
+    match_result = face_verification.verify(id_card_path, face_path)
     return JSONResponse(status_code=200, content={
         "statusCode": 200,
         "result": {
@@ -197,10 +190,10 @@ async def extract_id_card(
             "error": str(e)
         })
 
-@app.get("/ekyc-api/files/{filename}", tags=["Files"])
-async def get_file(filename: str):
-    file_path = os.path.join(filename)
-    image_path = Path(file_path)
+@app.get("/ekyc-api/{path}", tags=["Files"])
+async def get_file(path: str):
+    file_path = os.path.join(path)
+    image_path = Path(path)
 
     if not image_path.is_file():
         return JSONResponse(status_code=404, content={"error": "File not found"})
