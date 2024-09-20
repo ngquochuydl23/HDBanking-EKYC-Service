@@ -10,7 +10,7 @@ from ekyc.utils.functions import get_image
 
 from starlette.responses import RedirectResponse
 from fastapi.responses import JSONResponse, StreamingResponse
-from fastapi import FastAPI, File, UploadFile, Request, Query, HTTPException
+from fastapi import FastAPI, File, UploadFile, Request, Form, HTTPException
 from app.utils.uploaded_file_utils import check_file_extension
 from app.db.mongodb import lifespan
 from pymongo.errors import DuplicateKeyError
@@ -65,8 +65,8 @@ async def get_idcard_by_no(request: Request, id_card_no: str):
             "error": str(e)
         })
 
-@app.post("/ekyc-api/face/verification", tags=["Face"])
-async def verification(
+@app.post("/ekyc-api/face/verification-test", tags=["Face"])
+async def verification_test(
         id_card: UploadFile = File(...),
         face: UploadFile = File(...)
 ):
@@ -81,6 +81,32 @@ async def verification(
 
     with open(id_card_path, "wb") as buffer:
         shutil.copyfileobj(id_card.file, buffer)
+
+    with open(face_path, "wb") as buffer:
+        shutil.copyfileobj(face.file, buffer)
+
+    id_card = get_image(id_card_path)
+    face = get_image(face_path)
+
+    match_result = face_verification.verify(id_card, face)
+    return JSONResponse(status_code=200, content={
+        "statusCode": 200,
+        "result": {
+            "match_result": match_result,
+            "face_url": face_path
+        }
+    })
+
+@app.post("/ekyc-api/face/verification", tags=["Face"])
+async def verification(
+        id_card_path = Form(...),
+        face: UploadFile = File(...)
+):
+    id_card_path = os.path.join(id_card_path)
+    face_path = os.path.join('uploads/faces/', create_unique_filename(face))
+
+    if not check_file_extension(face):
+        return "Face must be jpg or png format!"
 
     with open(face_path, "wb") as buffer:
         shutil.copyfileobj(face.file, buffer)

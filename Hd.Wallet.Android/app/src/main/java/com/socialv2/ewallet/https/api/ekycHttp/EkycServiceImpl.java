@@ -1,4 +1,4 @@
-package com.socialv2.ewallet.https.api.ocrHttp;
+package com.socialv2.ewallet.https.api.ekycHttp;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -18,14 +18,14 @@ import okhttp3.RequestBody;
 
 public class OcrIdCardServiceImpl implements IOcrIdCardService {
     private IHttpSetting mHttpSetting;
-    private IHttpOcr mHttpOcr;
+    private IHttpEkyc mHttpOcr;
 
     public OcrIdCardServiceImpl(Context context) {
 
-        mHttpSetting = new HttpSettingImpl(context, "https://ocr-banking.pgonevn.com/id-card/");
+        mHttpSetting = new HttpSettingImpl(context, "https://ocr-banking.pgonevn.com/ekyc-api/");
         mHttpOcr = mHttpSetting
                 .getRetrofitBuilder()
-                .create(IHttpOcr.class);
+                .create(IHttpEkyc.class);
     }
 
     @Override
@@ -41,10 +41,10 @@ public class OcrIdCardServiceImpl implements IOcrIdCardService {
         RequestBody backRequestBody = RequestBody.create(MediaType.parse("image/jpeg"), backByte);
 
         MultipartBody.Part frontFile = MultipartBody.Part
-                .createFormData("file", "image.jpeg", frontRequestBody);
+                .createFormData("front_id_card", "image.jpeg", frontRequestBody);
 
         MultipartBody.Part backFile = MultipartBody.Part
-                .createFormData("file", "image1.png", backRequestBody);
+                .createFormData("back_id_card", "image1.png", backRequestBody);
 
         return mHttpOcr.extractIdCard(frontFile, backFile)
                 .observeOn(AndroidSchedulers.mainThread())

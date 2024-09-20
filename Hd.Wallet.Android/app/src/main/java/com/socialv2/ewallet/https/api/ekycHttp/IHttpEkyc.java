@@ -13,11 +13,11 @@ import retrofit2.http.Part;
 
 public interface IHttpOcr {
 
-    @POST("extract")
+    @POST("id-card/extract")
     @Multipart
     Observable<HttpResponseDto<IdCardExtractDto>> extractIdCard(
-            @Part MultipartBody.Part front_id_card,
-            @Part MultipartBody.Part back_id_card
+            @Part MultipartBody.Part frontIdCard,
+            @Part MultipartBody.Part backIdCard
     );
 
 }
