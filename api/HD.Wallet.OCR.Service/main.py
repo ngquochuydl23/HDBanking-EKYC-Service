@@ -171,8 +171,8 @@ async def extract_id_card(
         if result:
             id_card_result = {
                 "id_card": result,
-                "front-url": '/' + front_save_path,
-                "back-url": '/' + back_save_path,
+                "front-url": front_save_path,
+                "back-url": back_save_path,
                 "type": "CCCD" if is_cccd else "CMND",
             }
 
