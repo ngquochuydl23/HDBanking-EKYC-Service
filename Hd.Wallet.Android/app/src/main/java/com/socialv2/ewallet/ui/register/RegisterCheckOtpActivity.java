@@ -67,9 +67,6 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
         startResendOtpCountdown();
     }
 
-
-
-
     private void initView() {
         WindowUtils.applyPadding(findViewById(R.id.main));
         mLoadingProgressBar.setVisibility(View.GONE);
@@ -157,7 +154,7 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
                 } else {
                     mErrorTextView.setVisibility(View.VISIBLE);
                     mErrorTextView.setText("Xác thực OTP thất bại. Vui lòng thử lại");
-
+                    mOtpTextView.requestFocus();
                     mOtpTextView.setEnabled(true);
                     mContinueButton.setEnabled(false);
                     mOtpTextView.setText("");

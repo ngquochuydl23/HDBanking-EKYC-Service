@@ -1,18 +1,16 @@
 package com.socialv2.ewallet.ui.facialRecognition;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.OptIn;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.camera.core.AspectRatio;
 import androidx.camera.core.CameraSelector;
@@ -29,19 +27,19 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.gson.Gson;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.BackdropLoadingDialogFragment;
-import com.socialv2.ewallet.https.api.ocrHttp.OcrIdCardServiceImpl;
+import com.socialv2.ewallet.dtos.idCard.IdCardExtractDto;
+import com.socialv2.ewallet.https.api.ekycHttp.EkycServiceImpl;
+import com.socialv2.ewallet.https.api.ekycHttp.IEkycService;
+import com.socialv2.ewallet.https.api.ekycHttp.IHttpEkyc;
 import com.socialv2.ewallet.permissions.Permissions;
-import com.socialv2.ewallet.ui.idCardTaken.IdCardFrameOverlayView;
-import com.socialv2.ewallet.ui.idCardTaken.IdCardTakenActivity;
-import com.socialv2.ewallet.ui.idCardTaken.UserCheckIdCardBottomSheet;
+import com.socialv2.ewallet.sharedReferences.KeyValueSharedPreferences;
 import com.socialv2.ewallet.utils.CropImageUtils;
 import com.socialv2.ewallet.utils.ImageToBitmap;
-import com.socialv2.ewallet.utils.WindowUtils;
 
-import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -57,7 +55,7 @@ public class FacialRecognitionActivity extends BaseActivity {
     private PreviewView mPreviewView;
     private CompletableFuture<Rect> rectFuture;
     private ListenableFuture<ProcessCameraProvider> mCameraProviderListenableFuture;
-
+    private IEkycService mEkycService;
 
     public FacialRecognitionActivity() {
         super(R.layout.activity_facial_recognition);
@@ -66,6 +64,8 @@ public class FacialRecognitionActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mEkycService = new EkycServiceImpl(this);
 
         mLoadingBackdropDialog = new BackdropLoadingDialogFragment();
         mLoadingBackdropDialog.setFragmentManager(getSupportFragmentManager());
@@ -105,7 +105,6 @@ public class FacialRecognitionActivity extends BaseActivity {
         mToolbar.setNavigationOnClickListener(view -> {
             finish();
         });
-
 
         rectFuture = mFacialFrameOverlayView.getIdCardRectAsync();
 
@@ -159,15 +158,14 @@ public class FacialRecognitionActivity extends BaseActivity {
         Preview preview = new Preview
                 .Builder()
                 .setTargetAspectRatio(AspectRatio.RATIO_16_9)
-                .setTargetRotation(mPreviewView.getDisplay().getRotation())
                 .build();
 
         mImageCapture = new ImageCapture
                 .Builder()
                 .setTargetAspectRatio(AspectRatio.RATIO_16_9)
-                .setTargetRotation(mPreviewView
-                        .getDisplay()
-                        .getRotation())
+//                .setTargetRotation(mPreviewView
+//                        .getDisplay()
+//                        .getRotation())
                 .build();
 
         CameraSelector cameraSelector = new CameraSelector
@@ -252,11 +250,36 @@ public class FacialRecognitionActivity extends BaseActivity {
 
                 Log.i(TAG, String.valueOf(croppedBitmap.getHeight()));
                 Log.i(TAG, String.valueOf(croppedBitmap.getWidth()));
+
+                faceVerification(croppedBitmap);
             }
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
+
+    @SuppressLint("CheckResult")
+    private void faceVerification(Bitmap faceBitmap) throws Exception {
+        IdCardExtractDto idCardExtract = getIdCardResult();
+        Log.i(TAG, idCardExtract.toString());
+        mEkycService.faceVerification(faceBitmap, idCardExtract.getFrontUrl())
+                .subscribe(response -> {
+                    Log.i(TAG, response.toString());
+                }, throwable -> {
+                    throwable.printStackTrace();
+                });
+    }
+
+    private IdCardExtractDto getIdCardResult() {
+        String json = new KeyValueSharedPreferences(this, "IdCardExtractResult")
+                .getData();
+
+        Gson gson = new Gson();
+        return gson.fromJson(json, IdCardExtractDto.class);
+    }
+
 }

@@ -21,12 +21,6 @@
             android:name=".ui.register.RegistrationSuccessfulActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.customAdapter.MainActivitysdadssd"
-            android:exported="false" />
-        <activity
-            android:name=".ui.home.NotificationActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.home.TransferMoneyActivity"
             android:exported="false" />
         <activity
@@ -34,9 +28,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.home.TransactionNotificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.fragment.fragmentQR.ResultQrActivity"
             android:exported="false" />
         <activity
             android:name=".ui.facialRecognition.SuccessRecognitionActivity"
@@ -85,24 +76,22 @@
             android:exported="false" />
         <activity
             android:name=".ui.facialRecognition.IntroduceFacialRecognitionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.mainHome.QRPaymentActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.fragment.fragmentQR.CustomCaptureActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:exported="false"
+            android:launchMode="singleTask" />
+
         <activity
             android:name=".ui.register.ConfirmInformationActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.idCardTaken.IdCardTakenActivity"
             android:exported="false"
+            android:launchMode="singleTask"
             android:theme="@style/CameraActivityStyle" />
         <activity
             android:name=".ui.idCardTaken.GettingTakenIdCardActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.register.RegisterEnterPhoneActivity"
             android:exported="false"

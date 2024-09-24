@@ -6,11 +6,9 @@ import logging
 import mimetypes
 
 from ekyc.face_verification import FaceVerification
-from ekyc.utils.functions import get_image
-
 from starlette.responses import RedirectResponse
 from fastapi.responses import JSONResponse, StreamingResponse
-from fastapi import FastAPI, File, UploadFile, Request, Query, HTTPException
+from fastapi import FastAPI, File, UploadFile, Request, Form, HTTPException
 from app.utils.uploaded_file_utils import check_file_extension
 from app.db.mongodb import lifespan
 from pymongo.errors import DuplicateKeyError
@@ -65,8 +63,8 @@ async def get_idcard_by_no(request: Request, id_card_no: str):
             "error": str(e)
         })
 
-@app.post("/ekyc-api/face/verification", tags=["Face"])
-async def verification(
+@app.post("/ekyc-api/face/verification-test", tags=["Face"])
+async def verification_test(
         id_card: UploadFile = File(...),
         face: UploadFile = File(...)
 ):
@@ -85,10 +83,31 @@ async def verification(
     with open(face_path, "wb") as buffer:
         shutil.copyfileobj(face.file, buffer)
 
-    id_card = get_image(id_card_path)
-    face = get_image(face_path)
+    match_result = face_verification.verify(id_card_path, face_path)
+    return JSONResponse(status_code=200, content={
+        "statusCode": 200,
+        "result": {
+            "match_result": match_result,
+            "face_url": face_path
+        }
+    })
 
-    match_result = face_verification.verify(id_card, face)
+
+@app.post("/ekyc-api/face/verification", tags=["Face"])
+async def verification(
+        id_card_path = Form(...),
+        face: UploadFile = File(...)
+):
+    id_card_path = os.path.join(id_card_path)
+    face_path = os.path.join('uploads/faces/', create_unique_filename(face))
+
+    if not check_file_extension(face):
+        return "Face must be jpg or png format!"
+
+    with open(face_path, "wb") as buffer:
+        shutil.copyfileobj(face.file, buffer)
+
+    match_result = face_verification.verify(id_card_path, face_path)
     return JSONResponse(status_code=200, content={
         "statusCode": 200,
         "result": {
@@ -145,8 +164,8 @@ async def extract_id_card(
         if result:
             id_card_result = {
                 "id_card": result,
-                "front-url": '/' + front_save_path,
-                "back-url": '/' + back_save_path,
+                "front-url": front_save_path,
+                "back-url": back_save_path,
                 "type": "CCCD" if is_cccd else "CMND",
             }
 
@@ -171,10 +190,10 @@ async def extract_id_card(
             "error": str(e)
         })
 
-@app.get("/ekyc-api/files/{filename}", tags=["Files"])
-async def get_file(filename: str):
-    file_path = os.path.join(filename)
-    image_path = Path(file_path)
+@app.get("/ekyc-api/{path}", tags=["Files"])
+async def get_file(path: str):
+    file_path = os.path.join(path)
+    image_path = Path(path)
 
     if not image_path.is_file():
         return JSONResponse(status_code=404, content={"error": "File not found"})

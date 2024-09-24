@@ -5,14 +5,18 @@ import com.google.gson.annotations.SerializedName;
 
 public class IdCardExtractDto {
 
-    @SerializedName("idCard")
+    @SerializedName("id_card")
     @Expose
     private IdCardDto idCard;
 
 
-    @SerializedName("url")
+    @SerializedName("back-url")
     @Expose
-    private String url;
+    private String backUrl;
+
+    @SerializedName("front-url")
+    @Expose
+    private String frontUrl;
 
 
     @SerializedName("type")
@@ -23,9 +27,10 @@ public class IdCardExtractDto {
 
     }
 
-    public IdCardExtractDto(IdCardDto idCard, String url, String type) {
+    public IdCardExtractDto(IdCardDto idCard, String backUrl, String frontUrl, String type) {
         this.idCard = idCard;
-        this.url = url;
+        this.backUrl = backUrl;
+        this.frontUrl = frontUrl;
         this.type = type;
     }
 
@@ -37,12 +42,20 @@ public class IdCardExtractDto {
         this.idCard = idCard;
     }
 
-    public String getUrl() {
-        return url;
+    public String getBackUrl() {
+        return backUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setBackUrl(String backUrl) {
+        this.backUrl = backUrl;
+    }
+
+    public String getFrontUrl() {
+        return frontUrl;
+    }
+
+    public void setFrontUrl(String frontUrl) {
+        this.frontUrl = frontUrl;
     }
 
     public String getType() {
@@ -57,7 +70,8 @@ public class IdCardExtractDto {
     public String toString() {
         return "IdCardExtractDto{" +
                 "idCard=" + idCard +
-                ", url='" + url + '\'' +
+                ", backUrl='" + backUrl + '\'' +
+                ", frontUrl='" + frontUrl + '\'' +
                 ", type='" + type + '\'' +
                 '}';
     }

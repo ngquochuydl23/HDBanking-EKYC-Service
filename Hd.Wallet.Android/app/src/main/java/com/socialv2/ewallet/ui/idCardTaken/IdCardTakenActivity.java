@@ -35,9 +35,10 @@ import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.BackdropLoadingDialogFragment;
 import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.idCard.IdCardExtractDto;
-import com.socialv2.ewallet.https.api.ocrHttp.IOcrIdCardService;
-import com.socialv2.ewallet.https.api.ocrHttp.OcrIdCardServiceImpl;
+import com.socialv2.ewallet.https.api.ekycHttp.IEkycService;
+import com.socialv2.ewallet.https.api.ekycHttp.EkycServiceImpl;
 import com.socialv2.ewallet.permissions.Permissions;
+import com.socialv2.ewallet.sharedReferences.KeyValueSharedPreferences;
 import com.socialv2.ewallet.ui.register.ConfirmInformationActivity;
 import com.socialv2.ewallet.utils.CropImageUtils;
 import com.socialv2.ewallet.utils.ImageToBitmap;
@@ -56,7 +57,7 @@ public class IdCardTakenActivity extends AppCompatActivity {
 
     private ListenableFuture<ProcessCameraProvider> mCameraProviderListenableFuture;
 
-    private IOcrIdCardService mOcrCardService;
+    private IEkycService mOcrCardService;
 
     private UserCheckIdCardBottomSheet mUserCheckIdCardBottomSheet;
     private IdCardFrameOverlayView mIdCardFrameOverlayView;
@@ -77,7 +78,7 @@ public class IdCardTakenActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_id_card_taken);
 
-        mOcrCardService = new OcrIdCardServiceImpl(this);
+        mOcrCardService = new EkycServiceImpl(this);
         mBitmaps = new ArrayList<>();
         mIdCardFrameOverlayView = findViewById(R.id.idCardFrameOverlayView);
         mToolbar = findViewById(R.id.toolbar);
@@ -214,15 +215,15 @@ public class IdCardTakenActivity extends AppCompatActivity {
         Preview preview = new Preview
                 .Builder()
                 .setTargetAspectRatio(AspectRatio.RATIO_16_9)
-                .setTargetRotation(mPreviewView.getDisplay().getRotation())
+//                .setTargetRotation(mPreviewView.getDisplay().getRotation())
                 .build();
 
         mImageCapture = new ImageCapture
                 .Builder()
                 .setTargetAspectRatio(AspectRatio.RATIO_16_9)
-                .setTargetRotation(mPreviewView
-                        .getDisplay()
-                        .getRotation())
+//                .setTargetRotation(mPreviewView
+//                        .getDisplay()
+//                        .getRotation())
                 .build();
 
         CameraSelector cameraSelector = new CameraSelector
@@ -317,8 +318,12 @@ public class IdCardTakenActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         String json = gson.toJson(idCardExtract);
 
+
                         mUserCheckIdCardBottomSheet.clearState();
                         mUserCheckIdCardBottomSheet.dismiss();
+
+                        new KeyValueSharedPreferences(this, "IdCardExtractResult")
+                                .setData(json);
 
                         Intent intent = new Intent(this, ConfirmInformationActivity.class);
                         intent.putExtra("IdCardExtract", json);

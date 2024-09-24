@@ -4,10 +4,8 @@ import android.content.Context;
 
 import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.checkOtp.CheckPhoneDto;
-import com.socialv2.ewallet.dtos.idCard.IdCardExtractDto;
 import com.socialv2.ewallet.https.HttpSettingImpl;
 import com.socialv2.ewallet.https.IHttpSetting;
-import com.socialv2.ewallet.https.api.ocrHttp.IHttpOcr;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;

@@ -3,7 +3,9 @@ Hd.Wallet.Android/.gradle
 
 api/Hd.Wallet.OCR.Service/.idea
 api/Hd.Wallet.OCR.Service/uploads
-api/Hd.Wallet.OCR.Service/ekyc/verification_models/weights
+api/Hd.Wallet.OCR.Service/ekyc/weights
+api/Hd.Wallet.OCR.Service/env
+api/Hd.Wallet.OCR.Service/venv
 
 api/Hd.Wallet.BalanceTrackingService/node_modules
 api/Hd.Wallet.TransactionService/node_modules
