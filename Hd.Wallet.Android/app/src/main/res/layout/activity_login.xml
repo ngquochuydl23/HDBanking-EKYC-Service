@@ -67,7 +67,7 @@
                 app:hintTextColor="@color/primaryColor">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextPhoneNumber"
+                    android:id="@+id/editTextPhoneNumberLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/regular_font"
@@ -79,7 +79,7 @@
 
 
             <Button
-                android:id="@+id/continueButton"
+                android:id="@+id/continueButtonLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
