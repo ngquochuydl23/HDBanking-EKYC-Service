@@ -17,7 +17,7 @@ class FaceVerification:
             img1_path=img1_path,
             img2_path=img2_path,
             model_name='VGG-Face',
-            enforce_detection=False
+            enforce_detection=True
         )
         return {
             'verified': result['verified'],
