@@ -19,8 +19,11 @@ class FaceVerification:
             model_name='VGG-Face',
             enforce_detection=True
         )
+
+        custom_threshold = 0.50
+
         return {
-            'verified': result['verified'],
+            'verified': result['distance'] < custom_threshold,
             'distance': result['distance'],
-            'threshold': result['threshold']
+            'threshold': custom_threshold
         }
