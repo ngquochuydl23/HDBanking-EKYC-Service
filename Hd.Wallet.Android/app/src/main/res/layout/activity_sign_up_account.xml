@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLayout"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -115,23 +115,23 @@
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/termsCheckBox"
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:paddingHorizontal="5dp"
                 android:text="@string/confirm_text"
-                android:textSize="14sp"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:textSize="14sp" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/privacyCheckBox"
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
-                android:paddingHorizontal="5dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="5dp"
                 android:text="@string/confirm1_text"
-                android:textSize="14sp"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/signUpButton"

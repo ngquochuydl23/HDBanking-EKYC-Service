@@ -3,8 +3,10 @@ package com.socialv2.ewallet.ui.facialRecognition;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.ViewGroup;
 
@@ -13,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.OptIn;
 import androidx.appcompat.widget.Toolbar;
 import androidx.camera.core.AspectRatio;
+import androidx.camera.core.Camera;
+import androidx.camera.core.CameraControl;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ExperimentalGetImage;
 import androidx.camera.core.ImageCapture;
@@ -37,8 +41,10 @@ import com.socialv2.ewallet.https.api.ekycHttp.IEkycService;
 import com.socialv2.ewallet.https.api.ekycHttp.IHttpEkyc;
 import com.socialv2.ewallet.permissions.Permissions;
 import com.socialv2.ewallet.sharedReferences.KeyValueSharedPreferences;
+import com.socialv2.ewallet.ui.register.SignUpAccountActivity;
 import com.socialv2.ewallet.utils.CropImageUtils;
 import com.socialv2.ewallet.utils.ImageToBitmap;
+import com.socialv2.ewallet.utils.NavigateUtil;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -83,11 +89,16 @@ public class FacialRecognitionActivity extends BaseActivity {
         super.onRestart();
         Log.i(TAG, "onRestart");
 
-        mLoadingBackdropDialog.setLoading(false);
+        //mLoadingBackdropDialog.setLoading(false);
+        mFacialFrameOverlayView.setGettingStarted();
+        mFacialFrameOverlayView.setVisibleButton(true);
         startCamera();
     }
 
     private void initView() {
+
+        mFacialFrameOverlayView.setGettingStarted();
+        mFacialFrameOverlayView.setVisibleButton(true);
         ViewGroup.MarginLayoutParams toolbarLayoutParams = (ViewGroup.MarginLayoutParams) mToolbar.getLayoutParams();
         ViewGroup.MarginLayoutParams overlayLayoutParams = (ViewGroup.MarginLayoutParams) mFacialFrameOverlayView.getLayoutParams();
 
@@ -177,7 +188,20 @@ public class FacialRecognitionActivity extends BaseActivity {
 
         try {
             cameraProvider.unbindAll();
-            cameraProvider.bindToLifecycle(this, cameraSelector, preview, mImageCapture);
+            Camera camera =  cameraProvider.bindToLifecycle(this, cameraSelector, preview, mImageCapture);
+
+            CameraControl cameraControl = camera.getCameraControl();
+
+            float minZoomRatio = camera
+                    .getCameraInfo()
+                    .getZoomState()
+                    .getValue()
+                    .getMinZoomRatio();
+
+            cameraControl.setZoomRatio(minZoomRatio);
+
+            // Optionally, you can focus on the center or a specific point
+
         } catch (Exception e) {
             Log.e(TAG, "CameraX - Use case binding failed", e);
         }
@@ -190,6 +214,7 @@ public class FacialRecognitionActivity extends BaseActivity {
             @Override
             public void onCaptureSuccess(@NonNull ImageProxy image) {
                 Log.i(TAG, "Captured image");
+
 
                 pauseCamera();
                 processImage(image);
@@ -205,6 +230,7 @@ public class FacialRecognitionActivity extends BaseActivity {
     }
 
     private void pauseCamera() {
+        mFacialFrameOverlayView.setGettingStarted();
         mCameraProviderListenableFuture.addListener(() -> {
             try {
                 ProcessCameraProvider cameraProvider = mCameraProviderListenableFuture.get();
@@ -243,6 +269,8 @@ public class FacialRecognitionActivity extends BaseActivity {
     private void processImage(@NonNull ImageProxy image) {
         try {
             if (rectFuture.isDone()) {
+                mFacialFrameOverlayView.setVisibleButton(false);
+                mFacialFrameOverlayView.setIsVerifying();
 
                 Rect rect = rectFuture.get();
                 Bitmap bitmap = ImageToBitmap.convert(image);
@@ -266,10 +294,27 @@ public class FacialRecognitionActivity extends BaseActivity {
     private void faceVerification(Bitmap faceBitmap) throws Exception {
         IdCardExtractDto idCardExtract = getIdCardResult();
         Log.i(TAG, idCardExtract.toString());
+
         mEkycService.faceVerification(faceBitmap, idCardExtract.getFrontUrl())
                 .subscribe(response -> {
                     Log.i(TAG, response.toString());
+
+                    if (response.getResult().getResult().getVerified()) {
+                        mFacialFrameOverlayView.setIsSuccess();
+
+
+                        new Handler().postDelayed(() -> {
+                            Log.i(TAG, "Navigate to other");
+                            finish();
+                            NavigateUtil.navigateTo(this, SignUpAccountActivity.class);
+                        }, 1000);
+                    } else {
+                        mFacialFrameOverlayView.setIsError();
+                    }
+
+
                 }, throwable -> {
+                    mFacialFrameOverlayView.setIsError();
                     throwable.printStackTrace();
                 });
     }

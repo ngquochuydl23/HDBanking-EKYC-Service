@@ -7,6 +7,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.ui.facialRecognition.IntroduceFacialRecognitionActivity;
 import com.socialv2.ewallet.ui.login.LoginActivity;
 import com.socialv2.ewallet.ui.register.WelcomeActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
@@ -36,7 +37,7 @@ public class Main1Activity extends AppCompatActivity {
     }
 
     private void navigateToSignUpActivity() {
-        NavigateUtil.navigateTo(this, WelcomeActivity.class); // Chuyển hướng đến màn hình đăng ký
+        NavigateUtil.navigateTo(this, IntroduceFacialRecognitionActivity.class); // Chuyển hướng đến màn hình đăng ký
     }
 
     private void navigateToLoginActivity() {

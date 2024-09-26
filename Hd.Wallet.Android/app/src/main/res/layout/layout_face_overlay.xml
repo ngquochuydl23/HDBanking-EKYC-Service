@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/overlayFaceView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -28,17 +29,74 @@
             android:textSize="16sp" />
     </LinearLayout>
 
-    <View
+    <FrameLayout
         android:id="@+id/overlayView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="30dp"
-        android:background="@drawable/facial_frame"
-        android:elevation="5dp"
+        android:visibility="visible"
         app:layout_constraintDimensionRatio="W,1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/overlayHeader" />
+        app:layout_constraintTop_toBottomOf="@id/overlayHeader">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/facial_frame" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/overlayVerifyingView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="30dp"
+        android:visibility="gone"
+        app:layout_constraintDimensionRatio="W,1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/overlayHeader">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/drawable_bg_facial_verifying" />
+
+        <View
+            android:id="@+id/faceVerifyingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:background="@drawable/drawable_facial_verifying" />
+
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/overlaySuccessView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="30dp"
+        android:background="@drawable/facial_frame_success"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/overlayView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/overlayView" />
+
+    <ImageView
+        android:id="@+id/successImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="-20dp"
+        android:elevation="8dp"
+        android:src="@drawable/ic_success_filled_small"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/overlaySuccessView"
+        app:layout_constraintLeft_toLeftOf="@id/overlaySuccessView"
+        app:layout_constraintRight_toRightOf="@id/overlaySuccessView" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -48,7 +106,8 @@
         android:paddingHorizontal="30dp"
         android:paddingTop="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/overlayView">
+        app:layout_constraintTop_toBottomOf="@id/overlayView"
+        app:layout_constraintVertical_bias="1.0">
 
         <Button
             android:id="@+id/cameraButton"
