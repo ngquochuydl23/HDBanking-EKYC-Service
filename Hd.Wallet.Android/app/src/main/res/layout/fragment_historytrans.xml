@@ -1,13 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_historytrans"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="historytdasdassadsadransfragnmet" />
+
+
+
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layoutHistory"
+                android:background="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tabMode="scrollable"
+                app:tabTextColor="@color/color_selector"
+
+         />
+            <!-- Đường line dưới TabLayout -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" /> <!-- Bạn có thể thay đổi màu sắc ở đây -->
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpagerHistory"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" /> <!-- Sử dụng layout_weight để ViewPager chiếm phần còn lại của layout -->
 
 </LinearLayout>

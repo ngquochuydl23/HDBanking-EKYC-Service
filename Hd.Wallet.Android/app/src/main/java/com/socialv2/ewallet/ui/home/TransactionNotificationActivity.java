@@ -8,9 +8,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.tabs.TabLayout;
 import com.socialv2.ewallet.R;
 
 public class TransactionNotificationActivity extends AppCompatActivity {
+
+
+    private TabLayout mTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
