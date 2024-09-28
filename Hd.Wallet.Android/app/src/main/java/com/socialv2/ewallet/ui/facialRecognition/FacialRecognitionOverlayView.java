@@ -28,7 +28,8 @@ public class FacialRecognitionOverlayView extends FrameLayout {
     private View mSuccessImageView;
     private View mOverlayVerifyingView;
     private SoundPool mSoundPool;
-
+    private View mOverlayErrorView;
+    private View mErrorImageView;
 
     private int soundId;
 
@@ -62,6 +63,8 @@ public class FacialRecognitionOverlayView extends FrameLayout {
         mOverlayVerifyingView = findViewById(R.id.overlayVerifyingView);
         mOverlaySuccessView = findViewById(R.id.overlaySuccessView);
         mSuccessImageView = findViewById(R.id.successImageView);
+        mOverlayErrorView = findViewById(R.id.overlayErrorView);
+        mErrorImageView = findViewById(R.id.errorImageView);
 
         setGettingStarted();
         setupSoundEffect();
@@ -127,7 +130,14 @@ public class FacialRecognitionOverlayView extends FrameLayout {
     public void setGettingStarted() {
         mOverlayView.setVisibility(View.VISIBLE);
 
+        // error view
+        mOverlayErrorView.setVisibility(View.GONE);
+        mErrorImageView.setVisibility(View.GONE);
+
+        // hide verifying
         mOverlayVerifyingView.setVisibility(View.GONE);
+
+        // hide success
         mOverlaySuccessView.setVisibility(View.GONE);
         mSuccessImageView.setVisibility(View.GONE);
     }
@@ -135,15 +145,31 @@ public class FacialRecognitionOverlayView extends FrameLayout {
     public void setIsSuccess() {
         mOverlayView.setVisibility(View.INVISIBLE);
 
+        // hide verifying
         mOverlayVerifyingView.setVisibility(View.GONE);
+
+        // error view
+        mOverlayErrorView.setVisibility(View.GONE);
+        mErrorImageView.setVisibility(View.GONE);
+
 
         mOverlaySuccessView.setVisibility(View.VISIBLE);
         mSuccessImageView.setVisibility(View.VISIBLE);
     }
 
     public void setIsError() {
+        mOverlayView.setVisibility(View.INVISIBLE);
+
+        // error view
+        mOverlayErrorView.setVisibility(View.VISIBLE);
+        mErrorImageView.setVisibility(View.VISIBLE);
+
+        // hide verifying
         mOverlayVerifyingView.setVisibility(View.GONE);
+
+        // hide success
         mSuccessImageView.setVisibility(View.GONE);
+        mOverlaySuccessView.setVisibility(View.GONE);
     }
 
     public void setIsVerifying() {
@@ -151,6 +177,9 @@ public class FacialRecognitionOverlayView extends FrameLayout {
         mOverlayView.setVisibility(View.INVISIBLE);
         mOverlaySuccessView.setVisibility(View.GONE);
         mSuccessImageView.setVisibility(View.GONE);
+        // error view
+        mOverlayErrorView.setVisibility(View.GONE);
+        mErrorImageView.setVisibility(View.GONE);
 
         ObjectAnimator rotation = ObjectAnimator.ofFloat(findViewById(R.id.faceVerifyingView), "rotation", 0f, 360f);
         rotation.setDuration(700);

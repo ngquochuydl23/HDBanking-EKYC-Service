@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -367,5 +368,15 @@ public class IdCardTakenActivity extends AppCompatActivity {
         } else {
             super.onBackPressed(); // Call the super method if the dialog is not visible
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Set maximum brightness (1.0f is the max brightness)
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.screenBrightness = 1.0f;  // Maximum brightness (1.0f)
+        getWindow().setAttributes(layoutParams);
     }
 }

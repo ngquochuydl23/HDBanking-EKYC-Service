@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,6 +64,8 @@ public class FacialRecognitionActivity extends BaseActivity {
     private ListenableFuture<ProcessCameraProvider> mCameraProviderListenableFuture;
     private IEkycService mEkycService;
 
+    private VerificationFailBottomSheet mVerificationFailBottomSheet;
+
     public FacialRecognitionActivity() {
         super(R.layout.activity_facial_recognition);
     }
@@ -72,9 +75,7 @@ public class FacialRecognitionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         mEkycService = new EkycServiceImpl(this);
-
-        mLoadingBackdropDialog = new BackdropLoadingDialogFragment();
-        mLoadingBackdropDialog.setFragmentManager(getSupportFragmentManager());
+        mVerificationFailBottomSheet = new VerificationFailBottomSheet();
 
         mToolbar = findViewById(R.id.toolbar);
         mPreviewView = findViewById(R.id.previewView);
@@ -89,6 +90,7 @@ public class FacialRecognitionActivity extends BaseActivity {
         super.onRestart();
         Log.i(TAG, "onRestart");
 
+        mVerificationFailBottomSheet.dismiss();
         //mLoadingBackdropDialog.setLoading(false);
         mFacialFrameOverlayView.setGettingStarted();
         mFacialFrameOverlayView.setVisibleButton(true);
@@ -126,6 +128,15 @@ public class FacialRecognitionActivity extends BaseActivity {
             }
         });
 
+        mVerificationFailBottomSheet.setRetryButtonClick(new VerificationFailBottomSheet.RetryButtonClick() {
+            @Override
+            public void onClick() {
+                mVerificationFailBottomSheet.dismiss();
+                mFacialFrameOverlayView.setGettingStarted();
+                mFacialFrameOverlayView.setVisibleButton(true);
+                startCamera();
+            }
+        });
     }
 
     private void requestPermissions() {
@@ -291,7 +302,7 @@ public class FacialRecognitionActivity extends BaseActivity {
     }
 
     @SuppressLint("CheckResult")
-    private void faceVerification(Bitmap faceBitmap) throws Exception {
+    private void faceVerification(Bitmap faceBitmap) {
         IdCardExtractDto idCardExtract = getIdCardResult();
         Log.i(TAG, idCardExtract.toString());
 
@@ -302,19 +313,23 @@ public class FacialRecognitionActivity extends BaseActivity {
                     if (response.getResult().getResult().getVerified()) {
                         mFacialFrameOverlayView.setIsSuccess();
 
-
                         new Handler().postDelayed(() -> {
                             Log.i(TAG, "Navigate to other");
                             finish();
                             NavigateUtil.navigateTo(this, SignUpAccountActivity.class);
                         }, 1000);
                     } else {
-                        mFacialFrameOverlayView.setIsError();
-                    }
 
+                        Log.w(TAG, response.getMsg());
+                        mFacialFrameOverlayView.setIsError();
+                        mVerificationFailBottomSheet.show(getSupportFragmentManager(), mVerificationFailBottomSheet.getTag());
+                    }
 
                 }, throwable -> {
                     mFacialFrameOverlayView.setIsError();
+                    mVerificationFailBottomSheet.show(getSupportFragmentManager(), mVerificationFailBottomSheet.getTag());
+
+
                     throwable.printStackTrace();
                 });
     }
@@ -327,4 +342,13 @@ public class FacialRecognitionActivity extends BaseActivity {
         return gson.fromJson(json, IdCardExtractDto.class);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Set maximum brightness (1.0f is the max brightness)
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.screenBrightness = 1.0f;  // Maximum brightness (1.0f)
+        getWindow().setAttributes(layoutParams);
+    }
 }

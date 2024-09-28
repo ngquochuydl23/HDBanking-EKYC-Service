@@ -95,8 +95,9 @@ public class BackdropLoadingDialogFragment extends DialogFragment {
         Dialog dialog = getDialog();
         if (dialog != null) {
             dialog.setOnKeyListener((dialogInterface, keyCode, event) -> {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    return true;
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                    // Prevent back button from dismissing the dialog
+                    return true; // Consume the event
                 }
                 return false;
             });

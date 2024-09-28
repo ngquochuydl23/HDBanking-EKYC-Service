@@ -98,6 +98,32 @@
         app:layout_constraintLeft_toLeftOf="@id/overlaySuccessView"
         app:layout_constraintRight_toRightOf="@id/overlaySuccessView" />
 
+    <View
+        android:id="@+id/overlayErrorView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="30dp"
+        android:background="@drawable/facial_frame_error"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/overlayView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/overlayView" />
+
+    <ImageView
+        android:id="@+id/errorImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="-20dp"
+        android:elevation="8dp"
+        android:src="@drawable/ic_error_filled_small"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/overlayErrorView"
+        app:layout_constraintLeft_toLeftOf="@id/overlayErrorView"
+        app:layout_constraintRight_toRightOf="@id/overlayErrorView" />
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
