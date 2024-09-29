@@ -9,3 +9,13 @@ api/Hd.Wallet.OCR.Service/venv
 
 api/Hd.Wallet.BalanceTrackingService/node_modules
 api/Hd.Wallet.TransactionService/node_modules
+api/HD.Wallet.BankingApi/.vs
+
+api/HD.Wallet.BankingApi/Services/*/obj
+api/HD.Wallet.BankingApi/Services/*/bin
+
+api/HD.Wallet.BankingApi/HD.Wallet.Shared/bin
+api/HD.Wallet.BankingApi/HD.Wallet.Shared/obj
+
+api/HD.Wallet.BankingApi/Gateways/Clothes.GatewayApi/bin
+api/HD.Wallet.BankingApi/Gateways/Clothes.GatewayApi/obj
