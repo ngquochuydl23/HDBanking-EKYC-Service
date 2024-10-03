@@ -40,17 +40,13 @@ public class HomeFragment extends BaseFragment {
         cardviewScanQr = view.findViewById(R.id.cardviewScanQr);
 //        cardviewHistory = view.findViewById(R.id.cardviewHistory);
 
-        mButtonNotification.setOnClickListener(v->{
-
-        });
-
-        cardviewDeposit.setOnClickListener(v -> {
-            NavigateUtil.navigateTo(this, DepositMoneyActivity.class);
-        });
-
-        mCardviewTransfer.setOnClickListener(v -> {
-            NavigateUtil.navigateTo(this, TransferMoneyActivity.class);
-        });
+//        cardviewDeposit.setOnClickListener(v -> {
+//            NavigateUtil.navigateTo(this, DepositMoneyActivity.class);
+//        });
+//
+//        mCardviewTransfer.setOnClickListener(v -> {
+//            NavigateUtil.navigateTo(this, TransferMoneyActivity.class);
+//        });
 
         cardviewScanQr.setOnClickListener(v -> {
             // Thực hiện hành động khi cardviewScanQr được nhấn

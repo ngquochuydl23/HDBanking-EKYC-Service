@@ -3,6 +3,8 @@ package com.socialv2.ewallet.ui.login;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -19,14 +21,15 @@ import com.socialv2.ewallet.ui.register.RegisterCheckOtpActivity;
 import com.socialv2.ewallet.ui.register.RegisterEnterPhoneActivity;
 import com.socialv2.ewallet.ui.register.WelcomeActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
+import com.socialv2.ewallet.utils.WindowUtils;
 
 import java.util.regex.Pattern;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements TextWatcher {
 
     private static final Pattern VIETNAM_PHONE_PATTERN = Pattern.compile("^0[3|5|7|8|9]\\d{8}$");
 
-    private Button mContinue, mSignIn;
+    private Button mContinueButton, mSignInButton;
     private TextInputEditText mEditTextPhoneNumber;
 
 
@@ -37,23 +40,27 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
-        mContinue = findViewById(R.id.continueButtonLogin);
-        mSignIn = findViewById(R.id.signinButton);
+        mContinueButton = findViewById(R.id.continueButtonLogin);
+        mSignInButton = findViewById(R.id.signinButton);
         mEditTextPhoneNumber = findViewById(R.id.editTextPhoneNumberLogin);
 
-        mSignIn.setOnClickListener(view -> {
+        mSignInButton.setOnClickListener(view -> {
             NavigateUtil.navigateTo(this, WelcomeActivity.class);
         });
 
-        getPhoneNumber();
         initView();
     }
 
-    private void getPhoneNumber() {
-        mContinue.setOnClickListener(view -> {
-            String phoneNumber = mEditTextPhoneNumber.getText().toString();
+    private void initView() {
+        WindowUtils.applyPadding(findViewById(R.id.main));
+        mContinueButton.setEnabled(false);
+        mEditTextPhoneNumber.addTextChangedListener(this);
+        mContinueButton.setOnClickListener(view -> {
+            String phoneNumber = mEditTextPhoneNumber
+                    .getText()
+                    .toString();
 
-            if (isValidVietnamPhoneNumber(phoneNumber)) {
+            if (VIETNAM_PHONE_PATTERN.matcher(phoneNumber).matches()) {
                 Intent intent = new Intent(LoginActivity.this, LoginPasswordActivity.class);
                 intent.putExtra("phone_number_login", phoneNumber); // Pass the phone number
                 startActivity(intent);
@@ -65,16 +72,26 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isValidVietnamPhoneNumber(String phoneNumber) {
-        return VIETNAM_PHONE_PATTERN.matcher(phoneNumber).matches();
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
     }
 
-    private void initView() {
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        String phoneNumber = mEditTextPhoneNumber
+                .getText()
+                .toString();
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        if (phoneNumber.length() > 0 && VIETNAM_PHONE_PATTERN.matcher(phoneNumber).matches()) {
+            mContinueButton.setEnabled(true);
+        } else {
+            mContinueButton.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }

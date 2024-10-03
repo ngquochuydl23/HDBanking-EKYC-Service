@@ -82,7 +82,6 @@
                 android:id="@+id/continueButtonLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:background="@drawable/drawable_filled_r10"
                 android:backgroundTint="@color/primaryColor"
                 android:fontFamily="@font/medium_font"
@@ -92,17 +91,20 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/signinButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="55dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/drawable_outline_r15"
+                android:elevation="0dp"
                 android:fontFamily="@font/medium_font"
                 android:text="Đăng kí mở tài khoản trực tuyến"
-                android:textAllCaps="false"
+                android:textColor="@color/gray"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                app:backgroundTint="@android:color/transparent"
+                app:cornerRadius="10dp"
+                app:strokeColor="@color/borderWidthColor"
+                app:strokeWidth="2dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

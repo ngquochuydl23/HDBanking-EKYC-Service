@@ -114,7 +114,7 @@ public class SignUpAccountActivity extends BaseActivity implements
         mValidator.setValidationListener(this);
         mValidator.setValidationMode(Validator.Mode.BURST);
         mLoadingBackdropDialog.setLoading(false);
-
+        mSignUpButton.setEnabled(false);
 
         mPasswordEditText.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {

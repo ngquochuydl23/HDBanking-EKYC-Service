@@ -14,6 +14,7 @@ import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.sharedReferences.KeyValueSharedPreferences;
 import com.socialv2.ewallet.ui.login.LoginActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
+import com.socialv2.ewallet.utils.WindowUtils;
 
 public class RegistrationSuccessfulActivity extends AppCompatActivity {
 
@@ -23,24 +24,17 @@ public class RegistrationSuccessfulActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-
         setContentView(R.layout.activity_registration_successful);
 
         loginButton = findViewById(R.id.loginButton);
-
-
-        loginButton.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(this, LoginActivity.class);
-        });
 
         initView();
     }
 
     private void initView() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        WindowUtils.applyPadding(findViewById(R.id.main));
+        loginButton.setOnClickListener(view -> {
+            NavigateUtil.navigateTo(this, LoginActivity.class);
         });
     }
 }
