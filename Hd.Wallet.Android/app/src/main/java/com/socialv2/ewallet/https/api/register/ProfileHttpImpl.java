@@ -1,26 +1,32 @@
-package com.socialv2.ewallet.https.api.profileHttp;
+package com.socialv2.ewallet.https.api.register;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
+import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.https.HttpSettingImpl;
 import com.socialv2.ewallet.https.IHttpSetting;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class ProfileHttpImpl implements IHttpProfile {
+public class ProfileHttpImpl implements IRegisterProfile {
 
     private IHttpSetting mHttpSetting;
-    private IHttpProfile mHttpProfile;
+    private IRegisterProfile mHttpProfile;
 
     public ProfileHttpImpl(Context context) {
 
         mHttpSetting = new HttpSettingImpl(context);
         mHttpProfile = mHttpSetting
                 .getRetrofitBuilder()
-                .create(IHttpProfile.class);
+                .create(IRegisterProfile.class);
+    }
+
+    @NonNull
+    @Override
+    public Observable<HttpResponseDto<Object>> getProfile() {
+        return null;
     }
 
 

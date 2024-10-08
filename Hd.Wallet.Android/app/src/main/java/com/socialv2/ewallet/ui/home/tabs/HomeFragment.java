@@ -34,26 +34,6 @@ public class HomeFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Ánh xạ các CardView
-        cardviewDeposit = view.findViewById(R.id.cardviewDeposit);
-        mCardviewTransfer = view.findViewById(R.id.cardviewTransfer);
-        cardviewScanQr = view.findViewById(R.id.cardviewScanQr);
-//        cardviewHistory = view.findViewById(R.id.cardviewHistory);
 
-//        cardviewDeposit.setOnClickListener(v -> {
-//            NavigateUtil.navigateTo(this, DepositMoneyActivity.class);
-//        });
-//
-//        mCardviewTransfer.setOnClickListener(v -> {
-//            NavigateUtil.navigateTo(this, TransferMoneyActivity.class);
-//        });
-
-        cardviewScanQr.setOnClickListener(v -> {
-            // Thực hiện hành động khi cardviewScanQr được nhấn
-        });
-
-        cardviewHistory.setOnClickListener(v -> {
-            // Thực hiện hành động khi cardviewHistory được nhấn
-        });
     }
 }

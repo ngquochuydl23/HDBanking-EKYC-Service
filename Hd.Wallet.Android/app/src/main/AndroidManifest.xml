@@ -30,9 +30,6 @@
         <activity
             android:name=".ui.home.TransactionNotificationActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.facialRecognition.SuccessRecognitionActivity"
-            android:exported="false" />
 
         <service
             android:name=".backgroundServices.FcmMessagingService"
@@ -63,9 +60,6 @@
             android:exported="false"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.signIn.SignInActivity"
-            android:exported="false" />
         <activity
             android:name=".ui.register.RegisterCheckOtpActivity"
             android:exported="false"

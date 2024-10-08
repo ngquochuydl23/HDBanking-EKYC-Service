@@ -2,6 +2,7 @@ package com.socialv2.ewallet.ui.login;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -16,10 +17,10 @@ import com.socialv2.ewallet.utils.NavigateUtil;
 
 public class LoginPasswordActivity extends AppCompatActivity {
 
-    private Button mContinue, mForgetPassword;
-    private TextView tvForgetPassword, tvChangeSdt;
-    private TextView mTvNumberPhone;
-
+    private Button mContinue;
+    private TextView mHiddenPhoneNumberTextView, tvChangeSdt;
+    private Button mChangePhoneNumberButton;
+    private View mForgotPasswordTextView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +28,10 @@ public class LoginPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_password);
 
         mContinue = findViewById(R.id.continueButton);
-        tvForgetPassword = findViewById(R.id.textviewForgetPassword);
-        tvChangeSdt = findViewById(R.id.textviewChangeSDT);
+        mForgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
+        mChangePhoneNumberButton = findViewById(R.id.changePhoneNumberButton);
 
-        mTvNumberPhone = findViewById(R.id.tvNumberPhone);
+        mHiddenPhoneNumberTextView = findViewById(R.id.hiddenPhoneNumberTextView);
 
         navigateunti();
         getPhoneNumber();
@@ -42,7 +43,7 @@ public class LoginPasswordActivity extends AppCompatActivity {
         if (phoneNumber != null) {
             // Mask the first 6 digits with asterisks
             String maskedPhoneNumber = phoneNumber.replaceAll("\\d(?=\\d{3})", "*");
-            mTvNumberPhone.setText(maskedPhoneNumber); // Set the masked phone number to TextView
+            mHiddenPhoneNumberTextView.setText(maskedPhoneNumber); // Set the masked phone number to TextView
 
         }
     }
@@ -63,11 +64,11 @@ public class LoginPasswordActivity extends AppCompatActivity {
             NavigateUtil.navigateTo(this, com.socialv2.ewallet.ui.home.MainHomeActivity.class);
         });
 
-        tvForgetPassword.setOnClickListener(view -> {
+        mForgotPasswordTextView.setOnClickListener(view -> {
             NavigateUtil.navigateTo(this, ResetPasswordActivity.class);
         });
 
-        tvChangeSdt.setOnClickListener(view -> {
+        mChangePhoneNumberButton.setOnClickListener(view -> {
             NavigateUtil.navigateTo(this, LoginActivity.class);
         });
     }

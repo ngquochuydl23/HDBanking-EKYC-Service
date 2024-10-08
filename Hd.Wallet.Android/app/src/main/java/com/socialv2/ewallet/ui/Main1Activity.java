@@ -38,7 +38,7 @@ public class Main1Activity extends AppCompatActivity {
     }
 
     private void navigateToSignUpActivity() {
-        NavigateUtil.navigateTo(this, SignUpAccountActivity.class); // Chuyển hướng đến màn hình đăng ký
+        NavigateUtil.navigateTo(this, WelcomeActivity.class); // Chuyển hướng đến màn hình đăng ký
     }
 
     private void navigateToLoginActivity() {
