@@ -21,9 +21,6 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.chaos.view.PinView;
 import com.socialv2.ewallet.R;
-import com.socialv2.ewallet.https.api.phoneHttp.IHttpPhone;
-import com.socialv2.ewallet.https.api.phoneHttp.IPhoneService;
-import com.socialv2.ewallet.https.api.phoneHttp.PhoneServiceImpl;
 import com.socialv2.ewallet.ui.idCardTaken.GettingTakenIdCardActivity;
 import com.socialv2.ewallet.utils.DpToPx;
 import com.socialv2.ewallet.utils.NavigateUtil;
@@ -43,7 +40,6 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private TextView  mNumberPhoneTextView;
 
-    private IPhoneService mPhoneService;
 
 
     @Override
@@ -52,7 +48,6 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register_check_otp);
 
-        mPhoneService = new PhoneServiceImpl(this);
 
         mOtpTextView = findViewById(R.id.otpTextView);
         mContinueButton = findViewById(R.id.continueButton);
@@ -118,15 +113,6 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
             // Mask the first 6 digits with asterisks
             String maskedPhoneNumber = phoneNumber.replaceAll("\\d(?=\\d{3})", "*");
             mNumberPhoneTextView.setText(maskedPhoneNumber); // Set the masked phone number to TextView
-
-
-            // loading
-            mPhoneService.checkValidPhoneNumber(phoneNumber)
-                    .subscribe(httpResponseDto -> {
-                        Log.i(TAG,  String.valueOf(httpResponseDto.getStatusCode()));
-                    }, throwable -> {
-                        throwable.printStackTrace();
-                    });
         }
     }
 

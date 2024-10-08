@@ -1,5 +1,6 @@
 package com.socialv2.ewallet.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -7,10 +8,11 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.socialv2.ewallet.R;
-import com.socialv2.ewallet.ui.facialRecognition.IntroduceFacialRecognitionActivity;
+import com.socialv2.ewallet.sharedReferences.KeyValueSharedPreferences;
+import com.socialv2.ewallet.sharedReferences.SaveTokenSharedPreference;
+import com.socialv2.ewallet.ui.main.MainHomeActivity;
 import com.socialv2.ewallet.ui.login.LoginActivity;
-import com.socialv2.ewallet.ui.register.SignUpAccountActivity;
-import com.socialv2.ewallet.ui.register.WelcomeActivity;
+import com.socialv2.ewallet.ui.login.LoginPasswordActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.WindowUtils;
 
@@ -38,10 +40,21 @@ public class Main1Activity extends AppCompatActivity {
     }
 
     private void navigateToSignUpActivity() {
-        NavigateUtil.navigateTo(this, WelcomeActivity.class); // Chuyển hướng đến màn hình đăng ký
+        NavigateUtil.navigateTo(this, MainHomeActivity.class); // Chuyển hướng đến màn hình đăng ký
     }
 
     private void navigateToLoginActivity() {
-        NavigateUtil.navigateTo(this, LoginActivity.class); // Chuyển hướng đến màn hình đăng nhập
+        String token = new SaveTokenSharedPreference(this)
+                .getData();
+
+        String phone = new KeyValueSharedPreferences(this, "PhoneNumberLogin")
+                .getData();
+        if  (token != null && phone != null && !token.isEmpty() && !phone.isEmpty()) {
+            Intent intent = new Intent(this, LoginPasswordActivity.class);
+            intent.putExtra("PhoneNumberLogin", phone); // Pass the phone number
+            startActivity(intent);
+        } else {
+            NavigateUtil.navigateTo(this, LoginActivity.class); // Chuyển hướng đến màn hình đăng nhập
+        }
     }
 }

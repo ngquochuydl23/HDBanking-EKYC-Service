@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.home.MainHomeActivity">
+    tools:context=".ui.main.MainHomeActivity">
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
@@ -15,16 +15,19 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@color/foregroundColor"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        app:itemBackground="@color/white"
         app:itemHorizontalTranslationEnabled="false"
-        app:itemIconSize="26dp"
         app:itemIconTint="@color/bottom_item_foreground"
+        app:itemRippleColor="@color/trans50"
         app:itemTextAppearanceActive="@style/BottomNavigationStyle"
         app:itemTextAppearanceInactive="@style/BottomNavigationStyle"
         app:itemTextColor="@color/bottom_item_foreground"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/menu_bottom_navigation" />

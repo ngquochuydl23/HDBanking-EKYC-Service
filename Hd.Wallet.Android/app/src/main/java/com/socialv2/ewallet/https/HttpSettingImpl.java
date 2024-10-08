@@ -1,12 +1,19 @@
 package com.socialv2.ewallet.https;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.sharedReferences.SaveTokenSharedPreference;
+import com.socialv2.ewallet.ui.login.LoginActivity;
+import com.socialv2.ewallet.ui.login.LoginPasswordActivity;
 
 import java.io.IOException;
+
 import okhttp3.CacheControl;
 import okhttp3.Headers;
 import okhttp3.Interceptor;
@@ -19,6 +26,9 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpSettingImpl implements IHttpSetting {
+
+    private final String TAG = HttpSettingImpl.class.getName();
+
     private Retrofit.Builder builder;
     private String baseUrl;
     private Context context;
@@ -66,15 +76,17 @@ public class HttpSettingImpl implements IHttpSetting {
                                 .cacheControl(CacheControl.FORCE_CACHE)
                                 .headers(headers)
                                 .build();
-                        return chain.proceed(newRequest);
+                        Response response = chain.proceed(newRequest);
+
+                        // Check for 401 Unauthorized status code
+                        Log.i(TAG, "StatusCode: " + response.code());
+                        if (response.code() == 401) {
+                            handleTokenExpired();
+                        }
+
+                        return response;
                     }
                 });
-//                .addInterceptor(new Interceptor() {
-//                    @Override
-//                    public Response intercept(Chain chain) throws IOException {
-//                        return chain.;
-//                    }
-//                });
 
         return new Retrofit.Builder()
                 .baseUrl(url)
@@ -85,4 +97,13 @@ public class HttpSettingImpl implements IHttpSetting {
                 .newBuilder();
     }
 
+    private void handleTokenExpired() {
+        if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            Intent intent = new Intent(activity, LoginPasswordActivity.class); // Replace with your LoginActivity class
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
+            activity.startActivity(intent);
+            activity.finish();
+        }
+    }
 }
