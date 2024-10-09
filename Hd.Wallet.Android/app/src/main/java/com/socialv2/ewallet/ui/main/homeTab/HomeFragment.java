@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,10 +21,16 @@ import android.widget.TextView;
 
 import com.socialv2.ewallet.BaseFragment;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.dtos.users.UserDto;
+import com.socialv2.ewallet.ui.contacts.ContactActivity;
+import com.socialv2.ewallet.ui.main.NotificationActivity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
 import com.socialv2.ewallet.ui.transfer.TransferMoneyActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.VietnameseConcurrency;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import eightbitlab.com.blurview.BlurView;
 import eightbitlab.com.blurview.RenderScriptBlur;
@@ -37,6 +45,9 @@ public class HomeFragment extends BaseFragment {
     private TextView mBalanceTextView;
     private Toolbar mHomeTabToolbar;
     private View mToggleVisibilityButton;
+    private RecyclerView mRecentlyContactRecyclerView;
+    private ContactRecentlyAdapter mContactRecentlyAdapter;
+    private View mSeeMoreContactButton;
 
     private boolean balanceVisible;
     private double balance;
@@ -49,6 +60,8 @@ public class HomeFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mContactRecentlyAdapter = new ContactRecentlyAdapter();
+
         mHomeTabToolbarContainer = view.findViewById(R.id.homeTabToolbarContainer);
         mAvatarView = view.findViewById(R.id.avatarView);
         mFundButton = view.findViewById(R.id.fundButton);
@@ -57,6 +70,8 @@ public class HomeFragment extends BaseFragment {
         mBalanceTextView = view.findViewById(R.id.balanceTextView);
         mHomeTabToolbar = view.findViewById(R.id.homeTabToolbar);
         mToggleVisibilityButton = view.findViewById(R.id.toggleVisibilityButton);
+        mRecentlyContactRecyclerView = view.findViewById(R.id.recentlyContactRecyclerView);
+        mSeeMoreContactButton = view.findViewById(R.id.seeMoreContactButton);
 
         balanceVisible = false;
 
@@ -66,15 +81,19 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        balanceVisible = false;
 
         getBalance();
-        balanceVisible = false;
+        getRecentlyContacts();
     }
 
     private void initView() {
         setHasOptionsMenu(true);
         ((AppCompatActivity)getActivity()).setSupportActionBar(mHomeTabToolbar);
         getActivity().setTitle("");
+
+        mRecentlyContactRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mRecentlyContactRecyclerView.setAdapter(mContactRecentlyAdapter);
 
         mToggleVisibilityButton.setBackgroundResource(R.drawable.ic_visibility_off_balance);
 
@@ -99,7 +118,7 @@ public class HomeFragment extends BaseFragment {
             balanceVisible = !balanceVisible;
 
             mToggleVisibilityButton.setBackgroundResource(balanceVisible ? R.drawable.ic_invisibility_off_balance: R.drawable.ic_visibility_off_balance);
-            mBalanceTextView.setText(balanceVisible ? VietnameseConcurrency.format(100000) : "*** **");
+            mBalanceTextView.setText(balanceVisible ? VietnameseConcurrency.format(balance) : "*** **");
         });
 
         mFundButton.setOnClickListener(view -> {
@@ -108,12 +127,16 @@ public class HomeFragment extends BaseFragment {
         mAvatarView.setOnClickListener(view -> {
             NavigateUtil.navigateTo(getContext(), ProfileActivity.class);
         });
+
+        mSeeMoreContactButton.setOnClickListener(view -> {
+            NavigateUtil.navigateTo(getContext(), ContactActivity.class);
+        });
     }
 
     private void getBalance() {
 
-
-        mBalanceTextView.setText(VietnameseConcurrency.format(1000000));
+        balance = 1000000;
+        mBalanceTextView.setText(VietnameseConcurrency.format(balance));
         mBalanceTextView.setText("*** **");
     }
 
@@ -126,23 +149,33 @@ public class HomeFragment extends BaseFragment {
         return result;
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.your_menu_xml, menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_settings:
-//                // Handle settings action
-//                return true;
-//            case R.id.action_search:
-//                // Handle search action
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_hometab_toolbar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_notification:
+                NavigateUtil.navigateTo(getContext(), NotificationActivity.class);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void getRecentlyContacts() {
+        List<UserDto> contacts = new ArrayList<UserDto>();
+        contacts.add(new UserDto());
+        contacts.add(new UserDto());
+        contacts.add(new UserDto());
+        contacts.add(new UserDto());
+        contacts.add(new UserDto());
+        contacts.add(new UserDto());
+        contacts.add(new UserDto());
+
+        mContactRecentlyAdapter.setItems(contacts);
+    }
 }

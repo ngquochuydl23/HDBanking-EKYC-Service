@@ -1,4 +1,4 @@
-package com.socialv2.ewallet.ui.main;
+package com.socialv2.ewallet.ui.transfer;
 
 import android.os.Bundle;
 
@@ -8,23 +8,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.tabs.TabLayout;
 import com.socialv2.ewallet.R;
 
-public class TransactionNotificationActivity extends AppCompatActivity {
-
-
-    private TabLayout mTabLayout;
+public class TransferToBankActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_transaction_notification);
-        initview();
-    }
-
-    private void initview() {
+        setContentView(R.layout.activity_transfer_to_bank);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

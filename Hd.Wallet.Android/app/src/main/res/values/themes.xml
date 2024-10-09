@@ -4,6 +4,7 @@
         <item name="android:fontFamily">@font/default_font</item>
         <item name="colorPrimary">@color/primaryColor</item>
     </style>
+
     <style name="Theme.OCRBanking_MobileApp" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:statusBarColor">@color/foregroundColor</item>
         <item name="android:windowLightStatusBar">true</item>
@@ -38,10 +39,12 @@
         <item name="android:paddingHorizontal">10dp</item>
         <item name="android:paddingTop">10dp</item>
     </style>
+
     <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">true</item>
         <item name="bottomSheetStyle">@style/BottomSheet</item>
     </style>
+
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
 
 
@@ -49,9 +52,8 @@
         <item name="android:textSize">@dimen/bottom_navigation_active_text_size</item>
         <item name="android:padding">0dp</item>
         <item name="textAllCaps">false</item>
-        <item  name="android:fontFamily">@font/regular_font</item>
+        <item name="android:fontFamily">@font/regular_font</item>
     </style>
-
 
 
     <style name="OnlyDarkActivity" parent="Theme.AppCompat.NoActionBar">
@@ -76,8 +78,6 @@
     </style>
 
 
-
-
     <!-- Toolbar    ?-->
     <style name="WeChatMainToolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">@color/foregroundColor</item>
@@ -87,7 +87,7 @@
     <style name="OCRMainToolbar_TitleTextAppearance">
         <item name="android:fontFamily">@font/medium_font</item>
         <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="OCRCameraToolbar_TitleTextAppearance">
@@ -141,7 +141,8 @@
         <item name="android:layout_marginStart">0dp</item>
         <item name="android:layout_marginEnd">0dp</item>
     </style>
+
     <style name="MainBottomNavigationViewStyle" parent="Widget.Design.BottomNavigationView">
-        <item name="itemIconSize">24dp</item> <!-- Set the desired icon size here -->
+        <item name="itemIconSize">30dp</item> <!-- Set the desired icon size here -->
     </style>
 </resources>

@@ -6,10 +6,6 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.ui.main.accountTab.AccountTabFragment;
 import com.socialv2.ewallet.ui.main.homeTab.HomeFragment;
 import com.socialv2.ewallet.ui.main.tabs.ProfileFragment;
 import com.socialv2.ewallet.ui.main.tabs.TransactionHistoryFragment;
@@ -25,7 +22,6 @@ import com.socialv2.ewallet.ui.main.tabs.TransactionHistoryFragment;
 public class MainHomeActivity extends BaseActivity {
 
     private BottomNavigationView mBottomNavigationView;
-    private Toolbar mToolbar;
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
@@ -33,6 +29,7 @@ public class MainHomeActivity extends BaseActivity {
 
 
     private HomeFragment mHomeFragment;
+    private AccountTabFragment mAccountFragment;
     private TransactionHistoryFragment mTransactionHistoryFragment;
     private ProfileFragment mProfileFragment;
 
@@ -42,6 +39,7 @@ public class MainHomeActivity extends BaseActivity {
 
         doubleBackToExitPressedOnce = true;
         mHomeFragment = new HomeFragment();
+        mAccountFragment = new AccountTabFragment();
         mProfileFragment = new ProfileFragment();
         mTransactionHistoryFragment = new TransactionHistoryFragment();
     }
@@ -50,7 +48,7 @@ public class MainHomeActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mToolbar = findViewById(R.id.toolbar);
+
         mBottomNavigationView = findViewById(R.id.bottomNavigationView);
         mFragmentManager = getSupportFragmentManager();
 
@@ -66,6 +64,9 @@ public class MainHomeActivity extends BaseActivity {
                 switch (item.getItemId()) {
                     case R.id.homeTab:
                         navigateFragment(mHomeFragment);
+                        return true;
+                    case R.id.accountTab:
+                        navigateFragment(mAccountFragment);
                         return true;
                     case R.id.transactionTab:
                         navigateFragment(mTransactionHistoryFragment);
