@@ -141,5 +141,7 @@
         <item name="android:layout_marginStart">0dp</item>
         <item name="android:layout_marginEnd">0dp</item>
     </style>
-
+    <style name="MainBottomNavigationViewStyle" parent="Widget.Design.BottomNavigationView">
+        <item name="itemIconSize">24dp</item> <!-- Set the desired icon size here -->
+    </style>
 </resources>

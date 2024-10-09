@@ -19,10 +19,13 @@
         android:theme="@style/Theme.OCRBanking_MobileApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.register.RegistrationSuccessfulActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.TransferMoneyActivity"
+            android:name=".ui.transfer.TransferMoneyActivity"
             android:exported="false" />
         <activity
             android:name=".ui.main.DepositMoneyActivity"
@@ -75,7 +78,6 @@
             android:name=".ui.facialRecognition.IntroduceFacialRecognitionActivity"
             android:exported="false"
             android:launchMode="singleTask" />
-
         <activity
             android:name=".ui.register.ConfirmInformationActivity"
             android:exported="false"

@@ -1,4 +1,4 @@
-package com.socialv2.ewallet.ui.main;
+package com.socialv2.ewallet.ui.transfer;
 
 import android.os.Bundle;
 

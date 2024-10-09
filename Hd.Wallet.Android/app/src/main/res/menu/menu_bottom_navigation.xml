@@ -7,7 +7,7 @@
         android:title="@string/Home" />
     <item
         android:id="@+id/transactionTab"
-        android:icon="@drawable/ic_home_chat"
+        android:icon="@drawable/ic_bank_card"
         android:title="@string/TransactionHistory" />
 
     <item

@@ -29,17 +29,20 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/homeTabToolbarContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp">
 
                         <com.socialv2.ewallet.components.AvatarView
+                            android:id="@+id/avatarView"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginLeft="20dp"
                             android:src="@drawable/default_avatar_men" />
 
                         <androidx.appcompat.widget.Toolbar
+                            android:id="@+id/homeTabToolbar"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -56,15 +59,31 @@
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:fontFamily="@font/bold_font"
-                        android:includeFontPadding="false"
-                        android:text="1.000.000đ"
-                        android:textColor="@color/white"
-                        android:textSize="32sp" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/balanceTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:fontFamily="@font/bold_font"
+                            android:includeFontPadding="false"
+                            android:text="1.000.000đ"
+                            android:textColor="@color/white"
+                            android:textSize="32sp" />
+
+                        <ImageView
+                            android:id="@+id/toggleVisibilityButton"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginLeft="10dp"
+                            android:clickable="true"
+                            app:tint="@color/white" />
+                    </LinearLayout>
                 </LinearLayout>
 
             </FrameLayout>
@@ -76,10 +95,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/drawable_border_top30dp"
                 android:backgroundTint="@color/foregroundColor"
-                android:elevation="0dp">
-
-
-            </LinearLayout>
+                android:elevation="0dp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -93,6 +109,128 @@
                 app:cardCornerRadius="20dp"
                 app:cardElevation="10dp">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/fundButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/icon_topup" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/regular_font"
+                            android:includeFontPadding="false"
+                            android:text="Nạp tiền"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/transferButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/fundButton"
+                        app:layout_constraintRight_toLeftOf="@id/transactionButton"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/ic_transfer"
+                            android:paddingHorizontal="10dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/regular_font"
+                            android:includeFontPadding="false"
+                            android:text="Chuyển tiền"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/transactionButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/transferButton"
+                        app:layout_constraintRight_toLeftOf="@id/withdrawalButton"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/ic_home_withdraw" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/regular_font"
+                            android:includeFontPadding="false"
+                            android:text="Quét QR"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/withdrawalButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/ic_home_withdraw" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/regular_font"
+                            android:includeFontPadding="false"
+                            android:text="Rút tiền"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.constraintlayout.widget.ConstraintLayout

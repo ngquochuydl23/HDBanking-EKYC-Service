@@ -30,7 +30,7 @@ public class AvatarView extends CircleImageView {
     }
 
     private void initView() {
-        setPadding(0, 0, 0, 0);
+        setPadding(10, 10, 10, 10);
         setBackground(getResources().getDrawable(R.drawable.drawable_filled_circle));
         setBackgroundTintList(getResources().getColorStateList(R.color.backgroundColor));
     }

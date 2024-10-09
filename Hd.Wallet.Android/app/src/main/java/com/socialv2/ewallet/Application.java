@@ -27,6 +27,7 @@ public class Application extends android.app.Application {
     }
 
     private void initApplication() {
+
         mThemeUi.init();
     }
 
