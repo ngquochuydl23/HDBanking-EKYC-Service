@@ -7,48 +7,73 @@
     android:layout_height="match_parent"
     android:background="@color/textColorDetailAddress">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:src="@drawable/image_screen_purple" />
+
     <androidx.cardview.widget.CardView
-        android:id="@+id/signUpCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="40dp"
-        app:cardBackgroundColor="#dae3e8"
-        app:cardCornerRadius="16dp"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="30dp"
+        app:cardBackgroundColor="@color/foregroundColor"
+        app:cardCornerRadius="20dp"
         app:cardElevation="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:fontFamily="@font/bold_font"
                 android:text="QR Nhận Tiền"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="18sp"
-                android:layout_gravity="center"
                 android:textStyle="bold" />
+
             <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
 
-
-            <ImageView
-                android:id="@+id/qr_code"
                 android:layout_width="match_parent"
-                android:layout_height="300dp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
 
-            <ImageView
-                android:id="@+id/overlay_image"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="center"
-                android:src="@drawable/flag_andorra"
-                android:background="@android:color/transparent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:id="@+id/qr_code"
+                        android:layout_width="0dp"
+                        android:layout_margin="10dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/drawable_outline_r15"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="H,1:1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.socialv2.ewallet.components.AvatarView
+                    android:id="@+id/overlay_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:elevation="10dp"
+                    android:src="@drawable/default_avatar_men" />
             </FrameLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

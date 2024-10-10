@@ -87,7 +87,7 @@
     <style name="OCRMainToolbar_TitleTextAppearance">
         <item name="android:fontFamily">@font/medium_font</item>
         <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="OCRCameraToolbar_TitleTextAppearance">

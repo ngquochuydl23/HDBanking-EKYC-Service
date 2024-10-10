@@ -1,13 +1,11 @@
 package com.socialv2.ewallet.ui.main.homeTab;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.socialv2.ewallet.BaseFragment;
@@ -24,7 +21,7 @@ import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.users.UserDto;
 import com.socialv2.ewallet.ui.contacts.ContactActivity;
 import com.socialv2.ewallet.ui.main.NotificationActivity;
-import com.socialv2.ewallet.ui.main.QRPaymentActivity;
+import com.socialv2.ewallet.ui.qr.QRPaymentActivity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
 import com.socialv2.ewallet.ui.transfer.TransferMoneyActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
@@ -32,9 +29,6 @@ import com.socialv2.ewallet.utils.VietnameseConcurrency;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import eightbitlab.com.blurview.BlurView;
-import eightbitlab.com.blurview.RenderScriptBlur;
 
 public class HomeFragment extends BaseFragment {
 

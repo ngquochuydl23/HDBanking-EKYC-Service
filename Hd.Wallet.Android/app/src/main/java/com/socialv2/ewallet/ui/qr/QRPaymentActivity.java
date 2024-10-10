@@ -1,4 +1,4 @@
-package com.socialv2.ewallet.ui.main;
+package com.socialv2.ewallet.ui.qr;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -24,7 +24,7 @@ public class QRPaymentActivity extends AppCompatActivity {
 
         mChildTabQrViewPager = findViewById(R.id.childTabQrViewPager);
         mBottomNavigationQrView = findViewById(R.id.qrBottomNavigationView);
-
+        mChildTabQrViewPager.setAdapter(new QRPagerAdapter(this));
         mBottomNavigationQrView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

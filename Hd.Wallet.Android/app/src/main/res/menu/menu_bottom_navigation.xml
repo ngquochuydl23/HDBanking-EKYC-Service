@@ -13,11 +13,11 @@
 
     <item
         android:id="@+id/transactionTab"
-        android:icon="@drawable/ic_bank_card"
-        android:title="@string/TransactionHistory" />
+        android:icon="@drawable/ic_home_transaction"
+        android:title="Lịch sử GD" />
 
     <item
         android:id="@+id/profileTab"
-        android:icon="@drawable/ic_home_chat"
+        android:icon="@drawable/ic_home_widget"
         android:title="@string/Me" />
 </menu>

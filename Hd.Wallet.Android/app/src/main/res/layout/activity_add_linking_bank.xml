@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.addCardOrAccount.AddLinkingBankActivity">
+
+    <com.socialv2.ewallet.components.HdWalletToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/accountNoTextInputLayout"
+                style="@style/MaterialFieldLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:hint="Số tài khoản"
+                android:labelFor="@id/emailEditText"
+                app:boxStrokeColor="@color/primaryColor"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="3dp"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/MaterialFieldErrorTextAppearance"
+                app:errorTextColor="@color/error"
+                app:helperTextEnabled="false"
+                app:helperTextTextAppearance="@style/MaterialFieldHelperTextTextAppearance"
+                app:helperTextTextColor="@color/textColorSecondary"
+                app:hintTextColor="@color/primaryColor">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/accountNoEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular_font"
+                    android:importantForAccessibility="yes"
+                    android:inputType="textEmailAddress"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ownerTextInputLayout"
+                style="@style/MaterialFieldLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="16dp"
+                android:hint="Chủ tài khoản"
+                android:labelFor="@id/emailEditText"
+                app:boxStrokeColor="@color/primaryColor"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="3dp"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/MaterialFieldErrorTextAppearance"
+                app:errorTextColor="@color/error"
+                app:helperTextEnabled="false"
+                app:helperTextTextAppearance="@style/MaterialFieldHelperTextTextAppearance"
+                app:helperTextTextColor="@color/textColorSecondary"
+                app:hintTextColor="@color/primaryColor">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ownerEditText"
+                    android:editable="false"
+                    android:text="NGUYEN QUOC HUY"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular_font"
+                    android:importantForAccessibility="yes"
+                    android:inputType="textEmailAddress"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/idCardNoTextInputLayout"
+                style="@style/MaterialFieldLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="16dp"
+                android:hint="Chủ tài khoản"
+                android:labelFor="@id/emailEditText"
+                app:boxStrokeColor="@color/primaryColor"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="3dp"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/MaterialFieldErrorTextAppearance"
+                app:errorTextColor="@color/error"
+                app:helperText="Vui lòng nhập địa chỉ email cá nhân và đang hoạt động của bạn. Email này sẽ được sử dụng để xác thực tài khoản và nhận thông báo giao dịch."
+                app:helperTextEnabled="false"
+                app:helperTextTextAppearance="@style/MaterialFieldHelperTextTextAppearance"
+                app:helperTextTextColor="@color/textColorSecondary"
+                app:hintTextColor="@color/primaryColor">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/idCardNoEditText"
+                    android:editable="false"
+                    android:text="251279169"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular_font"
+                    android:importantForAccessibility="yes"
+                    android:inputType="textEmailAddress"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

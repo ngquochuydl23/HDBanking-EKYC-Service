@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.mainHome.NotificationActivity">
+    android:layout_height="match_parent">
 
+    <com.socialv2.ewallet.components.HdWalletToolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:title="Thông báo"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
