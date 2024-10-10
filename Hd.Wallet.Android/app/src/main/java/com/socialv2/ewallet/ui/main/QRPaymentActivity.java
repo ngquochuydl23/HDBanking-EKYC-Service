@@ -15,29 +15,30 @@ import com.socialv2.ewallet.R;
 public class QRPaymentActivity extends AppCompatActivity {
 
     private BottomNavigationView mBottomNavigationQrView;
-    private ViewPager2 mViewPager2;
+    private ViewPager2 mChildTabQrViewPager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_payment);
 
-        mBottomNavigationQrView = findViewById(R.id.bottom_navigation_qr);
+        mChildTabQrViewPager = findViewById(R.id.childTabQrViewPager);
+        mBottomNavigationQrView = findViewById(R.id.qrBottomNavigationView);
 
         mBottomNavigationQrView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.bottom_genqr) {
-                    mViewPager2.setCurrentItem(0);
+                    mChildTabQrViewPager.setCurrentItem(0);
                 } else if (id == R.id.bottom_scanqr) {
-                    mViewPager2.setCurrentItem(1);
+                    mChildTabQrViewPager.setCurrentItem(1);
                 }
                 return true;
             }
         });
 
-        mViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        mChildTabQrViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);

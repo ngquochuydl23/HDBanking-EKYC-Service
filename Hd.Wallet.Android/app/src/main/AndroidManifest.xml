@@ -19,6 +19,12 @@
         android:theme="@style/Theme.OCRBanking_MobileApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.addCardOrAccount.AddCardOrAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.QRPaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.transfer.TransferToBankActivity"
             android:exported="false" />
         <activity

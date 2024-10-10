@@ -12,6 +12,8 @@ import android.view.View;
 import com.socialv2.ewallet.BaseFragment;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
+import com.socialv2.ewallet.ui.addCardOrAccount.AddCardOrAccountActivity;
+import com.socialv2.ewallet.utils.NavigateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ public class AccountTabFragment extends BaseFragment {
 
     private RecyclerView mAccountCardRecyclerView;
     private AccountCardAdapter mAccountCardAdapter;
+    private View mAddLinkingAccountButton;
 
     public AccountTabFragment() {
         super(R.layout.fragment_account_tab);
@@ -33,6 +36,7 @@ public class AccountTabFragment extends BaseFragment {
         mAccountCardAdapter = new AccountCardAdapter();
 
         mAccountCardRecyclerView = view.findViewById(R.id.accountCardRecyclerView);
+        mAddLinkingAccountButton = view.findViewById(R.id.addLinkingAccountButton);
 
         initView();
         getAccounts();
@@ -41,6 +45,10 @@ public class AccountTabFragment extends BaseFragment {
     private void initView() {
         mAccountCardRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAccountCardRecyclerView.setAdapter(mAccountCardAdapter);
+
+        mAddLinkingAccountButton.setOnClickListener(view -> {
+            NavigateUtil.navigateTo(getContext(), AddCardOrAccountActivity.class);
+        });
     }
 
     private void getAccounts() {

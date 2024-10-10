@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -39,5 +40,46 @@
             android:layout_marginTop="10dp"
             tools:itemCount="3"
             tools:listitem="@layout/item_account_card" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/addLinkingAccountButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:background="@drawable/drawable_outline_dash_15dp"
+            android:backgroundTint="#50662AB2"
+            android:padding="5dp">
+
+
+            <TextView
+                android:id="@+id/bankNameTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/semibold_font"
+                android:includeFontPadding="false"
+                android:text="+ Thêm tài khoản/thẻ"
+                android:textColor="@color/secondaryColor"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/paymentTypeTextView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/paymentTypeTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular_font"
+                android:text="Liên kết với ngân hàng có sẵn"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bankNameTextView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

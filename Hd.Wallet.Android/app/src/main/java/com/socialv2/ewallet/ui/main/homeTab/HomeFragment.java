@@ -24,6 +24,7 @@ import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.users.UserDto;
 import com.socialv2.ewallet.ui.contacts.ContactActivity;
 import com.socialv2.ewallet.ui.main.NotificationActivity;
+import com.socialv2.ewallet.ui.main.QRPaymentActivity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
 import com.socialv2.ewallet.ui.transfer.TransferMoneyActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
@@ -41,6 +42,7 @@ public class HomeFragment extends BaseFragment {
     private View mFundButton;
     private View mTransferButton;
     private View mWithdrawalButton;
+    private View mQrButton;
     private View mAvatarView;
     private TextView mBalanceTextView;
     private Toolbar mHomeTabToolbar;
@@ -72,6 +74,7 @@ public class HomeFragment extends BaseFragment {
         mToggleVisibilityButton = view.findViewById(R.id.toggleVisibilityButton);
         mRecentlyContactRecyclerView = view.findViewById(R.id.recentlyContactRecyclerView);
         mSeeMoreContactButton = view.findViewById(R.id.seeMoreContactButton);
+        mQrButton = view.findViewById(R.id.qrButton);
 
         balanceVisible = false;
 
@@ -121,15 +124,16 @@ public class HomeFragment extends BaseFragment {
             mBalanceTextView.setText(balanceVisible ? VietnameseConcurrency.format(balance) : "*** **");
         });
 
-        mFundButton.setOnClickListener(view -> {
-        });
-
         mAvatarView.setOnClickListener(view -> {
             NavigateUtil.navigateTo(getContext(), ProfileActivity.class);
         });
 
         mSeeMoreContactButton.setOnClickListener(view -> {
             NavigateUtil.navigateTo(getContext(), ContactActivity.class);
+        });
+
+        mQrButton.setOnClickListener(view -> {
+            NavigateUtil.navigateTo(getContext(), QRPaymentActivity.class);
         });
     }
 
