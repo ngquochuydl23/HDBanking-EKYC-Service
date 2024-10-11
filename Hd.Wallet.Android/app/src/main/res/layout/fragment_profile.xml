@@ -158,5 +158,38 @@
                 app:strokeWidth="1dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="@font/semibold_font"
+            android:text="Cài đặt"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="18sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/menuAppRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_menu_app" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/logOutButton"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:elevation="0dp"
+            android:fontFamily="@font/medium_font"
+            android:text="Đăng xuất"
+            android:textColor="@color/error"
+            android:textSize="14sp"
+            app:backgroundTint="@color/white"
+            app:cornerRadius="10dp"
+            app:layout_constraintTop_toBottomOf="@id/idCardNotiSubtitle"
+            app:strokeColor="@color/error"
+            app:strokeWidth="1dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

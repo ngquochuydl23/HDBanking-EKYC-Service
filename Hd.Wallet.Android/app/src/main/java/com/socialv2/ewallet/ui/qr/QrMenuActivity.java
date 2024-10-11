@@ -5,22 +5,26 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 
-public class QRPaymentActivity extends AppCompatActivity {
+public class QrMenuActivity extends BaseActivity {
 
     private BottomNavigationView mBottomNavigationQrView;
     private ViewPager2 mChildTabQrViewPager;
 
+
+    public QrMenuActivity() {
+        super(R.layout.activity_qr_acitvity);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qr_payment);
 
         mChildTabQrViewPager = findViewById(R.id.childTabQrViewPager);
         mBottomNavigationQrView = findViewById(R.id.qrBottomNavigationView);

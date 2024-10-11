@@ -20,13 +20,13 @@
         android:theme="@style/Theme.OCRBanking_MobileApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.qr.QrMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.addCardOrAccount.AddLinkingBankActivity"
             android:exported="false" />
         <activity
             android:name=".ui.addCardOrAccount.AddCardOrAccountActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.qr.QRPaymentActivity"
             android:exported="false" />
         <activity
             android:name=".ui.transfer.TransferToBankActivity"

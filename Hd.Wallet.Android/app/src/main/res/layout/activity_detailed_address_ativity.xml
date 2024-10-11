@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="No 191, Ba Triệu, Lê Đại Hành"
-                android:textColor="@color/textColorDetailAddress"
+                android:textColor="@color/gray"
                 android:textSize="24sp" />
 
             <!-- District TextView -->
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hai Bà Trưng"
-                    android:textColor="@color/textColorDetailAddress"
+                    android:textColor="@color/gray"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hà Nội"
-                    android:textColor="@color/textColorDetailAddress"
+                    android:textColor="@color/gray"
                     android:textSize="20sp" />
             </LinearLayout>
         </LinearLayout>

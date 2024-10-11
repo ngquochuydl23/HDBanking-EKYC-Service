@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/childTabQrViewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/qrBottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/foregroundColor"
+        android:backgroundTint="#30ffffff"
+        app:elevation="10dp"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        app:itemBackground="@color/white"
+        app:itemHorizontalTranslationEnabled="false"
+        app:itemIconTint="@color/bottom_item_foreground"
+        app:itemRippleColor="@color/trans50"
+        app:itemTextAppearanceActive="@style/BottomNavigationStyle"
+        app:itemTextAppearanceInactive="@style/BottomNavigationStyle"
+        app:itemTextColor="@color/bottom_item_foreground"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom_qr_navigation" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

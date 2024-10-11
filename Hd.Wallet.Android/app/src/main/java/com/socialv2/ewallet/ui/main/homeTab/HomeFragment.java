@@ -21,8 +21,8 @@ import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.users.UserDto;
 import com.socialv2.ewallet.ui.contacts.ContactActivity;
 import com.socialv2.ewallet.ui.main.NotificationActivity;
-import com.socialv2.ewallet.ui.qr.QRPaymentActivity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
+import com.socialv2.ewallet.ui.qr.QrMenuActivity;
 import com.socialv2.ewallet.ui.transfer.TransferMoneyActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.VietnameseConcurrency;
@@ -127,7 +127,7 @@ public class HomeFragment extends BaseFragment {
         });
 
         mQrButton.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(getContext(), QRPaymentActivity.class);
+            NavigateUtil.navigateTo(getContext(), QrMenuActivity.class);
         });
     }
 

@@ -16,7 +16,7 @@ import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.ui.main.accountTab.AccountTabFragment;
 import com.socialv2.ewallet.ui.main.homeTab.HomeFragment;
-import com.socialv2.ewallet.ui.main.tabs.ProfileFragment;
+import com.socialv2.ewallet.ui.main.moreTab.ProfileFragment;
 import com.socialv2.ewallet.ui.main.tabs.TransactionHistoryFragment;
 
 public class MainHomeActivity extends BaseActivity {

@@ -22,7 +22,6 @@
     <color name="icColorPrimary">#000</color>
     <color name="icColorSecondary">#aaa</color>
     <color name="frameIcColor">#80ffffff</color>
-    <color name="textColorDetailAddress">#258EBD</color>
 
 
 </resources>
