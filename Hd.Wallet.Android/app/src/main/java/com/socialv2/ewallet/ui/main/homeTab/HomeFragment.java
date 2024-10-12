@@ -22,7 +22,7 @@ import com.socialv2.ewallet.dtos.users.UserDto;
 import com.socialv2.ewallet.ui.contacts.ContactActivity;
 import com.socialv2.ewallet.ui.main.NotificationActivity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
-import com.socialv2.ewallet.ui.qr.QrMenuActivity;
+import com.socialv2.ewallet.ui.qr.MyQrActivity;
 import com.socialv2.ewallet.ui.transfer.TransferMoneyActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.VietnameseConcurrency;
@@ -127,7 +127,7 @@ public class HomeFragment extends BaseFragment {
         });
 
         mQrButton.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(getContext(), QrMenuActivity.class);
+            NavigateUtil.navigateTo(getContext(), MyQrActivity.class);
         });
     }
 
@@ -136,15 +136,6 @@ public class HomeFragment extends BaseFragment {
         balance = 1000000;
         mBalanceTextView.setText(VietnameseConcurrency.format(balance));
         mBalanceTextView.setText("*** **");
-    }
-
-    private int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
     }
 
     @Override
