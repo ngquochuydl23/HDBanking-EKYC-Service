@@ -19,6 +19,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.alexzhirkevich.customqrgenerator.QrData;
 import com.github.alexzhirkevich.customqrgenerator.vector.QrCodeDrawableKt;
+import com.github.alexzhirkevich.customqrgenerator.vector.QrVectorOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.socialv2.ewallet.BaseActivity;
@@ -56,10 +57,10 @@ public class MyQrActivity extends BaseActivity {
         initView();
 
         AccountDto account = new AccountDto();
-        account.setId("3e42cfee-6e62-4d52-b63b-e11f97ff7925");
+        account.setId("ffeba890-30cb-49ee-9dda-a2209d750c10");
 
         UserDto user = new UserDto();
-        user.setAvatar("https://v2.hayugo.edu.vn/api/storage/image/1b3780e90912c5213ae3643370902904.jpg");
+        user.setAvatar("https://avatars.githubusercontent.com/u/36536025?v=4");
 
         generateQRCode(account, user, new MyQrActivity.OnQrCodeGeneratedListener() {
             @Override
@@ -108,6 +109,7 @@ public class MyQrActivity extends BaseActivity {
                                 data,
                                 getQrStyle(MyQrActivity.this, resource),
                                 null);
+
 
                         if (listener != null) {
                             listener.onQrCodeGenerated(qrCodeDrawable);
