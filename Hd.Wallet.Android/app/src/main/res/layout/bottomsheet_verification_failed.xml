@@ -14,16 +14,18 @@
         android:src="@drawable/img_face_verification_failed" />
 
     <TextView
+        android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/semibold_font"
-        android:text="Xác thực không thành công"
+        android:text="Quét mã không thành công"
         android:textAlignment="center"
         android:layout_marginTop="20dp"
         android:textColor="@color/textColorPrimary"
         android:textSize="20sp" />
 
     <TextView
+        android:id="@+id/subtitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
