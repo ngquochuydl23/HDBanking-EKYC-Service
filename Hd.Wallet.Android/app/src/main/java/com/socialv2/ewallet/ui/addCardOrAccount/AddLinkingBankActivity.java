@@ -18,10 +18,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.gson.Gson;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.BackdropLoadingDialogFragment;
 import com.socialv2.ewallet.components.HdWalletToolbar;
+import com.socialv2.ewallet.dtos.accounts.AccountBankDto;
 import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
 import com.socialv2.ewallet.dtos.banks.BankDto;
 import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
@@ -145,8 +147,16 @@ public class AddLinkingBankActivity extends BaseActivity {
                     ))
                     .subscribe(response -> {
                                 mLoadingBackdropDialog.setLoading(false);
+                                AccountBankDto bankAccount = response
+                                        .getResult()
+                                        .getAccountBank();
 
-                                NavigateUtil.navigateTo(this, LinkingBankSuccessfullyActivity.class);
+                                Intent intent = new Intent(this, LinkingBankSuccessfullyActivity.class);
+                                String json = new Gson().toJson(bankAccount);
+
+                                intent.putExtra("AccountBank-json", json);
+
+                                startActivity(intent);
                                 finish();
                             },
                             throwable -> {
