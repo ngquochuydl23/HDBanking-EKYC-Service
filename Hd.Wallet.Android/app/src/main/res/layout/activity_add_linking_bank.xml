@@ -74,13 +74,13 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ownerEditText"
-                    android:editable="false"
-                    android:text="NGUYEN QUOC HUY"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:editable="false"
                     android:fontFamily="@font/regular_font"
                     android:importantForAccessibility="yes"
                     android:inputType="textEmailAddress"
+                    android:text="NGUYEN QUOC HUY"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="16dp"
-                android:hint="Chủ tài khoản"
+                android:hint="CCCD/CMND"
                 android:labelFor="@id/emailEditText"
                 app:boxStrokeColor="@color/primaryColor"
                 app:boxStrokeWidth="2dp"
@@ -99,7 +99,6 @@
                 app:errorEnabled="true"
                 app:errorTextAppearance="@style/MaterialFieldErrorTextAppearance"
                 app:errorTextColor="@color/error"
-                app:helperText="Vui lòng nhập địa chỉ email cá nhân và đang hoạt động của bạn. Email này sẽ được sử dụng để xác thực tài khoản và nhận thông báo giao dịch."
                 app:helperTextEnabled="false"
                 app:helperTextTextAppearance="@style/MaterialFieldHelperTextTextAppearance"
                 app:helperTextTextColor="@color/textColorSecondary"
@@ -107,17 +106,51 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/idCardNoEditText"
-                    android:editable="false"
-                    android:text="251279169"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:editable="false"
                     android:fontFamily="@font/regular_font"
                     android:importantForAccessibility="yes"
                     android:inputType="textEmailAddress"
+                    android:text="251279169"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:text="Điều kiện liên kết"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:fontFamily="@font/medium_font"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/linkingConditionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="17dp"
+                android:fontFamily="@font/regular_font"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="14sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <Button
+        android:id="@+id/linkAccountButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/drawable_filled_r10"
+        android:backgroundTint="@color/primaryColor"
+        android:fontFamily="@font/medium_font"
+        android:text="Tiếp tục"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </LinearLayout>

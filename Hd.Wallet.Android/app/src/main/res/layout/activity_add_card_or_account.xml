@@ -41,7 +41,7 @@
         android:layout_weight="1"
         android:fillViewport="true">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -53,6 +53,13 @@
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/item_bank_app" />
 
-        </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progressBarView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:progressTint="@color/secondaryColor"
+                android:layout_gravity="center" />
+        </FrameLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

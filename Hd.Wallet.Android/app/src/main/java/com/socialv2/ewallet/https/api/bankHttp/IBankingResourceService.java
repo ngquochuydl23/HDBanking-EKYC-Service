@@ -11,4 +11,8 @@ import io.reactivex.rxjava3.core.Observable;
 
 public interface IBankingResourceService {
     Observable<HttpResponseDto<List<BankDto>>> getBanks();
+
+    Observable<HttpResponseDto<List<BankDto>>> getTopBanks();
+
+    Observable<HttpResponseDto<BankDto>> getBankByBin(String bin);
 }

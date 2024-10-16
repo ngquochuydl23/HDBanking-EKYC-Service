@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
-import com.socialv2.ewallet.dtos.banks.BankAppDto;
+import com.socialv2.ewallet.dtos.banks.BankDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,17 +51,13 @@ public class BankUtils {
         this.context = context;
     }
 
-    public List<BankAppDto> getOtherBankInstalled() {
+    public List<String> getOtherBankInstalled() {
         PackageManager pm = context.getPackageManager();
-        List<BankAppDto> bankInstalledList = new ArrayList<>();
+        List<String> bankInstalledList = new ArrayList<>();
         for (String packageName : bankApps) {
             PackageInfo packageInfo = findPackage(packageName);
             if (packageInfo != null) {
-
-                String appName = (String) pm.getApplicationLabel(packageInfo.applicationInfo);
-                Drawable appIcon = pm.getApplicationIcon(packageInfo.applicationInfo);
-
-                bankInstalledList.add(new BankAppDto(appName, appIcon));
+                bankInstalledList.add(packageInfo.packageName);
             }
         }
 

@@ -34,4 +34,18 @@ public class BankingResourceHttpImpl implements IBankingResourceService {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }
+
+    @Override
+    public Observable<HttpResponseDto<List<BankDto>>> getTopBanks() {
+        return mHttpBankingResource.getTopBanks()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<HttpResponseDto<BankDto>> getBankByBin(String bin) {
+        return mHttpBankingResource.getBankByBin(bin)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
 }

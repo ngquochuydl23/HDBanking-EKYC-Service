@@ -3,14 +3,11 @@ package com.socialv2.ewallet.dtos.accounts;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AccountBankDto {
+public class RequestLinkingAccount {
+
     @SerializedName("bin")
     @Expose
     private String bin;
-
-    @SerializedName("bankName")
-    @Expose
-    private String bankName;
 
     @SerializedName("bankAccountId")
     @Expose
@@ -20,29 +17,17 @@ public class AccountBankDto {
     @Expose
     private String bankOwnerName;
 
-    @SerializedName("logoUrl")
-    @Expose
-    private String logoUrl;
-
-    @SerializedName("bankFullName")
-    @Expose
-    private String bankFullName;
-
     @SerializedName("idCardNo")
     @Expose
     private String idCardNo;
 
-    public AccountBankDto() {
 
-    }
+    public RequestLinkingAccount() { }
 
-    public AccountBankDto(String bin, String bankName, String bankAccountId, String bankOwnerName, String logoUrl, String bankFullName, String idCardNo) {
+    public RequestLinkingAccount(String bin, String bankAccountId, String bankOwnerName, String idCardNo) {
         this.bin = bin;
-        this.bankName = bankName;
         this.bankAccountId = bankAccountId;
         this.bankOwnerName = bankOwnerName;
-        this.logoUrl = logoUrl;
-        this.bankFullName = bankFullName;
         this.idCardNo = idCardNo;
     }
 
@@ -52,14 +37,6 @@ public class AccountBankDto {
 
     public void setBin(String bin) {
         this.bin = bin;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
     }
 
     public String getBankAccountId() {
@@ -78,22 +55,6 @@ public class AccountBankDto {
         this.bankOwnerName = bankOwnerName;
     }
 
-    public String getLogoUrl() {
-        return logoUrl;
-    }
-
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
-    }
-
-    public String getBankFullName() {
-        return bankFullName;
-    }
-
-    public void setBankFullName(String bankFullName) {
-        this.bankFullName = bankFullName;
-    }
-
     public String getIdCardNo() {
         return idCardNo;
     }
@@ -104,13 +65,10 @@ public class AccountBankDto {
 
     @Override
     public String toString() {
-        return "AccountBankDto{" +
+        return "RequestLinkingAccount{" +
                 "bin='" + bin + '\'' +
-                ", bankName='" + bankName + '\'' +
                 ", bankAccountId='" + bankAccountId + '\'' +
                 ", bankOwnerName='" + bankOwnerName + '\'' +
-                ", logoUrl='" + logoUrl + '\'' +
-                ", bankFullName='" + bankFullName + '\'' +
                 ", idCardNo='" + idCardNo + '\'' +
                 '}';
     }

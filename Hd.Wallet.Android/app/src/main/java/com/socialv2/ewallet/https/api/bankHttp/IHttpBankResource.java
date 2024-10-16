@@ -10,6 +10,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface IHttpBankResource {
-    @GET("bankingResource")
+    @GET("bankingResource/Bank")
     Observable<HttpResponseDto<List<BankDto>>> getBanks();
+
+    @GET("bankingResource/Bank/top")
+    Observable<HttpResponseDto<List<BankDto>>> getTopBanks();
+
+    @GET("bankingResource/Bank/{bin}")
+    Observable<HttpResponseDto<BankDto>> getBankByBin(@Path("bin") String bin);
 }

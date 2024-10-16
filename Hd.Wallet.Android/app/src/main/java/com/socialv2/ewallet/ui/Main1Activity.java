@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.sharedReferences.KeyValueSharedPreferences;
 import com.socialv2.ewallet.sharedReferences.SaveTokenSharedPreference;
+import com.socialv2.ewallet.ui.addCardOrAccount.AddCardOrAccountActivity;
 import com.socialv2.ewallet.ui.main.MainHomeActivity;
 import com.socialv2.ewallet.ui.login.LoginActivity;
 import com.socialv2.ewallet.ui.login.LoginPasswordActivity;
@@ -41,7 +42,7 @@ public class Main1Activity extends AppCompatActivity {
     }
 
     private void navigateToSignUpActivity() {
-        NavigateUtil.navigateTo(this, TransferMoneyActivity.class); // Chuyển hướng đến màn hình đăng ký
+        NavigateUtil.navigateTo(this, MainHomeActivity.class); // Chuyển hướng đến màn hình đăng ký
     }
 
     private void navigateToLoginActivity() {

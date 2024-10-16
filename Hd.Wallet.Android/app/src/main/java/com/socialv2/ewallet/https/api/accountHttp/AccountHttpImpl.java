@@ -4,10 +4,13 @@ import android.content.Context;
 
 import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
+import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
 import com.socialv2.ewallet.dtos.auth.LoginRequestDto;
 import com.socialv2.ewallet.dtos.auth.LoginResponseDto;
 import com.socialv2.ewallet.https.HttpSettingImpl;
 import com.socialv2.ewallet.https.IHttpSetting;
+
+import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -29,6 +32,20 @@ public class AccountHttpImpl implements IAccountService {
     @Override
     public Observable<HttpResponseDto<AccountDto>> getAccountById(String accountId) {
         return mHttpAccount.getAccountById(accountId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<HttpResponseDto<AccountDto>> addLinkingAccount(RequestLinkingAccount body) {
+        return mHttpAccount.addLinkingAccount(body)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<HttpResponseDto<List<AccountDto>>> getAccounts() {
+        return mHttpAccount.getAccounts()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }
