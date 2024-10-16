@@ -128,7 +128,6 @@ public class HomeFragment extends BaseFragment {
         });
 
         mQrButton.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(getContext(), MyQrActivity.class);
             NavigateUtil.navigateTo(getContext(), QrTransferActivity.class);
         });
     }

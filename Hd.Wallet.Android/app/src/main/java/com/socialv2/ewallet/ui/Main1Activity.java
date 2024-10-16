@@ -13,6 +13,7 @@ import com.socialv2.ewallet.sharedReferences.SaveTokenSharedPreference;
 import com.socialv2.ewallet.ui.main.MainHomeActivity;
 import com.socialv2.ewallet.ui.login.LoginActivity;
 import com.socialv2.ewallet.ui.login.LoginPasswordActivity;
+import com.socialv2.ewallet.ui.transfer.TransferMoneyActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.WindowUtils;
 
@@ -40,7 +41,7 @@ public class Main1Activity extends AppCompatActivity {
     }
 
     private void navigateToSignUpActivity() {
-        NavigateUtil.navigateTo(this, MainHomeActivity.class); // Chuyển hướng đến màn hình đăng ký
+        NavigateUtil.navigateTo(this, TransferMoneyActivity.class); // Chuyển hướng đến màn hình đăng ký
     }
 
     private void navigateToLoginActivity() {

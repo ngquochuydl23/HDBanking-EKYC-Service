@@ -7,11 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.qr.QrTransferActivity">
 
+
     <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="23dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <com.socialv2.ewallet.components.HdWalletToolbar
         android:id="@+id/toolbar"
@@ -22,27 +24,80 @@
         android:titleTextColor="@color/white"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="60dp"
+        android:src="@drawable/drawale_qr_overlay"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="W,1:1"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/updateButton"
+        android:id="@+id/flashButton"
         style="@style/Widget.Material3.Button.IconButton.Filled"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="60dp"
         android:layout_weight="1"
-        android:elevation="0dp"
+        android:elevation="5dp"
+        android:fontFamily="@font/medium_font"
+        android:paddingHorizontal="20dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:backgroundTint="#ffffff"
+        app:cornerRadius="40dp"
+        app:icon="@drawable/ic_torch"
+        app:iconSize="30dp"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/myQrButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/myQrButton"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="60dp"
+        android:layout_weight="1"
+        android:elevation="5dp"
         android:fontFamily="@font/medium_font"
         android:paddingHorizontal="20dp"
         android:text="QR của tôi"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:backgroundTint="#ffffff"
-        app:cornerRadius="30dp"
+        app:cornerRadius="40dp"
         app:icon="@drawable/ic_my_qr"
         app:iconPadding="10dp"
+        app:iconSize="30dp"
         app:iconTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:strokeWidth="1dp" />
+        app:layout_constraintLeft_toRightOf="@id/flashButton"
+        app:layout_constraintRight_toLeftOf="@id/uploadQrImageButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/uploadQrImageButton"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="60dp"
+        android:layout_weight="1"
+        android:elevation="5dp"
+        android:fontFamily="@font/medium_font"
+        android:paddingHorizontal="20dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:backgroundTint="#ffffff"
+        app:cornerRadius="40dp"
+        app:icon="@drawable/ic_upload_qr"
+        app:iconSize="30dp"
+        app:iconTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/myQrButton"
+        app:layout_constraintRight_toRightOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

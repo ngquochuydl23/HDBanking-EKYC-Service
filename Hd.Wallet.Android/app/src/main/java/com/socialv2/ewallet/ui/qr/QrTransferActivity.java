@@ -2,12 +2,16 @@ package com.socialv2.ewallet.ui.qr;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -45,6 +49,7 @@ import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
 import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
 import com.socialv2.ewallet.permissions.Permissions;
 import com.socialv2.ewallet.ui.transfer.TransferMoneyActivity;
+import com.socialv2.ewallet.utils.NavigateUtil;
 
 import java.util.List;
 import java.util.UUID;
@@ -56,7 +61,7 @@ import java.util.concurrent.Executors;
 public class QrTransferActivity extends BaseActivity {
 
     private static final String TAG = QrTransferActivity.class.getName();
-    private static final float MAX_ZOOM_RATIO = 5.0f;
+    private static final float MAX_ZOOM_RATIO = 2.0f;
 
     private ListenableFuture<ProcessCameraProvider> mCameraProviderListenableFuture;
 
@@ -70,9 +75,15 @@ public class QrTransferActivity extends BaseActivity {
     private ImageAnalysis mAnalysisUseCase;
     private ExecutorService mCameraExecutor;
     private IAccountService mAccountService;
+    private Button mUploadQrImageButton;
+    private Button mMyQrButton;
+    private Button mFlashButton;
 
+    private CameraManager mCameraManager;
+    private String mCameraId;
 
     private boolean isZooming = false;
+    private boolean isLightTurnOn = false;
 
     public QrTransferActivity() {
         super(R.layout.activity_qr_transfer);
@@ -83,9 +94,19 @@ public class QrTransferActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         mAccountService = new AccountHttpImpl(this);
+        mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        try {
+            mCameraId = mCameraManager.getCameraIdList()[0];
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
 
         mPreviewView = findViewById(R.id.previewView);
         mToolbar = findViewById(R.id.toolbar);
+        mUploadQrImageButton = findViewById(R.id.uploadQrImageButton);
+        mMyQrButton = findViewById(R.id.myQrButton);
+        mFlashButton = findViewById(R.id.flashButton);
+
         initView();
         requestPermissions();
     }
@@ -98,10 +119,20 @@ public class QrTransferActivity extends BaseActivity {
             params.setMargins(params.leftMargin, getStatusBarHeight(), params.rightMargin, params.bottomMargin);
             mToolbar.setLayoutParams(params);
         }
+
+        mMyQrButton.setOnClickListener(view -> {
+            NavigateUtil.navigateTo(this, MyQrActivity.class);
+        });
+
+        mFlashButton.setOnClickListener(view -> {
+            setTurnLightOnOff(!isLightTurnOn);
+        });
     }
 
     private void requestPermissions() {
-        appPermission = new Permissions(this, new String[]{Manifest.permission.CAMERA});
+        appPermission = new Permissions(this, new String[]{
+                Manifest.permission.CAMERA
+        });
 
         if (!appPermission.checkIsGranted()) {
             Log.d(TAG, "Camera permission is denied");
@@ -162,8 +193,6 @@ public class QrTransferActivity extends BaseActivity {
         }
 
         Preview.Builder builder = new Preview.Builder();
-        builder.setTargetRotation(getRotation());
-
         mPreviewUseCase = builder.build();
         mPreviewUseCase.setSurfaceProvider(mPreviewView.getSurfaceProvider());
 
@@ -188,7 +217,6 @@ public class QrTransferActivity extends BaseActivity {
         mAnalysisUseCase = new ImageAnalysis
                 .Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .setTargetRotation(getRotation())
                 .build();
 
         mAnalysisUseCase.setAnalyzer(mCameraExecutor, this::analyze);
@@ -198,10 +226,6 @@ public class QrTransferActivity extends BaseActivity {
         } catch (Exception e) {
             Log.e(TAG, "Error when bind analysis", e);
         }
-    }
-
-    protected int getRotation() throws NullPointerException {
-        return mPreviewView.getDisplay().getRotation();
     }
 
     @SuppressLint("UnsafeOptInUsageError")
@@ -240,7 +264,6 @@ public class QrTransferActivity extends BaseActivity {
                     Log.i(TAG, "Success Analyse - QR Result: " + rawValue);
 
                     handleQrCodeResult(rawValue);
-                    stopCamera();
                 }
             }
         } else {
@@ -258,14 +281,14 @@ public class QrTransferActivity extends BaseActivity {
         UUID uuid = UUID.fromString(accountId);
 
         if (!uuid.toString().equals(accountId)) {
-
             Log.e(TAG, "Invalid UUID Result");
-            // show bottomsheet invalid qr code
             return;
         }
 
+        stopCamera();
         mAccountService.getAccountById(accountId)
                 .subscribe(response -> {
+
                     Log.e(TAG, "GetAccountById successfully");
 
                     AccountDto account = response.getResult();
@@ -273,10 +296,17 @@ public class QrTransferActivity extends BaseActivity {
 
                     Intent intent = new Intent(this, TransferMoneyActivity.class);
                     intent.putExtra("AccountJsonResult", json);
-                    //startActivity(intent);
+                    startActivity(intent);
                 },throwable -> {
 
-                    // fitler error to show http error
+                    ScanFailedBottomSheet scanFailedScanFailedBottomSheet =    new ScanFailedBottomSheet("Quét mã thất bại", "Không tìm thấy ngân hàng thụ hưởng. Vui lòng quét mã khác hoặc bấm thử lại.");
+                    scanFailedScanFailedBottomSheet.show(getSupportFragmentManager(), ScanFailedBottomSheet.TAG);
+                    scanFailedScanFailedBottomSheet.setRetryClickListener(new ScanFailedBottomSheet.OnRetryListener() {
+                        @Override
+                        public void onRetryClick() {
+                            resume();
+                        }
+                    });
                     throwable.printStackTrace();
                 });
     }
@@ -284,6 +314,12 @@ public class QrTransferActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        resume();
+    }
+
+    private void resume() {
+        isLightTurnOn = false;
+        isZooming = false;
 
         requestPermissions();
 
@@ -291,6 +327,7 @@ public class QrTransferActivity extends BaseActivity {
         layoutParams.screenBrightness = 1.0f;  // Maximum brightness (1.0f)
         getWindow().setAttributes(layoutParams);
     }
+
 
     private void zoomToQr(Barcode barcode) {
         if (mCamera == null || isZooming) {
@@ -312,5 +349,12 @@ public class QrTransferActivity extends BaseActivity {
         }
     }
 
-
+    private void setTurnLightOnOff(Boolean turnOn) {
+        isLightTurnOn = turnOn;
+        try {
+            mCameraManager.setTorchMode(mCameraId, isLightTurnOn);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
 }
