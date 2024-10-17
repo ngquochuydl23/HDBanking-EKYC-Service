@@ -1,6 +1,9 @@
 package com.socialv2.ewallet;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -41,5 +44,16 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void onInitalBeforeInflatingView() {
         EdgeToEdge.enable(this);
+    }
+
+
+    protected void hideKeyboard() {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        View currentFocusView = getCurrentFocus();
+
+        if (currentFocusView != null) {
+            inputMethodManager.hideSoftInputFromWindow(currentFocusView.getWindowToken(), 0);
+        }
     }
 }

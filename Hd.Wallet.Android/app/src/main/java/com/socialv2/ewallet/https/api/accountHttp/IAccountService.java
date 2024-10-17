@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.core.Observable;
 public interface IAccountService {
     Observable<HttpResponseDto<AccountDto>> getAccountById(String accountId);
 
-    Observable<HttpResponseDto<AccountDto>> addLinkingAccount(RequestLinkingAccount body);
+    Observable<HttpResponseDto<AccountDto>> addLinkingAccount(String pin, RequestLinkingAccount body);
 
     Observable<HttpResponseDto<List<AccountDto>>> getAccounts();
 

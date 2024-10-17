@@ -69,6 +69,7 @@ public class HttpSettingImpl implements IHttpSetting {
 
                         Request originalRequest = chain.request();
                         Headers headers = new Headers.Builder()
+                                .addAll(originalRequest.headers())
                                 .add("Authorization", "Bearer " + accessToken)
                                 .build();
 

@@ -16,10 +16,7 @@
         <shape android:shape="rectangle">
             <solid android:color="@color/white" /> <!-- Background color when filled -->
             <corners android:radius="8dp" />
-            <stroke
-                android:width="2dp"
-                android:color="@color/black" /> <!-- Border when filled -->
-        </shape>
+          </shape>
     </item>
 
     <!-- Default state (when the PinView item is empty and not focused) -->

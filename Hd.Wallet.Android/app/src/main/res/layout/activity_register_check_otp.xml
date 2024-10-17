@@ -68,7 +68,7 @@
                 app:itemSpacing="10dp"
                 app:itemWidth="48dp"
                 app:lineColor="@color/borderWidthColor"
-                app:lineWidth="2dp"
+                app:lineWidth="1dp"
                 app:viewType="rectangle" />
 
             <TextView

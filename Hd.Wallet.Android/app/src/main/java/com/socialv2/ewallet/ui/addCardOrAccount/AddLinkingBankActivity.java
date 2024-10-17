@@ -3,10 +3,13 @@ package com.socialv2.ewallet.ui.addCardOrAccount;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -21,8 +25,10 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.gson.Gson;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.components.AskUserPinBottomSheet;
 import com.socialv2.ewallet.components.BackdropLoadingDialogFragment;
 import com.socialv2.ewallet.components.HdWalletToolbar;
+import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.accounts.AccountBankDto;
 import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
 import com.socialv2.ewallet.dtos.banks.BankDto;
@@ -32,7 +38,11 @@ import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
 import com.socialv2.ewallet.https.api.bankHttp.BankingResourceHttpImpl;
 import com.socialv2.ewallet.https.api.bankHttp.IBankingResourceService;
 import com.socialv2.ewallet.singleton.UserSingleton;
+import com.socialv2.ewallet.ui.idCardTaken.GettingTakenIdCardActivity;
+import com.socialv2.ewallet.ui.register.RegisterCheckOtpActivity;
+import com.socialv2.ewallet.utils.AesEncryptionUtils;
 import com.socialv2.ewallet.utils.NavigateUtil;
+import com.socialv2.ewallet.utils.ParseHttpError;
 import com.socialv2.ewallet.utils.WindowUtils;
 
 import java.text.Normalizer;
@@ -52,7 +62,7 @@ public class AddLinkingBankActivity extends BaseActivity {
     private EditText mIdCardNoEditText;
     private Button mLinkAccountButton;
     private TextView mLinkingConditionTextView;
-
+    private AskUserPinBottomSheet mAskUserPinBottomSheet;
     private BankDto mBank;
 
     public AddLinkingBankActivity() {
@@ -86,7 +96,8 @@ public class AddLinkingBankActivity extends BaseActivity {
         mLoadingBackdropDialog.setLoading(false);
         WindowUtils.applyPadding(findViewById(R.id.main));
         mLinkAccountButton.setOnClickListener(view -> {
-            addLinkingAccount();
+            getBottomSheet();
+            mAskUserPinBottomSheet.show(getSupportFragmentManager(), AskUserPinBottomSheet.class.getName());
         });
 
         SpannableString spannable = new SpannableString(
@@ -143,7 +154,23 @@ public class AddLinkingBankActivity extends BaseActivity {
     }
 
     @SuppressLint("CheckResult")
-    private void addLinkingAccount() {
+    private void getBottomSheet() {
+        if (mAskUserPinBottomSheet == null) {
+            mAskUserPinBottomSheet = new AskUserPinBottomSheet();
+            mAskUserPinBottomSheet.setOnCompletePin(pin -> {
+                Log.i(TAG, pin);
+
+                hideKeyboard();
+                mAskUserPinBottomSheet.dismiss();
+                mLoadingBackdropDialog.setLoading(true);
+
+                onCompletePin(pin);
+            });
+        }
+    }
+
+    @SuppressLint("CheckResult")
+    private void onCompletePin(String pin) {
         String bankAccountId = mAccountNoEditText
                 .getText()
                 .toString();
@@ -155,37 +182,56 @@ public class AddLinkingBankActivity extends BaseActivity {
         String idCardNo = mIdCardNoEditText
                 .getText()
                 .toString();
-
-        if (!bankAccountId.isEmpty() && !bankOwnerName.isEmpty() && !idCardNo.isEmpty()) {
-            mLoadingBackdropDialog.setLoading(true);
-            mAccountService
-                    .addLinkingAccount(new RequestLinkingAccount(
-                            mBank.getBin(),
-                            bankAccountId,
-                            bankOwnerName,
-                            idCardNo
-                    ))
-                    .subscribe(response -> {
-                                mLoadingBackdropDialog.setLoading(false);
-                                AccountBankDto bankAccount = response
-                                        .getResult()
-                                        .getAccountBank();
-
-                                Intent intent = new Intent(this, LinkingBankSuccessfullyActivity.class);
-                                String json = new Gson().toJson(bankAccount);
-
-                                intent.putExtra("AccountBank-json", json);
-
-                                startActivity(intent);
-                                finish();
-                            },
-                            throwable -> {
-                                throwable.printStackTrace();
-                                mLoadingBackdropDialog.setLoading(false);
-                            },
-                            () -> {
-                                mLoadingBackdropDialog.setLoading(false);
-                            });
+        if (bankAccountId.isEmpty() || bankOwnerName.isEmpty() || idCardNo.isEmpty() || pin.isEmpty()) {
+            return;
         }
+        mAccountService
+                .addLinkingAccount(pin, new RequestLinkingAccount(
+                        mBank.getBin(),
+                        bankAccountId,
+                        bankOwnerName,
+                        idCardNo
+                ))
+                .subscribe(response -> {
+                            mLoadingBackdropDialog.setLoading(false);
+                            AccountBankDto bankAccount = response
+                                    .getResult()
+                                    .getAccountBank();
+
+                            Intent intent = new Intent(AddLinkingBankActivity.this, LinkingBankSuccessfullyActivity.class);
+                            String json = new Gson().toJson(bankAccount);
+
+                            intent.putExtra("AccountBank-json", json);
+
+                            startActivity(intent);
+                            finish();
+                        },
+                        throwable -> {
+                            mLoadingBackdropDialog.setLoading(false);
+
+                            Log.e(TAG, throwable.getMessage());
+
+                            int statusCode = ParseHttpError.getStatusCode(throwable);
+                            if (statusCode == 400) {
+                                HttpResponseDto<?> errorBody = ParseHttpError.parse(throwable);
+                                String errMsg = errorBody.getError();
+
+                                if (errMsg.equals("Pin is incorrect")) {
+                                    getBottomSheet();
+
+                                    mAskUserPinBottomSheet.setOnShowListener(() -> {
+                                        mAskUserPinBottomSheet.setPinIncorrect();
+                                    });
+
+                                    mAskUserPinBottomSheet.show(getSupportFragmentManager(), AskUserPinBottomSheet.class.getName());
+
+                                }
+                            }
+
+
+                        },
+                        () -> {
+                            mLoadingBackdropDialog.setLoading(false);
+                        });
     }
 }

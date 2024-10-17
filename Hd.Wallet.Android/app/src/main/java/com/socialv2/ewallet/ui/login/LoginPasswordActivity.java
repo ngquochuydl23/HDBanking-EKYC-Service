@@ -101,8 +101,7 @@ public class LoginPasswordActivity extends AppCompatActivity {
     @SuppressLint("CheckResult")
     private void login() {
         mLoadingBackdropDialog.setLoading(true);
-        String phoneNumber = getIntent()
-                .getStringExtra("PhoneNumberLogin");
+        String phoneNumber = new KeyValueSharedPreferences(this, "PhoneNumberLogin").getData();
         String password = mPasswordEditText
                 .getText()
                 .toString();

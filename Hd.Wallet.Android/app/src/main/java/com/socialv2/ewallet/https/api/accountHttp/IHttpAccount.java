@@ -13,6 +13,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -21,7 +22,9 @@ public interface IHttpAccount {
     Observable<HttpResponseDto<AccountDto>> getAccountById(@Path("accountId") String accountId);
 
     @POST("account/Account")
-    Observable<HttpResponseDto<AccountDto>> addLinkingAccount(@Body RequestLinkingAccount body);
+    Observable<HttpResponseDto<AccountDto>> addLinkingAccount(
+            @Header("X-EncryptedPin") String encryptedPin,
+            @Body RequestLinkingAccount body);
 
     @GET("account/Account")
     Observable<HttpResponseDto<List<AccountDto>>> getAccounts();

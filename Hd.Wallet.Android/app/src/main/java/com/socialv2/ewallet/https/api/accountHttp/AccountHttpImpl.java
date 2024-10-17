@@ -1,6 +1,7 @@
 package com.socialv2.ewallet.https.api.accountHttp;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.accounts.AccountBalanceDto;
@@ -10,6 +11,7 @@ import com.socialv2.ewallet.dtos.auth.LoginRequestDto;
 import com.socialv2.ewallet.dtos.auth.LoginResponseDto;
 import com.socialv2.ewallet.https.HttpSettingImpl;
 import com.socialv2.ewallet.https.IHttpSetting;
+import com.socialv2.ewallet.utils.AesEncryptionUtils;
 
 import java.util.List;
 
@@ -38,8 +40,8 @@ public class AccountHttpImpl implements IAccountService {
     }
 
     @Override
-    public Observable<HttpResponseDto<AccountDto>> addLinkingAccount(RequestLinkingAccount body) {
-        return mHttpAccount.addLinkingAccount(body)
+    public Observable<HttpResponseDto<AccountDto>> addLinkingAccount(String pin, RequestLinkingAccount body) {
+        return mHttpAccount.addLinkingAccount(AesEncryptionUtils.encrypt(pin), body)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }
