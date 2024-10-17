@@ -63,7 +63,8 @@ public class LoginPasswordActivity extends AppCompatActivity {
     }
 
     private void getPhoneNumber() {
-        String phoneNumber = getIntent().getStringExtra("PhoneNumberLogin");
+
+        String phoneNumber = new KeyValueSharedPreferences(this, "PhoneNumberLogin").getData();
         if (phoneNumber != null) {
 
             String maskedPhoneNumber = phoneNumber.replaceAll("\\d(?=\\d{3})", "*");
@@ -142,7 +143,7 @@ public class LoginPasswordActivity extends AppCompatActivity {
                         } else if (errorBody.getError().equals("Password is incorrect")) {
                             // cảnh báo sai mật khẩu.
                         }
-                    } else if (statusCode == 500){
+                    } else if (statusCode == 500) {
                         Log.e(TAG, errorBody.getError());
 
                         // Đưa ra lỗi chung chung

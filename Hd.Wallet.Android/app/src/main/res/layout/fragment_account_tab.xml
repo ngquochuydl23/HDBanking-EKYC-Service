@@ -47,9 +47,10 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="20dp"
-            android:clickable="true"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/drawable_outline_dash_15dp"
             android:backgroundTint="#50662AB2"
+            android:clickable="true"
             android:padding="5dp">
 
 
@@ -60,8 +61,8 @@
                 android:fontFamily="@font/semibold_font"
                 android:includeFontPadding="false"
                 android:text="+ Thêm tài khoản/thẻ"
-                android:textColor="@color/secondaryColor"
                 android:textAlignment="center"
+                android:textColor="@color/secondaryColor"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@id/paymentTypeTextView"
                 app:layout_constraintLeft_toLeftOf="parent"

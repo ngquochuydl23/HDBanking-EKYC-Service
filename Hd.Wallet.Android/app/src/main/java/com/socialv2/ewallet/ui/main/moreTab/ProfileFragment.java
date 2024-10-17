@@ -1,8 +1,10 @@
 package com.socialv2.ewallet.ui.main.moreTab;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,16 +14,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.socialv2.ewallet.BaseFragment;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.components.AvatarView;
 import com.socialv2.ewallet.dtos.MenuAppDto;
+import com.socialv2.ewallet.singleton.UserSingleton;
+import com.socialv2.ewallet.ui.profile.ProfileActivity;
+import com.socialv2.ewallet.utils.NavigateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileFragment extends BaseFragment {
 
+    private static final String TAG = ProfileFragment.class.getName();
+
     private RecyclerView mMenuAppRecyclerView;
     private MenuAppAdapter mMenuAppAdapter;
     private Button mLogOutButton;
+    private AvatarView mAvatarImageView;
+    private TextView mFullnameTextView;
+    private TextView mPhoneNumberTextView;
+    private View mUserInfoContainerView;
 
     public ProfileFragment() {
         super(R.layout.fragment_profile);
@@ -33,10 +45,15 @@ public class ProfileFragment extends BaseFragment {
 
         mMenuAppAdapter = new MenuAppAdapter();
 
+        mUserInfoContainerView = view.findViewById(R.id.userInfoContainerView);
         mMenuAppRecyclerView = view.findViewById(R.id.menuAppRecyclerView);
         mLogOutButton = view.findViewById(R.id.logOutButton);
+        mAvatarImageView = view.findViewById(R.id.avatarImageView);
+        mFullnameTextView = view.findViewById(R.id.fullnameTextView);
+        mPhoneNumberTextView = view.findViewById(R.id.phoneNumberTextView);
 
         initView();
+        observeUserData();
     }
 
     private void initView() {
@@ -49,14 +66,23 @@ public class ProfileFragment extends BaseFragment {
         mMenuAppRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mMenuAppRecyclerView.setAdapter(mMenuAppAdapter);
         mMenuAppAdapter.setItems(menuAppItems);
-//        mUserInfoContainerView.setOnClickListener(view -> {
-//            NavigateUtil.navigateTo(getContext(), ProfileActivity.class);
-//        });
+        mUserInfoContainerView.setOnClickListener(view -> {
+            NavigateUtil.navigateTo(getContext(), ProfileActivity.class);
+        });
 
         mLogOutButton.setOnClickListener(view -> {
 
         });
     }
 
+    private void observeUserData() {
+        UserSingleton.getInstance()
+                .getData()
+                .observe(getViewLifecycleOwner(), user -> {
 
+                    mAvatarImageView.setSrcWithGender(user.getAvatar(), true);
+                    mFullnameTextView.setText(user.getFullName());
+                    mPhoneNumberTextView.setText(user.getPhoneNumber());
+                });
+    }
 }

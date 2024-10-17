@@ -8,7 +8,6 @@ import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.users.UserDto;
 import com.socialv2.ewallet.https.HttpSettingImpl;
 import com.socialv2.ewallet.https.IHttpSetting;
-import com.socialv2.ewallet.https.api.register.IRegisterService;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -28,8 +27,15 @@ public class UserHttpImpl implements IUserService {
 
     @NonNull
     @Override
-    public Observable<HttpResponseDto<Object>> getUserByPhone(String phone) {
+    public Observable<HttpResponseDto<UserDto>> getUserByPhone(String phone) {
         return mHttpUser.getUserByPhone(phone)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<HttpResponseDto<UserDto>> getUserInfo() {
+        return mHttpUser.getUserInfo()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }

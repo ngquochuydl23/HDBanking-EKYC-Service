@@ -119,6 +119,8 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
 
                         Log.i(TAG, response.toString());
 
+                        new KeyValueSharedPreferences(this,"PhoneNumberLogin")
+                                .setData(phoneNumber);
                         Intent intent = new Intent(LoginActivity.this, LoginPasswordActivity.class);
                         intent.putExtra("PhoneNumberLogin", phoneNumber); // Pass the phone number
                         startActivity(intent);

@@ -3,6 +3,7 @@ package com.socialv2.ewallet.https.api.accountHttp;
 import android.content.Context;
 
 import com.socialv2.ewallet.dtos.HttpResponseDto;
+import com.socialv2.ewallet.dtos.accounts.AccountBalanceDto;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
 import com.socialv2.ewallet.dtos.auth.LoginRequestDto;
@@ -46,6 +47,20 @@ public class AccountHttpImpl implements IAccountService {
     @Override
     public Observable<HttpResponseDto<List<AccountDto>>> getAccounts() {
         return mHttpAccount.getAccounts()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<HttpResponseDto<AccountBalanceDto>> getAccountBalance() {
+        return mHttpAccount.getAccountBalance()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<HttpResponseDto<AccountDto>> unlinkAccount(String accountId) {
+        return mHttpAccount.unlinkAccount(accountId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }

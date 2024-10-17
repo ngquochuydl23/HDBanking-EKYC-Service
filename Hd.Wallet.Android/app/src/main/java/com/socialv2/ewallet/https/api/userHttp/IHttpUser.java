@@ -12,5 +12,8 @@ import retrofit2.http.Query;
 
 public interface IHttpUser {
     @GET("account/User/FindUserByPhone")
-    Observable<HttpResponseDto<Object>> getUserByPhone(@Query("phone") String phone);
+    Observable<HttpResponseDto<UserDto>> getUserByPhone(@Query("phone") String phone);
+
+    @GET("account/User/UserInfo")
+    Observable<HttpResponseDto<UserDto>> getUserInfo();
 }

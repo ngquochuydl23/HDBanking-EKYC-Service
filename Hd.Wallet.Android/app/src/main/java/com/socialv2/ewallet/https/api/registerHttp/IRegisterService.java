@@ -1,4 +1,4 @@
-package com.socialv2.ewallet.https.api.register;
+package com.socialv2.ewallet.https.api.registerHttp;
 
 
 import androidx.annotation.NonNull;

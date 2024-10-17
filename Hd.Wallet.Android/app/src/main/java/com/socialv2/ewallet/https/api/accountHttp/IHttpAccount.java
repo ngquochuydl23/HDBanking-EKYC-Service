@@ -1,6 +1,8 @@
 package com.socialv2.ewallet.https.api.accountHttp;
 
 import com.socialv2.ewallet.dtos.HttpResponseDto;
+import com.socialv2.ewallet.dtos.accounts.AccountBalanceDto;
+import com.socialv2.ewallet.dtos.accounts.AccountBankDto;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
 import com.socialv2.ewallet.dtos.auth.LoginRequestDto;
@@ -18,10 +20,15 @@ public interface IHttpAccount {
     @GET("account/Account/{accountId}")
     Observable<HttpResponseDto<AccountDto>> getAccountById(@Path("accountId") String accountId);
 
-
     @POST("account/Account")
     Observable<HttpResponseDto<AccountDto>> addLinkingAccount(@Body RequestLinkingAccount body);
 
     @GET("account/Account")
     Observable<HttpResponseDto<List<AccountDto>>> getAccounts();
+
+    @GET("account/Account/Balance")
+    Observable<HttpResponseDto<AccountBalanceDto>> getAccountBalance();
+
+    @POST("account/Account/{accountId}/Unlink")
+    Observable<HttpResponseDto<AccountDto>> unlinkAccount(@Path("accountId") String accountId);
 }

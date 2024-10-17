@@ -26,12 +26,17 @@ import com.socialv2.ewallet.components.HdWalletToolbar;
 import com.socialv2.ewallet.dtos.accounts.AccountBankDto;
 import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
 import com.socialv2.ewallet.dtos.banks.BankDto;
+import com.socialv2.ewallet.dtos.users.UserDto;
 import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
 import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
 import com.socialv2.ewallet.https.api.bankHttp.BankingResourceHttpImpl;
 import com.socialv2.ewallet.https.api.bankHttp.IBankingResourceService;
+import com.socialv2.ewallet.singleton.UserSingleton;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.WindowUtils;
+
+import java.text.Normalizer;
+import java.util.regex.Pattern;
 
 public class AddLinkingBankActivity extends BaseActivity {
 
@@ -111,6 +116,21 @@ public class AddLinkingBankActivity extends BaseActivity {
                     }, throwable -> {
                         throwable.printStackTrace();
                     });
+
+            UserDto user = UserSingleton
+                    .getInstance()
+                    .getData()
+                    .getValue();
+
+            if (user != null) {
+                String ownerName = Normalizer.normalize(user.getFullName(), Normalizer.Form.NFD);
+                Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+                String result = pattern.matcher(ownerName).replaceAll("");
+                ownerName = result.toUpperCase();
+
+                mOwnerEditText.setText(ownerName);
+                mIdCardNoEditText.setText(user.getIdCardNo());
+            }
         }
     }
 

@@ -1,7 +1,9 @@
 package com.socialv2.ewallet.ui.main;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.dtos.users.UserDto;
+import com.socialv2.ewallet.https.api.userHttp.IUserService;
+import com.socialv2.ewallet.https.api.userHttp.UserHttpImpl;
+import com.socialv2.ewallet.singleton.UserSingleton;
 import com.socialv2.ewallet.ui.main.accountTab.AccountTabFragment;
 import com.socialv2.ewallet.ui.main.homeTab.HomeFragment;
 import com.socialv2.ewallet.ui.main.moreTab.ProfileFragment;
@@ -21,7 +27,10 @@ import com.socialv2.ewallet.ui.main.tabs.TransactionHistoryFragment;
 
 public class MainHomeActivity extends BaseActivity {
 
+    private static final String TAG = MainHomeActivity.class.getName();
+
     private BottomNavigationView mBottomNavigationView;
+    private IUserService mUserService;
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
@@ -42,18 +51,20 @@ public class MainHomeActivity extends BaseActivity {
         mAccountFragment = new AccountTabFragment();
         mProfileFragment = new ProfileFragment();
         mTransactionHistoryFragment = new TransactionHistoryFragment();
+
+
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mUserService = new UserHttpImpl(this);
 
         mBottomNavigationView = findViewById(R.id.bottomNavigationView);
         mFragmentManager = getSupportFragmentManager();
 
         initView();
-
+        getUserProfile();
     }
 
     private void initView() {
@@ -113,5 +124,21 @@ public class MainHomeActivity extends BaseActivity {
 
         mBottomNavigationView.setSelectedItemId(R.id.homeTab);
         navigateFragment(mHomeFragment);
+    }
+
+    @SuppressLint("CheckResult")
+    private void getUserProfile() {
+        mUserService
+                .getUserInfo()
+                .subscribe(response -> {
+                    UserDto user = response.getResult();
+                    UserSingleton
+                            .getInstance()
+                            .setData(user);
+
+                    Log.i(TAG, user.toString());
+                }, throwable -> {
+                    throwable.printStackTrace();
+                });
     }
 }

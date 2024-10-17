@@ -1,4 +1,4 @@
-package com.socialv2.ewallet.https.api.register;
+package com.socialv2.ewallet.https.api.registerHttp;
 
 import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.checkOtp.CheckPhoneDto;
