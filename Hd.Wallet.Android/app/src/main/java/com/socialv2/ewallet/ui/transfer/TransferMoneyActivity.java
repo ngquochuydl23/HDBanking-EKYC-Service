@@ -2,6 +2,7 @@ package com.socialv2.ewallet.ui.transfer;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -14,11 +15,14 @@ import com.google.gson.Gson;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
+import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.WindowUtils;
 
 public class TransferMoneyActivity extends BaseActivity {
 
     private final String TAG = TransferMoneyActivity.class.getName();
+
+    private Button mTransferButton;
 
     public TransferMoneyActivity() {
         super(R.layout.activity_transfer_money);
@@ -27,6 +31,10 @@ public class TransferMoneyActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mTransferButton = findViewById(R.id.transferButton);
+
+
         initView();
 
         getAccountResult();
@@ -34,6 +42,9 @@ public class TransferMoneyActivity extends BaseActivity {
 
     private void initView() {
         WindowUtils.applyPadding(findViewById(R.id.main));
+        mTransferButton.setOnClickListener(view -> {
+            NavigateUtil.navigateTo(this, SuccessfulTransactionActivity.class);
+        });
     }
 
     private void getAccountResult() {
@@ -42,4 +53,6 @@ public class TransferMoneyActivity extends BaseActivity {
 
         Log.i(TAG, account.toString());
     }
+
+
 }

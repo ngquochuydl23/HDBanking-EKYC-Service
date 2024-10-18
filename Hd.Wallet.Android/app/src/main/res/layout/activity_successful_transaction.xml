@@ -1,248 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginTop="10dp"
-    tools:context=".ui.transfer.SuccessfulTransactionActivity">
+    android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewPaymentSuccess"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="5dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="vertical"
-            android:gravity="center"
-            android:padding="15dp">
+            android:weightSum="1">
 
-            <ImageView
-                android:id="@+id/imageViewSuccessIcon"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_gravity="center"
-                android:background="@color/black"
-                android:scaleType="centerCrop" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieAnimationView"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="10dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false"
+                app:lottie_rawRes="@raw/successsful_lotties" />
 
             <TextView
-                android:id="@+id/textViewPaymentStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Thanh toán thành công"
-                android:includeFontPadding="false"
-                android:fontFamily="@font/semibold_font"
-                android:textColor="@color/textColorSecondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/textViewPaymentAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="100.000.000 VND"
-                android:includeFontPadding="false"
-                android:fontFamily="@font/semibold_font"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewPaymentDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="2dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/textViewDetailsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/semibold_font"
-                android:text="Chi tiết "
-                android:includeFontPadding="false"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="18sp"
-                android:padding="15dp"
-                android:textStyle="bold" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/semibold_font"
+                android:paddingHorizontal="20dp"
+                android:text="Chuyển thành công"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp">
 
                 <TextView
-                    android:id="@+id/textViewTransactionIdLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semibold_font"
+                    android:includeFontPadding="false"
+                    android:text="VND"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:background="@color/white"
+                    android:fontFamily="@font/semibold_font"
+                    android:includeFontPadding="false"
+                    android:text="120,000,000"
+                    android:textColor="@color/secondaryColor"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/semibold_font"
+                android:includeFontPadding="true"
+                android:paddingHorizontal="20dp"
+                android:text="Tới Ho Thi Thu Tram"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="26sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular_font"
+                    android:text="Tài khoản nhận"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/semibold_font"
+                    android:text="Agribank"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/semibold_font"
+                    android:text="0021 4256 1238 11"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular_font"
+                    android:text="Tài khoản nhận"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/semibold_font"
+                    android:text="Nguyen Quoc Huy chuyen khoan"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular_font"
+                    android:text="Ngày thực hiện"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/semibold_font"
+                    android:text="12 tháng 4, 2021"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular_font"
                     android:text="Mã giao dịch"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/textViewTransactionId"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semibold_font"
-                    android:text="0804239934"
+                    android:text="FT9310841901"
                     android:textColor="@color/textColorPrimary"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/transferButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/textViewTransactionStatusLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold_font"
-                    android:text="Trạng thái giao dịch"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewTransactionStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold_font"
-                    android:text="Thành công"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/textViewTransactionTimeLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold_font"
-                    android:text="Thời gian giao dịch"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewTransactionTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold_font"
-                    android:text="12:34 08/04/2023"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/textViewTransactionAmountLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold_font"
-                    android:text="Số tiền giao dịch"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewTransactionAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold_font"
-                    android:text="100.000.000 VND"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/drawable_filled_r10"
+                android:backgroundTint="@color/primaryColor"
+                android:fontFamily="@font/medium_font"
+                android:layout_marginHorizontal="20dp"
+                android:text="Hoàn thành"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="50dp"
-        >
-    <Button
-        android:id="@+id/retakeButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/bold_font"
-        android:text="Lưu hóa đơn"
-        android:textAllCaps="false"
-        android:background="@drawable/drawable_outline_r15"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-    <Button
-        android:id="@+id/btn_start_recognition"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/drawable_filled_r15"
-        android:backgroundTint="@color/primaryColor"
-        android:text="Xong"
-        android:fontFamily="@font/bold_font"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-</LinearLayout>
-
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

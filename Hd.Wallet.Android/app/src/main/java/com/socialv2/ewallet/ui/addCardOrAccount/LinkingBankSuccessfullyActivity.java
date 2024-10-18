@@ -19,6 +19,7 @@ import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.accounts.AccountBankDto;
 import com.socialv2.ewallet.ui.login.LoginPasswordActivity;
 import com.socialv2.ewallet.ui.main.MainHomeActivity;
+import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.WindowUtils;
 
 public class LinkingBankSuccessfullyActivity extends BaseActivity {
@@ -52,10 +53,7 @@ public class LinkingBankSuccessfullyActivity extends BaseActivity {
     private void initView() {
         WindowUtils.applyPadding(findViewById(R.id.main));
         mHomeBackButton.setOnClickListener(view -> {
-            Intent intent = new Intent(this, MainHomeActivity.class); // Replace with your LoginActivity class
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
-            startActivity(intent);
-            finish();
+            NavigateUtil.navigateToHomeClearState(this);
         });
     }
 
