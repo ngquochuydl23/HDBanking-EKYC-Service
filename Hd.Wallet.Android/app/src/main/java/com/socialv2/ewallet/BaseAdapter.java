@@ -28,11 +28,18 @@ public abstract class BaseAdapter<TModel extends Object> extends RecyclerView.Ad
 
     protected abstract RecyclerView.ViewHolder getViewHolder(@NonNull ViewGroup parent, int viewType);
 
-    protected abstract void bind(@NonNull RecyclerView.ViewHolder viewHolder, TModel model);
+    protected void bind(@NonNull RecyclerView.ViewHolder viewHolder, TModel model) {
+
+    }
+
+    protected void bind(@NonNull RecyclerView.ViewHolder viewHolder, TModel model, int position) {
+        bind(viewHolder, list.get(position));
+    }
+
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        bind(holder, list.get(position));
+        bind(holder, list.get(position), position);
     }
 
     public Context getContext() {

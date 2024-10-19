@@ -29,9 +29,15 @@ public interface IHttpAccount {
     @GET("account/Account")
     Observable<HttpResponseDto<List<AccountDto>>> getAccounts();
 
+    @GET("account/Account/Primary")
+    Observable<HttpResponseDto<AccountDto>> getPrimaryAccount();
+
     @GET("account/Account/Balance")
     Observable<HttpResponseDto<AccountBalanceDto>> getAccountBalance();
 
     @POST("account/Account/{accountId}/Unlink")
-    Observable<HttpResponseDto<AccountDto>> unlinkAccount(@Path("accountId") String accountId);
+    Observable<HttpResponseDto<AccountDto>> unlinkAccount(
+            @Header("X-EncryptedPin") String encryptedPin,
+            @Path("accountId") String accountId
+    );
 }

@@ -61,8 +61,15 @@ public class AccountHttpImpl implements IAccountService {
     }
 
     @Override
-    public Observable<HttpResponseDto<AccountDto>> unlinkAccount(String accountId) {
-        return mHttpAccount.unlinkAccount(accountId)
+    public Observable<HttpResponseDto<AccountDto>> getPrimaryAccount() {
+        return mHttpAccount.getPrimaryAccount()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<HttpResponseDto<AccountDto>> unlinkAccount(String pin, String accountId) {
+        return mHttpAccount.unlinkAccount(AesEncryptionUtils.encrypt(pin), accountId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }

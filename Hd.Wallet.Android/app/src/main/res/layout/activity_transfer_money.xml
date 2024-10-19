@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <com.socialv2.ewallet.components.HdWalletToolbar
@@ -48,11 +49,13 @@
                     android:textSize="30sp" />
 
                 <EditText
+                    android:id="@+id/amountMoneyEditText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:background="@color/white"
                     android:fontFamily="@font/semibold_font"
+                    android:inputType="number"
                     android:text="120,000,000"
                     android:textColor="@color/secondaryColor"
                     android:textSize="30sp" />
@@ -131,6 +134,7 @@
                 android:layout_weight="1" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/selectSourceButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="7.5dp"
@@ -150,7 +154,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.socialv2.ewallet.components.AvatarView
-                        android:id="@+id/avatarView"
+                        android:id="@+id/logoBankAvatarView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"

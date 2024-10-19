@@ -2,6 +2,7 @@
 
     <style name="Base.Theme.OCRBanking_MobileApp" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:fontFamily">@font/default_font</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="colorPrimary">@color/primaryColor</item>
     </style>
 

@@ -19,5 +19,7 @@ public interface IAccountService {
 
     Observable<HttpResponseDto<AccountBalanceDto>> getAccountBalance();
 
-    Observable<HttpResponseDto<AccountDto>> unlinkAccount(String accountId);
+    Observable<HttpResponseDto<AccountDto>> getPrimaryAccount();
+
+    Observable<HttpResponseDto<AccountDto>> unlinkAccount(String pin, String accountId);
 }
