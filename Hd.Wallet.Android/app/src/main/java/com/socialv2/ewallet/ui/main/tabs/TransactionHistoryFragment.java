@@ -12,12 +12,13 @@ import com.google.android.material.tabs.TabLayout;
 import com.socialv2.ewallet.BaseFragment;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.ui.main.tabs.tabLayoutHistory.TabarHistoryViewPager;
+import com.socialv2.ewallet.ui.statistic.StatisticActivity;
+import com.socialv2.ewallet.utils.NavigateUtil;
 
 public class TransactionHistoryFragment extends BaseFragment {
 
-    private TabLayout mTabLayoutHistory;
-    private ViewPager mViewPager;
-
+    private TabLayout mHistoryTabLayout;
+    private View mStatisticButton;
     public TransactionHistoryFragment() {
         super(R.layout.fragment_historytrans);
     }
@@ -26,15 +27,32 @@ public class TransactionHistoryFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Khởi tạo TabLayout và ViewPager
-        mTabLayoutHistory = view.findViewById(R.id.tab_layoutHistory);
-        mViewPager = view.findViewById(R.id.viewpagerHistory);
+        mHistoryTabLayout = view.findViewById(R.id.historyTabLayout);
+        mStatisticButton = view.findViewById(R.id.statisticButton);
+        initView();
+    }
 
-        // Thiết lập ViewPager với Adapter
-        TabarHistoryViewPager tabarHistoryViewPager = new TabarHistoryViewPager(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        mViewPager.setAdapter(tabarHistoryViewPager);
+    private void initView() {
 
-        // Liên kết TabLayout với ViewPager
-        mTabLayoutHistory.setupWithViewPager(mViewPager);
+        mStatisticButton.setOnClickListener(view -> {
+            NavigateUtil.navigateTo(getContext(), StatisticActivity.class);
+        });
+
+        mHistoryTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 }

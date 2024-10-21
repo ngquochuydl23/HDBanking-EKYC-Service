@@ -6,43 +6,64 @@
     android:orientation="vertical">
 
 
-
-
-
-
-    <HorizontalScrollView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/bold_font"
+        android:text="Lịch sử giao dịch"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/statisticButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/medium_font"
+        android:text="Xem thống kê"
+        android:textColor="@color/secondaryColor"
+        android:textSize="14sp" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/historyTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        app:tabIndicatorColor="@color/secondaryColor"
+        app:tabMode="scrollable"
+        app:tabSelectedTextAppearance="@style/SelectedTabTextAppearance"
+        app:tabSelectedTextColor="@color/secondaryColor"
+        app:tabTextAppearance="@style/TabTextAppearance"
+        app:tabTextColor="@color/textColorSecondary">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="Tất cả" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layoutHistory"
-                android:background="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:tabMode="scrollable"
-                app:tabTextColor="@color/color_selector"
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chuyển tiền" />
 
-         />
-            <!-- Đường line dưới TabLayout -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray" /> <!-- Bạn có thể thay đổi màu sắc ở đây -->
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nhận tiền" />
 
-        </LinearLayout>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rút tiền" />
 
-    </HorizontalScrollView>
-
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpagerHistory"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" /> <!-- Sử dụng layout_weight để ViewPager chiếm phần còn lại của layout -->
-
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nạp tiền" />
+    </com.google.android.material.tabs.TabLayout>
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.socialv2.ewallet.ui.main.moreTab;
 
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.AvatarView;
 import com.socialv2.ewallet.dtos.MenuAppDto;
 import com.socialv2.ewallet.singleton.UserSingleton;
+import com.socialv2.ewallet.ui.nfcScan.IdCardNfcScanActivity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 
@@ -34,6 +36,9 @@ public class ProfileFragment extends BaseFragment {
     private TextView mFullnameTextView;
     private TextView mPhoneNumberTextView;
     private View mUserInfoContainerView;
+    private View mProvideIdCardViaNFCView;
+    private NfcAdapter mNFCAdapter;
+    private Button mUpdateButton;
 
     public ProfileFragment() {
         super(R.layout.fragment_profile);
@@ -43,6 +48,7 @@ public class ProfileFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mNFCAdapter = NfcAdapter.getDefaultAdapter(getContext());
         mMenuAppAdapter = new MenuAppAdapter();
 
         mUserInfoContainerView = view.findViewById(R.id.userInfoContainerView);
@@ -51,8 +57,12 @@ public class ProfileFragment extends BaseFragment {
         mAvatarImageView = view.findViewById(R.id.avatarImageView);
         mFullnameTextView = view.findViewById(R.id.fullnameTextView);
         mPhoneNumberTextView = view.findViewById(R.id.phoneNumberTextView);
+        mProvideIdCardViaNFCView = view.findViewById(R.id.provideIdCardViaNFCView);
+        mUpdateButton = view.findViewById(R.id.updateButton);
+
 
         initView();
+        checkNFCSupport();
         observeUserData();
     }
 
@@ -73,6 +83,10 @@ public class ProfileFragment extends BaseFragment {
         mLogOutButton.setOnClickListener(view -> {
 
         });
+
+        mUpdateButton.setOnClickListener(view -> {
+            NavigateUtil.navigateTo(getContext(), IdCardNfcScanActivity.class);
+        });
     }
 
     private void observeUserData() {
@@ -84,5 +98,17 @@ public class ProfileFragment extends BaseFragment {
                     mFullnameTextView.setText(user.getFullName());
                     mPhoneNumberTextView.setText(user.getPhoneNumber());
                 });
+    }
+
+    private void checkNFCSupport() {
+        if (mNFCAdapter == null) {
+            Log.w(TAG, "NFS is not supported in this device.");
+
+            mProvideIdCardViaNFCView.setVisibility(View.GONE);
+            return;
+        }
+
+        Log.i(TAG, "NFS is supported in this device.");
+        mProvideIdCardViaNFCView.setVisibility(View.VISIBLE);
     }
 }

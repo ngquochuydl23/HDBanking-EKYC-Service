@@ -3,11 +3,14 @@ package com.socialv2.ewallet.ui.transfer;
 import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +33,8 @@ public class SelectSourceBottomSheet extends BaseBottomSheetDialog {
     private View mBottomSheetLayout;
     private RecyclerView mSourceBankRecyclerView;
     private SelectSourceBankAdapter mSelectSourceBankAdapter;
+    private TextView mHeaderTextView;
+
 
     private IAccountService mAccountService;
 
@@ -37,6 +42,7 @@ public class SelectSourceBottomSheet extends BaseBottomSheetDialog {
         super(R.layout.bottomsheet_select_source);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -49,10 +55,26 @@ public class SelectSourceBottomSheet extends BaseBottomSheetDialog {
             }
         });
 
+        mHeaderTextView = view.findViewById(R.id.headerTextView);
         mBottomSheetLayout = view.findViewById(R.id.bottomSheetLayout);
         mSourceBankRecyclerView = view.findViewById(R.id.sourceBankRecyclerView);
         mSourceBankRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mSourceBankRecyclerView.setAdapter(mSelectSourceBankAdapter);
+
+
+        mHeaderTextView.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                Drawable drawableStart = mHeaderTextView.getCompoundDrawables()[0];
+                if (drawableStart != null) {
+                    int drawableWidth = drawableStart.getBounds().width();
+                    if (event.getX() <= (drawableWidth + mHeaderTextView.getPaddingStart())) {
+                        dismiss();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
 
         setupBottomSheetHeight();
         getAccountBanks();

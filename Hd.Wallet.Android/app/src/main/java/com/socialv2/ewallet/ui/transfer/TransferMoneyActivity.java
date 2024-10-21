@@ -44,7 +44,7 @@ public class TransferMoneyActivity extends BaseActivity {
     private TextView mSrcAccountNoBank;
     private TextView mBalanceTextView;
     private AvatarView mLogoBankAvatarView;
-
+    private EditText mTransferContentEditText;
 
     private AccountDto mSourceAccount;
     private AccountDto mDestAccount;
@@ -66,7 +66,7 @@ public class TransferMoneyActivity extends BaseActivity {
         mToolbar = findViewById(R.id.toolbar);
         mBalanceTextView = findViewById(R.id.balanceTextView);
         mLogoBankAvatarView = findViewById(R.id.logoBankAvatarView);
-
+        mTransferContentEditText= findViewById(R.id.transferContentEditText);
 
         mSelectSourceBottomSheet = new SelectSourceBottomSheet();
         initView();
@@ -87,9 +87,7 @@ public class TransferMoneyActivity extends BaseActivity {
             mSelectSourceBottomSheet.show(getSupportFragmentManager(), mSelectSourceBottomSheet.getTag());
         });
 
-        mSelectSourceBottomSheet.setOnSelectSourceBank(account -> {
-            onSelectedSource(account);
-        });
+        mSelectSourceBottomSheet.setOnSelectSourceBank(this::onSelectedSource);
     }
 
     private void getDestAccountResult() {
@@ -112,8 +110,10 @@ public class TransferMoneyActivity extends BaseActivity {
             FetchImageUrl.read(mLogoBankAvatarView, BankingResourceLogo.getLogo(mSourceAccount
                     .getAccountBank()
                     .getLogoUrl()));
+
             mBalanceTextView.setText("Tài khoản liên kết");
         } else {
+
             mBalanceTextView.setVisibility(View.VISIBLE);
             mBalanceTextView.setText("Số dư " + VietnameseConcurrency.format(mSourceAccount.getWalletBalance()));
             mLogoBankAvatarView.setImageDrawable(getDrawable(R.drawable.ic_src_wallet));
@@ -126,6 +126,10 @@ public class TransferMoneyActivity extends BaseActivity {
                 .subscribe(response -> {
                     AccountDto primaryAccount = response.getResult();
                     onSelectedSource(primaryAccount);
+                    mTransferContentEditText.setText(primaryAccount
+                            .getAccountBank()
+                            .getBankOwnerName() + " chuyen khoan");
+
                     Log.i(TAG, primaryAccount.toString());
                 }, throwable -> {
 
