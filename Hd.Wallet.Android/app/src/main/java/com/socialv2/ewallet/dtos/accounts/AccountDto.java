@@ -16,7 +16,7 @@ public class AccountDto {
 
     @SerializedName("isBankLinking")
     @Expose
-    private Boolean isBankLinking;
+    private boolean isBankLinking;
 
     @SerializedName("walletBalance")
     @Expose
@@ -73,7 +73,7 @@ public class AccountDto {
         return isBankLinking;
     }
 
-    public void setBankLinking(Boolean bankLinking) {
+    public void setBankLinking(boolean bankLinking) {
         isBankLinking = bankLinking;
     }
 

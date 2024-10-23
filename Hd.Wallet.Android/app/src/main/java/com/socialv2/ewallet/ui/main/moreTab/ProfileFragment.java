@@ -104,7 +104,7 @@ public class ProfileFragment extends BaseFragment {
         if (mNFCAdapter == null) {
             Log.w(TAG, "NFS is not supported in this device.");
 
-            mProvideIdCardViaNFCView.setVisibility(View.GONE);
+            //mProvideIdCardViaNFCView.setVisibility(View.GONE);
             return;
         }
 

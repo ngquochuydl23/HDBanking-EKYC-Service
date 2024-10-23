@@ -54,6 +54,12 @@
                 app:strokeColor="@color/borderWidthColor"
                 app:strokeWidth="1dp" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recentlyTransferDestRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_recently_transfer_dest" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

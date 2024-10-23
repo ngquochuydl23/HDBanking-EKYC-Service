@@ -9,7 +9,7 @@
     <uses-feature android:name="android.hardware.camera.any" />
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true" />
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="true" />
@@ -36,9 +36,9 @@
             android:name=".ui.nfcScan.IdCardNfcScanActivity"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
-                <data android:mimeType="application/vnd.com.example.cccd" /> <!-- Thay đổi mimeType nếu cần -->
+                <action android:name="android.nfc.action.TAG_DISCOVERED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="*/*"/>
             </intent-filter>
         </activity>
         <activity

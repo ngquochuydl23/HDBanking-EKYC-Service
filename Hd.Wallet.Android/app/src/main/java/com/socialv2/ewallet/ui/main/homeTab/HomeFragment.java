@@ -22,9 +22,8 @@ import com.socialv2.ewallet.dtos.users.UserDto;
 import com.socialv2.ewallet.ui.contacts.ContactActivity;
 import com.socialv2.ewallet.ui.main.NotificationActivity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
-import com.socialv2.ewallet.ui.qr.MyQrActivity;
 import com.socialv2.ewallet.ui.qr.QrTransferActivity;
-import com.socialv2.ewallet.ui.transfer.TransferMoneyActivity;
+import com.socialv2.ewallet.ui.transfer.FindDestAccountActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.VietnameseConcurrency;
 
@@ -43,7 +42,7 @@ public class HomeFragment extends BaseFragment {
     private Toolbar mHomeTabToolbar;
     private View mToggleVisibilityButton;
     private RecyclerView mRecentlyContactRecyclerView;
-    private ContactRecentlyAdapter mContactRecentlyAdapter;
+    private RecentlyTransferDestAdapter mContactRecentlyAdapter;
     private View mSeeMoreContactButton;
 
     private boolean balanceVisible;
@@ -57,7 +56,7 @@ public class HomeFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mContactRecentlyAdapter = new ContactRecentlyAdapter();
+        mContactRecentlyAdapter = new RecentlyTransferDestAdapter();
 
         mHomeTabToolbarContainer = view.findViewById(R.id.homeTabToolbarContainer);
         mAvatarView = view.findViewById(R.id.avatarView);
@@ -109,7 +108,7 @@ public class HomeFragment extends BaseFragment {
         });
 
         mTransferButton.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(getContext(), TransferMoneyActivity.class);
+            NavigateUtil.navigateTo(getContext(), FindDestAccountActivity.class);
         });
 
         mToggleVisibilityButton.setOnClickListener(view -> {
@@ -158,14 +157,14 @@ public class HomeFragment extends BaseFragment {
 
     private void getRecentlyContacts() {
         List<UserDto> contacts = new ArrayList<UserDto>();
-        contacts.add(new UserDto());
-        contacts.add(new UserDto());
-        contacts.add(new UserDto());
-        contacts.add(new UserDto());
-        contacts.add(new UserDto());
-        contacts.add(new UserDto());
-        contacts.add(new UserDto());
-
-        mContactRecentlyAdapter.setItems(contacts);
+//        contacts.add(new UserDto());
+//        contacts.add(new UserDto());
+//        contacts.add(new UserDto());
+//        contacts.add(new UserDto());
+//        contacts.add(new UserDto());
+//        contacts.add(new UserDto());
+//        contacts.add(new UserDto());
+//
+//        mContactRecentlyAdapter.setItems(contacts);
     }
 }
