@@ -45,16 +45,32 @@
                 android:fontFamily="@font/regular_font"
                 android:hint="Tìm theo tên ngân hàng"
                 android:paddingLeft="15dp"
+                android:lines="1"
                 android:textColorHint="@color/textColorSecondary"
                 android:textSize="14sp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recentlyTransferDestRecyclerView"
+
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_recently_transfer_dest" />
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/bankRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_select_bank" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:progressTint="@color/secondaryColor"
+                    android:layout_gravity="center" />
+            </FrameLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
