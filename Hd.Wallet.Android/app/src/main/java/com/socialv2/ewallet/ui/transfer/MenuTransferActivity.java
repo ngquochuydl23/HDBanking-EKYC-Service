@@ -1,13 +1,9 @@
 package com.socialv2.ewallet.ui.transfer;
 
 import android.os.Bundle;
+import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,26 +11,40 @@ import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.ui.main.homeTab.RecentlyTransferDestAdapter;
+import com.socialv2.ewallet.ui.qr.QrTransferActivity;
+import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.WindowUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FindDestAccountActivity extends BaseActivity {
+public class MenuTransferActivity extends BaseActivity {
 
     private RecyclerView mRecentlyTransferDestRecyclerView;
     private RecentlyTransferDestAdapter mRecentlyTransferDestAdapter;
+    private View mQrTransferButton;
+    private View mBankingTransferButton;
+    private View mInternalTransferButton;
 
-    public FindDestAccountActivity() {
-        super(R.layout.activity_find_dest_account);
+    private FindFriendBottomSheet mFindFriendBottomSheet;
+
+    public MenuTransferActivity() {
+        super(R.layout.activity_menu_transfer);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mRecentlyTransferDestRecyclerView = findViewById(R.id.recentlyTransferDestRecyclerView);
         mRecentlyTransferDestAdapter = new RecentlyTransferDestAdapter(true);
+        mFindFriendBottomSheet = new FindFriendBottomSheet();
+
+
+        mInternalTransferButton = findViewById(R.id.internalTransferButton);
+        mRecentlyTransferDestRecyclerView = findViewById(R.id.recentlyTransferDestRecyclerView);
+        mQrTransferButton = findViewById(R.id.qrTransferButton);
+        mBankingTransferButton = findViewById(R.id.bankingTransferButton);
+
         initView();
         getRecentlyTransferDest();
     }
@@ -43,6 +53,20 @@ public class FindDestAccountActivity extends BaseActivity {
         WindowUtils.applyPadding(findViewById(R.id.main));
         mRecentlyTransferDestRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecentlyTransferDestRecyclerView.setAdapter(mRecentlyTransferDestAdapter);
+
+        mInternalTransferButton.setOnClickListener(view -> {
+            mFindFriendBottomSheet.show(getSupportFragmentManager(), mFindFriendBottomSheet.getTag());
+        });
+
+        mQrTransferButton.setOnClickListener(view -> {
+            NavigateUtil.navigateTo(this, QrTransferActivity.class);
+        });
+
+        mBankingTransferButton.setOnClickListener(view -> {
+
+        });
+
+
     }
 
     private void getRecentlyTransferDest() {

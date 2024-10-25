@@ -11,7 +11,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.socialv2.ewallet.BaseFragment;
 import com.socialv2.ewallet.R;
-import com.socialv2.ewallet.ui.main.tabs.tabLayoutHistory.TabarHistoryViewPager;
 import com.socialv2.ewallet.ui.statistic.StatisticActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 

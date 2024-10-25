@@ -1,5 +1,6 @@
 package com.socialv2.ewallet.ui.main.homeTab;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,10 @@ public class RecentlyTransferDestAdapter extends BaseAdapter<AccountDto> {
         ContactRecentlyViewHolder itemView = (ContactRecentlyViewHolder) viewHolder;
 
         itemView.mContainerLayout.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(getContext(), TransferMoneyActivity.class);
+            String json = "";
+            Intent intent = new Intent(getContext(), TransferMoneyActivity.class);
+            intent.putExtra("AccountJsonResult", json);
+            getContext().startActivity(intent);
         });
 
         if (account.getBankLinking()) {
@@ -62,7 +66,7 @@ public class RecentlyTransferDestAdapter extends BaseAdapter<AccountDto> {
             itemView.mAvatarView.setLayoutParams(layoutParams);
             itemView.mSrcAccountNoBankTextView.setText("190 319 0512 3456");
             itemView.mOwnerNameTextView.setText("NGUYEN QUOC HUY");
-            FetchImageUrl.read(itemView.mAvatarView, BankingResourceLogo.getLogo("Uploads/mbbank.png"));
+            FetchImageUrl.read(itemView.mAvatarView, BankingResourceLogo.getLogo("Uploads/vcb.png"));
         } else {
 
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) itemView.mAvatarView.getLayoutParams();

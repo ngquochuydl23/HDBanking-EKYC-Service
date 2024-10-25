@@ -47,6 +47,11 @@ public class AskUserPinBottomSheet extends BaseBottomSheetDialog {
     }
 
     @Override
+    public int getTheme() {
+        return R.style.PinBottomSheetDialog;
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setCancelable(false);

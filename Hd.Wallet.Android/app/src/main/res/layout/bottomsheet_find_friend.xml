@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheetLayout"
+    style="@style/BottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="15dp">
+
+    <TextView
+        android:id="@+id/headerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="0dp"
+        android:drawableStart="@drawable/ic_close_1"
+        android:drawablePadding="15dp"
+        android:fontFamily="@font/semibold_font"
+        android:text="Tìm người nhận"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="24sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/drawable_outline_circle_1w"
+        android:drawableStart="@drawable/ic_toolbar_search"
+        android:fontFamily="@font/regular_font"
+        android:drawablePadding="15dp"
+        android:hint="Tìm tên, số điện thoại"
+        android:paddingLeft="15dp"
+        android:textColorHint="@color/textColorSecondary"
+        android:textSize="14sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contactRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        tools:listitem="@layout/item_contact" />
+</LinearLayout>

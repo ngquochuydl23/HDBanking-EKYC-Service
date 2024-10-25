@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.transfer.FindDestAccountActivity"
+            android:name=".ui.transfer.MenuTransferActivity"
             android:exported="false" />
         <activity
             android:name=".ui.accountBank.DetailAccountBankActivity"

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/containerLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="7.5dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_marginBottom="10dp">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/avatarCardView"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -18,11 +17,31 @@
 
         <com.socialv2.ewallet.components.AvatarView
             android:id="@+id/avatarView"
-            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/image_agribank" />
-    </FrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/isBankLinkingView"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="-50dp"
+        android:layout_marginLeft="35dp"
+        android:background="@drawable/drawable_filled_circle"
+        android:backgroundTint="#f5f5f5"
+        android:padding="5dp"
+        android:src="@drawable/ic_is_bank_linking"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:tint="#696969" />
+
 
     <TextView
         android:id="@+id/ownerNameTextView"
@@ -52,4 +71,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ownerNameTextView" />
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#d0d0d0"
+        app:layout_constraintTop_toBottomOf="@id/srcAccountNoBankTextView"
+        app:layout_constraintLeft_toLeftOf="@id/srcAccountNoBankTextView"
+        app:layout_constraintRight_toRightOf="@id/srcAccountNoBankTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

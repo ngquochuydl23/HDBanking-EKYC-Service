@@ -55,7 +55,7 @@ public class AddCardOrAccountActivity extends BaseActivity {
     private void getInstallBanks() {
         mProgressBarView.setVisibility(View.VISIBLE);
         mBankingResourceService
-                .getBanks()
+                .getTopBanks()
                 .subscribe(response -> {
                     mBankAppAdapter.setItems(response.getResult());
                     Log.i(TAG, response.getResult().toString());
@@ -64,9 +64,6 @@ public class AddCardOrAccountActivity extends BaseActivity {
                 }, () -> {
                     mProgressBarView.setVisibility(View.GONE);
                 });
-
-
-        //mBankAppAdapter.setItems(bankApps);
     }
 
     @Override
