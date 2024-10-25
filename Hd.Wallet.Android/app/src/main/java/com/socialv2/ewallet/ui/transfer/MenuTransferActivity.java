@@ -63,7 +63,7 @@ public class MenuTransferActivity extends BaseActivity {
         });
 
         mBankingTransferButton.setOnClickListener(view -> {
-
+            NavigateUtil.navigateTo(this, FindBankActivity.class);
         });
 
 
