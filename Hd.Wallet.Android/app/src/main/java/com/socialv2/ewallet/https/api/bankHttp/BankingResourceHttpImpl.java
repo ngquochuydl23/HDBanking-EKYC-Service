@@ -29,8 +29,8 @@ public class BankingResourceHttpImpl implements IBankingResourceService {
     }
 
     @Override
-    public Observable<HttpResponseDto<List<BankDto>>> getBanks() {
-        return mHttpBankingResource.getBanks()
+    public Observable<HttpResponseDto<List<BankDto>>> getBanks(String search) {
+        return mHttpBankingResource.getBanks(search)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }

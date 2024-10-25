@@ -36,9 +36,11 @@
                 android:textSize="30sp" />
 
             <EditText
+                android:id="@+id/searchEditText"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
+                android:imeOptions="actionSearch"
                 android:background="@drawable/drawable_outline_circle_1w"
                 android:drawableStart="@drawable/ic_toolbar_search"
                 android:drawablePadding="15dp"

@@ -10,7 +10,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Observable;
 
 public interface IBankingResourceService {
-    Observable<HttpResponseDto<List<BankDto>>> getBanks();
+    Observable<HttpResponseDto<List<BankDto>>> getBanks(String search);
 
     Observable<HttpResponseDto<List<BankDto>>> getTopBanks();
 

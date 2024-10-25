@@ -8,10 +8,11 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface IHttpBankResource {
     @GET("bankingResource/Bank")
-    Observable<HttpResponseDto<List<BankDto>>> getBanks();
+    Observable<HttpResponseDto<List<BankDto>>> getBanks(@Query("search") String search);
 
     @GET("bankingResource/Bank/top")
     Observable<HttpResponseDto<List<BankDto>>> getTopBanks();
