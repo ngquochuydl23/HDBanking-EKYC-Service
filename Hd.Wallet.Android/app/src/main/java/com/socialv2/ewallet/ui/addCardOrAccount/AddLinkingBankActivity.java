@@ -3,24 +3,14 @@ package com.socialv2.ewallet.ui.addCardOrAccount;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.gson.Gson;
 import com.socialv2.ewallet.BaseActivity;
@@ -35,19 +25,14 @@ import com.socialv2.ewallet.dtos.banks.BankDto;
 import com.socialv2.ewallet.dtos.users.UserDto;
 import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
 import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
+import com.socialv2.ewallet.https.api.transferHttp.TransferHttpImpl;
+import com.socialv2.ewallet.https.api.transferHttp.ITransferService;
 import com.socialv2.ewallet.https.api.bankHttp.BankingResourceHttpImpl;
 import com.socialv2.ewallet.https.api.bankHttp.IBankingResourceService;
 import com.socialv2.ewallet.singleton.UserSingleton;
-import com.socialv2.ewallet.ui.idCardTaken.GettingTakenIdCardActivity;
-import com.socialv2.ewallet.ui.register.RegisterCheckOtpActivity;
-import com.socialv2.ewallet.utils.AesEncryptionUtils;
-import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.ParseHttpError;
 import com.socialv2.ewallet.utils.UpperCaseOwnerName;
 import com.socialv2.ewallet.utils.WindowUtils;
-
-import java.text.Normalizer;
-import java.util.regex.Pattern;
 
 public class AddLinkingBankActivity extends BaseActivity {
 

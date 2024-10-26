@@ -8,14 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.google.gson.Gson;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.AskUserPinBottomSheet;
@@ -24,11 +18,10 @@ import com.socialv2.ewallet.components.BackdropLoadingDialogFragment;
 import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.accounts.AccountBankDto;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
-import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
 import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
 import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
-import com.socialv2.ewallet.ui.addCardOrAccount.AddLinkingBankActivity;
-import com.socialv2.ewallet.ui.addCardOrAccount.LinkingBankSuccessfullyActivity;
+import com.socialv2.ewallet.https.api.transferHttp.TransferHttpImpl;
+import com.socialv2.ewallet.https.api.transferHttp.ITransferService;
 import com.socialv2.ewallet.utils.BankingResourceLogo;
 import com.socialv2.ewallet.utils.FetchImageUrl;
 import com.socialv2.ewallet.utils.ParseHttpError;

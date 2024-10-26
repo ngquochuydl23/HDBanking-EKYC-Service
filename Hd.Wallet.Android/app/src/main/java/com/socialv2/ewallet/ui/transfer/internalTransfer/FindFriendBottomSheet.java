@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.socialv2.ewallet.BaseBottomSheetDialog;
 import com.socialv2.ewallet.R;
-import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
-import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
+import com.socialv2.ewallet.https.api.transferHttp.TransferHttpImpl;
+import com.socialv2.ewallet.https.api.transferHttp.ITransferService;
 import com.socialv2.ewallet.ui.transfer.SelectSourceBottomSheet;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class FindFriendBottomSheet extends BaseBottomSheetDialog {
     private RecyclerView mContactRecyclerView;
     private TextView mHeaderTextView;
 
-    private IAccountService mAccountService;
+    private ITransferService mAccountService;
     private ContactAdapter mContactAdapter;
 
     public FindFriendBottomSheet() {
@@ -46,7 +46,7 @@ public class FindFriendBottomSheet extends BaseBottomSheetDialog {
         super.onViewCreated(view, savedInstanceState);
 
         mContactAdapter = new ContactAdapter();
-        mAccountService = new AccountHttpImpl(getContext());
+        mAccountService = new TransferHttpImpl(getContext());
 //        mSelectSourceBankAdapter = new SelectSourceBankAdapter();
 //        mSelectSourceBankAdapter.setOnSelectSourceBankListener(account -> {
 //            if (mOnSelectSourceBank != null) {

@@ -13,14 +13,12 @@ import android.view.View;
 
 import com.socialv2.ewallet.BaseFragment;
 import com.socialv2.ewallet.R;
-import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
 import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
+import com.socialv2.ewallet.https.api.transferHttp.TransferHttpImpl;
+import com.socialv2.ewallet.https.api.transferHttp.ITransferService;
 import com.socialv2.ewallet.ui.addCardOrAccount.AddCardOrAccountActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class AccountTabFragment extends BaseFragment {

@@ -1,6 +1,5 @@
 package com.socialv2.ewallet.ui.transfer;
 
-import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +21,8 @@ import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
 import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
-import com.socialv2.ewallet.ui.facialRecognition.VerificationFailBottomSheet;
+import com.socialv2.ewallet.https.api.transferHttp.TransferHttpImpl;
+import com.socialv2.ewallet.https.api.transferHttp.ITransferService;
 
 public class SelectSourceBottomSheet extends BaseBottomSheetDialog {
 

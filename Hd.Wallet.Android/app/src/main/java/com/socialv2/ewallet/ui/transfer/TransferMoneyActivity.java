@@ -2,38 +2,38 @@ package com.socialv2.ewallet.ui.transfer;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.gson.Gson;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.components.AskUserPinBottomSheet;
 import com.socialv2.ewallet.components.AvatarView;
+import com.socialv2.ewallet.components.BackdropLoadingDialogFragment;
 import com.socialv2.ewallet.components.HdWalletToolbar;
 import com.socialv2.ewallet.dtos.CitizenAccountBankDto;
+import com.socialv2.ewallet.dtos.HttpResponseDto;
+import com.socialv2.ewallet.dtos.accounts.AccountBankDto;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
-import com.socialv2.ewallet.dtos.banks.BankDto;
+import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
+import com.socialv2.ewallet.dtos.transfers.RequestBankTransferDto;
 import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
 import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
+import com.socialv2.ewallet.https.api.transferHttp.TransferHttpImpl;
+import com.socialv2.ewallet.https.api.transferHttp.ITransferService;
+import com.socialv2.ewallet.ui.addCardOrAccount.AddLinkingBankActivity;
+import com.socialv2.ewallet.ui.addCardOrAccount.LinkingBankSuccessfullyActivity;
 import com.socialv2.ewallet.utils.BankingResourceLogo;
 import com.socialv2.ewallet.utils.FetchImageUrl;
 import com.socialv2.ewallet.utils.NavigateUtil;
+import com.socialv2.ewallet.utils.ParseHttpError;
 import com.socialv2.ewallet.utils.UpperCaseOwnerName;
 import com.socialv2.ewallet.utils.VietnameseConcurrency;
 import com.socialv2.ewallet.utils.WindowUtils;
@@ -43,10 +43,11 @@ public class TransferMoneyActivity extends BaseActivity {
     private final String TAG = TransferMoneyActivity.class.getName();
 
     private IAccountService mAccountService;
+    private ITransferService mTransferService;
+
     private EditText mAmountMoneyEditText;
     private Button mTransferButton;
     private View mSelectSourceButton;
-    private SelectSourceBottomSheet mSelectSourceBottomSheet;
     private HdWalletToolbar mToolbar;
     private TextView mSrcAccountNoBank;
     private TextView mBalanceTextView;
@@ -56,6 +57,10 @@ public class TransferMoneyActivity extends BaseActivity {
     private AvatarView mLogoBankAvatarView;
     private AvatarView mDestLogoImageView;
     private EditText mTransferContentEditText;
+
+    private SelectSourceBottomSheet mSelectSourceBottomSheet;
+    private BackdropLoadingDialogFragment mLoadingBackdropDialog;
+    private AskUserPinBottomSheet mAskUserPinBottomSheet;
 
     private AccountDto mSourceAccount;
 
@@ -68,6 +73,7 @@ public class TransferMoneyActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         mAccountService = new AccountHttpImpl(this);
+        mTransferService = new TransferHttpImpl(this);
 
         mTransferButton = findViewById(R.id.transferButton);
         mSelectSourceButton = findViewById(R.id.selectSourceButton);
@@ -83,6 +89,10 @@ public class TransferMoneyActivity extends BaseActivity {
         mDestLogoImageView = findViewById(R.id.destLogoImageView);
 
         mSelectSourceBottomSheet = new SelectSourceBottomSheet();
+
+        mLoadingBackdropDialog = new BackdropLoadingDialogFragment();
+        mLoadingBackdropDialog.setFragmentManager(getSupportFragmentManager());
+
         initView();
 
         getPrimaryBalance();
@@ -94,7 +104,8 @@ public class TransferMoneyActivity extends BaseActivity {
 
         mAmountMoneyEditText.requestFocus();
         mTransferButton.setOnClickListener(view -> {
-            transfer();
+            getBottomSheet();
+            mAskUserPinBottomSheet.show(getSupportFragmentManager(), AskUserPinBottomSheet.class.getName());
         });
 
         mSelectSourceButton.setOnClickListener(view -> {
@@ -155,13 +166,13 @@ public class TransferMoneyActivity extends BaseActivity {
     private void getPrimaryBalance() {
         mAccountService.getPrimaryAccount()
                 .subscribe(response -> {
-                    AccountDto primaryAccount = response.getResult();
-                    onSelectedSource(primaryAccount);
-                    mTransferContentEditText.setText(primaryAccount
+                    mSourceAccount = response.getResult();
+                    onSelectedSource(mSourceAccount);
+                    mTransferContentEditText.setText(mSourceAccount
                             .getAccountBank()
                             .getBankOwnerName() + " chuyen khoan");
 
-                    Log.i(TAG, primaryAccount.toString());
+                    Log.i(TAG, mSourceAccount.toString());
                 }, throwable -> {
 
                 }, () -> {
@@ -169,7 +180,25 @@ public class TransferMoneyActivity extends BaseActivity {
                 });
     }
 
-    private void transfer() {
+    @SuppressLint("CheckResult")
+    private void getBottomSheet() {
+        if (mAskUserPinBottomSheet == null) {
+            mAskUserPinBottomSheet = new AskUserPinBottomSheet();
+            mAskUserPinBottomSheet.setOnCompletePin(pin -> {
+                Log.i(TAG, pin);
+
+                hideKeyboard();
+                mAskUserPinBottomSheet.dismiss();
+                mLoadingBackdropDialog.setLoading(true);
+
+                transfer(pin);
+            });
+        }
+    }
+
+
+    @SuppressLint("CheckResult")
+    private void transfer(String pin) {
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("TransferTo")) {
             String transferTo = intent.getStringExtra("TransferTo");
@@ -177,6 +206,48 @@ public class TransferMoneyActivity extends BaseActivity {
             if (transferTo.equals("Bank") && intent.hasExtra("CitizenAccount")) {
                 CitizenAccountBankDto citizenAccountBank = new Gson()
                         .fromJson(intent.getStringExtra("CitizenAccount"), CitizenAccountBankDto.class);
+                double amount = Double.parseDouble(mAmountMoneyEditText
+                        .getText()
+                        .toString());
+
+                String transferContent = mTransferContentEditText
+                        .getText()
+                        .toString();
+
+                mTransferService.bankTransfer(pin, new RequestBankTransferDto(
+                                mSourceAccount.getId(),
+                                citizenAccountBank.getBin(),
+                                citizenAccountBank.getAccountNo(),
+                                transferContent,
+                                amount))
+                        .subscribe(response -> {
+                                    mLoadingBackdropDialog.setLoading(false);
+                                },
+                                throwable -> {
+                                    mLoadingBackdropDialog.setLoading(false);
+
+                                    int statusCode = ParseHttpError.getStatusCode(throwable);
+                                    if (statusCode == 400 || statusCode == 500) {
+                                        HttpResponseDto<?> errorBody = ParseHttpError.parse(throwable);
+                                        String errMsg = errorBody.getError();
+                                        Log.e(TAG, errMsg, throwable);
+
+
+                                        if (errMsg.equals("Pin is incorrect")) {
+                                            getBottomSheet();
+
+                                            mAskUserPinBottomSheet.setOnShowListener(() -> {
+                                                mAskUserPinBottomSheet.setPinIncorrect();
+                                            });
+
+                                            mAskUserPinBottomSheet.show(getSupportFragmentManager(), AskUserPinBottomSheet.class.getName());
+
+                                        }
+                                    }
+                                },
+                                () -> {
+                                    mLoadingBackdropDialog.setLoading(false);
+                                });
 
                 NavigateUtil.navigateTo(this, SuccessfulTransactionActivity.class);
             } else if (transferTo.equals("Internal") && intent.hasExtra("Account")) {
