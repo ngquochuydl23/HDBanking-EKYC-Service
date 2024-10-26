@@ -1,10 +1,9 @@
-package com.socialv2.ewallet.ui.transfer;
+package com.socialv2.ewallet.ui.transfer.internalTransfer;
 
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -18,9 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.socialv2.ewallet.BaseBottomSheetDialog;
 import com.socialv2.ewallet.R;
-import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
 import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
+import com.socialv2.ewallet.ui.transfer.SelectSourceBottomSheet;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,6 +12,8 @@ import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.ui.main.homeTab.RecentlyTransferDestAdapter;
 import com.socialv2.ewallet.ui.qr.QrTransferActivity;
+import com.socialv2.ewallet.ui.transfer.bankTransfer.FindBankActivity;
+import com.socialv2.ewallet.ui.transfer.internalTransfer.FindFriendBottomSheet;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.WindowUtils;
 

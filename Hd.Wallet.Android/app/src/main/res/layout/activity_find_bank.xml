@@ -41,6 +41,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
                 android:imeOptions="actionSearch"
+                android:singleLine="true"
                 android:background="@drawable/drawable_outline_circle_1w"
                 android:drawableStart="@drawable/ic_toolbar_search"
                 android:drawablePadding="15dp"
@@ -54,13 +55,13 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/bankRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="20dp"
                     tools:itemCount="5"
                     tools:listitem="@layout/item_select_bank" />

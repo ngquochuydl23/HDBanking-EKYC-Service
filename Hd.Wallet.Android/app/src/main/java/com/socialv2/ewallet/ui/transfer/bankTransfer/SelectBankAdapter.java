@@ -1,10 +1,9 @@
-package com.socialv2.ewallet.ui.transfer;
+package com.socialv2.ewallet.ui.transfer.bankTransfer;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,8 +13,6 @@ import com.socialv2.ewallet.BaseAdapter;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.AvatarView;
 import com.socialv2.ewallet.dtos.banks.BankDto;
-import com.socialv2.ewallet.ui.addCardOrAccount.AddLinkingBankActivity;
-import com.socialv2.ewallet.ui.addCardOrAccount.BankAppAdapter;
 import com.socialv2.ewallet.utils.BankingResourceLogo;
 import com.socialv2.ewallet.utils.FetchImageUrl;
 
@@ -35,10 +32,18 @@ public class SelectBankAdapter extends BaseAdapter<BankDto> {
         FetchImageUrl.read(itemView.mAvatarView, BankingResourceLogo.getLogo(bank.getLogoApp()));
         itemView.mShortNameTextView.setText(bank.getShortName());
         itemView.mNameTextView.setText(bank.getName());
+
+        itemView.mContainerLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), FindDestBankAccountActivity.class);
+            intent.putExtra("Bin", bank.getBin());
+            intent.putExtra("ShortName", bank.getShortName());
+            getContext().startActivity(intent);
+        });
     }
 
     public class SelectBankViewHolder extends RecyclerView.ViewHolder {
 
+        private View mContainerLayout;
         private AvatarView mAvatarView;
         private TextView mNameTextView;
         private TextView mShortNameTextView;
@@ -46,6 +51,7 @@ public class SelectBankAdapter extends BaseAdapter<BankDto> {
         public SelectBankViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            mContainerLayout = itemView.findViewById(R.id.containerLayout);
             mAvatarView = itemView.findViewById(R.id.avatarView);
             mNameTextView = itemView.findViewById(R.id.nameTextView);
             mShortNameTextView = itemView.findViewById(R.id.shortNameTextView);

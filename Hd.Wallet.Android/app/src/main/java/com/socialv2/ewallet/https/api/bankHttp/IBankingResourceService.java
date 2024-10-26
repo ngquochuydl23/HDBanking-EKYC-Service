@@ -1,6 +1,7 @@
 package com.socialv2.ewallet.https.api.bankHttp;
 
 
+import com.socialv2.ewallet.dtos.CitizenAccountBankDto;
 import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.auth.LoginResponseDto;
 import com.socialv2.ewallet.dtos.banks.BankDto;
@@ -15,4 +16,6 @@ public interface IBankingResourceService {
     Observable<HttpResponseDto<List<BankDto>>> getTopBanks();
 
     Observable<HttpResponseDto<BankDto>> getBankByBin(String bin);
+
+    Observable<HttpResponseDto<CitizenAccountBankDto>> getCitizenAccountBank(String bin, String accountBankNo);
 }

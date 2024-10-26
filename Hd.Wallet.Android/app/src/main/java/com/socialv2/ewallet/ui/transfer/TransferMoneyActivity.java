@@ -1,8 +1,12 @@
 package com.socialv2.ewallet.ui.transfer;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,12 +26,15 @@ import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.AvatarView;
 import com.socialv2.ewallet.components.HdWalletToolbar;
+import com.socialv2.ewallet.dtos.CitizenAccountBankDto;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
+import com.socialv2.ewallet.dtos.banks.BankDto;
 import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
 import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
 import com.socialv2.ewallet.utils.BankingResourceLogo;
 import com.socialv2.ewallet.utils.FetchImageUrl;
 import com.socialv2.ewallet.utils.NavigateUtil;
+import com.socialv2.ewallet.utils.UpperCaseOwnerName;
 import com.socialv2.ewallet.utils.VietnameseConcurrency;
 import com.socialv2.ewallet.utils.WindowUtils;
 
@@ -43,11 +50,14 @@ public class TransferMoneyActivity extends BaseActivity {
     private HdWalletToolbar mToolbar;
     private TextView mSrcAccountNoBank;
     private TextView mBalanceTextView;
+    private TextView mDestFullNameTextView;
+    private TextView mDestAccountNoTextView;
+    private TextView mBankNameTextView;
     private AvatarView mLogoBankAvatarView;
+    private AvatarView mDestLogoImageView;
     private EditText mTransferContentEditText;
 
     private AccountDto mSourceAccount;
-    private AccountDto mDestAccount;
 
     public TransferMoneyActivity() {
         super(R.layout.activity_transfer_money);
@@ -66,7 +76,11 @@ public class TransferMoneyActivity extends BaseActivity {
         mToolbar = findViewById(R.id.toolbar);
         mBalanceTextView = findViewById(R.id.balanceTextView);
         mLogoBankAvatarView = findViewById(R.id.logoBankAvatarView);
-        mTransferContentEditText= findViewById(R.id.transferContentEditText);
+        mTransferContentEditText = findViewById(R.id.transferContentEditText);
+        mDestFullNameTextView = findViewById(R.id.destFullNameTextView);
+        mDestAccountNoTextView = findViewById(R.id.destAccountNoTextView);
+        mBankNameTextView = findViewById(R.id.bankNameTextView);
+        mDestLogoImageView = findViewById(R.id.destLogoImageView);
 
         mSelectSourceBottomSheet = new SelectSourceBottomSheet();
         initView();
@@ -80,7 +94,7 @@ public class TransferMoneyActivity extends BaseActivity {
 
         mAmountMoneyEditText.requestFocus();
         mTransferButton.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(this, SuccessfulTransactionActivity.class);
+            transfer();
         });
 
         mSelectSourceButton.setOnClickListener(view -> {
@@ -88,14 +102,31 @@ public class TransferMoneyActivity extends BaseActivity {
         });
 
         mSelectSourceBottomSheet.setOnSelectSourceBank(this::onSelectedSource);
+
     }
 
     private void getDestAccountResult() {
-        String json = "{ \"id\": \"ffeba890-30cb-49ee-9dda-a2209d750c10\", \"userId\": \"9565dc9b-0af9-4793-81e4-8f3615612785\", \"isBankLinking\": false, \"walletBalance\": 1000000, \"linkedAccountId\": null, \"transactionLimit\": 10000000, \"accountType\": 0, \"accountBank\": { \"bankName\": \"HD_WALLET_MBBANK\", \"bankAccountId\": \"0868684961\", \"bankOwnerName\": \"NGUYEN QUOC HUY\", \"idCardNo\": \"068203012123\" }, \"user\": null, \"isBlocked\": false, \"isUnlinked\": false, \"isDeleted\": false, \"createdAt\": \"2024-09-30T14:36:32.792995\", \"lastUpdated\": \"0001-01-01T00:00:00\" }";
-        mDestAccount = new Gson()
-                .fromJson(json, AccountDto.class);
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("TransferTo")) {
+            String transferTo = intent.getStringExtra("TransferTo");
 
-        //Log.i(TAG, account.toString());
+
+            if (transferTo.equals("Bank") && intent.hasExtra("CitizenAccount")) {
+                CitizenAccountBankDto citizenAccountBank = new Gson()
+                        .fromJson(intent.getStringExtra("CitizenAccount"), CitizenAccountBankDto.class);
+
+                FetchImageUrl.read(mDestLogoImageView, BankingResourceLogo.getLogo(citizenAccountBank
+                        .getBank()
+                        .getLogoApp()));
+
+                mDestFullNameTextView.setText(UpperCaseOwnerName.apply(citizenAccountBank.getOwnerName()));
+                mDestAccountNoTextView.setText(citizenAccountBank.getAccountNo());
+                mBankNameTextView.setText(citizenAccountBank.getBankName());
+                return;
+            }
+
+
+        }
     }
 
     private void onSelectedSource(AccountDto account) {
@@ -136,5 +167,25 @@ public class TransferMoneyActivity extends BaseActivity {
                 }, () -> {
 
                 });
+    }
+
+    private void transfer() {
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("TransferTo")) {
+            String transferTo = intent.getStringExtra("TransferTo");
+
+            if (transferTo.equals("Bank") && intent.hasExtra("CitizenAccount")) {
+                CitizenAccountBankDto citizenAccountBank = new Gson()
+                        .fromJson(intent.getStringExtra("CitizenAccount"), CitizenAccountBankDto.class);
+
+                NavigateUtil.navigateTo(this, SuccessfulTransactionActivity.class);
+            } else if (transferTo.equals("Internal") && intent.hasExtra("Account")) {
+
+
+                NavigateUtil.navigateTo(this, SuccessfulTransactionActivity.class);
+            }
+        }
+
+
     }
 }

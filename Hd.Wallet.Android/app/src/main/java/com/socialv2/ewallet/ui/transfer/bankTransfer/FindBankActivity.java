@@ -1,4 +1,4 @@
-package com.socialv2.ewallet.ui.transfer;
+package com.socialv2.ewallet.ui.transfer.bankTransfer;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -10,12 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +20,6 @@ import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.banks.BankDto;
 import com.socialv2.ewallet.https.api.bankHttp.BankingResourceHttpImpl;
 import com.socialv2.ewallet.https.api.bankHttp.IBankingResourceService;
-import com.socialv2.ewallet.ui.addCardOrAccount.AddLinkingBankActivity;
 import com.socialv2.ewallet.utils.WindowUtils;
 
 import java.util.List;

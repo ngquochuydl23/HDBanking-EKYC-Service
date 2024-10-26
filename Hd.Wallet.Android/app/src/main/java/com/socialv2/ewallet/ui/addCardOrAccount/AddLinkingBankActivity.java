@@ -43,6 +43,7 @@ import com.socialv2.ewallet.ui.register.RegisterCheckOtpActivity;
 import com.socialv2.ewallet.utils.AesEncryptionUtils;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.ParseHttpError;
+import com.socialv2.ewallet.utils.UpperCaseOwnerName;
 import com.socialv2.ewallet.utils.WindowUtils;
 
 import java.text.Normalizer;
@@ -134,12 +135,8 @@ public class AddLinkingBankActivity extends BaseActivity {
                     .getValue();
 
             if (user != null) {
-                String ownerName = Normalizer.normalize(user.getFullName(), Normalizer.Form.NFD);
-                Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-                String result = pattern.matcher(ownerName).replaceAll("");
-                ownerName = result.toUpperCase();
 
-                mOwnerEditText.setText(ownerName);
+                mOwnerEditText.setText(UpperCaseOwnerName.apply(user.getFullName()));
                 mIdCardNoEditText.setText(user.getIdCardNo());
             }
         }
@@ -182,14 +179,13 @@ public class AddLinkingBankActivity extends BaseActivity {
         String idCardNo = mIdCardNoEditText
                 .getText()
                 .toString();
-        if (bankAccountId.isEmpty() || bankOwnerName.isEmpty() || idCardNo.isEmpty() || pin.isEmpty()) {
+        if (bankAccountId.isEmpty() || idCardNo.isEmpty() || pin.isEmpty()) {
             return;
         }
         mAccountService
                 .addLinkingAccount(pin, new RequestLinkingAccount(
                         mBank.getBin(),
                         bankAccountId,
-                        bankOwnerName,
                         idCardNo
                 ))
                 .subscribe(response -> {
@@ -209,12 +205,13 @@ public class AddLinkingBankActivity extends BaseActivity {
                         throwable -> {
                             mLoadingBackdropDialog.setLoading(false);
 
-                            Log.e(TAG, throwable.getMessage());
 
                             int statusCode = ParseHttpError.getStatusCode(throwable);
-                            if (statusCode == 400) {
+                            if (statusCode == 400 || statusCode == 500) {
                                 HttpResponseDto<?> errorBody = ParseHttpError.parse(throwable);
                                 String errMsg = errorBody.getError();
+                                Log.e(TAG, errMsg, throwable);
+
 
                                 if (errMsg.equals("Pin is incorrect")) {
                                     getBottomSheet();
@@ -224,6 +221,18 @@ public class AddLinkingBankActivity extends BaseActivity {
                                     });
 
                                     mAskUserPinBottomSheet.show(getSupportFragmentManager(), AskUserPinBottomSheet.class.getName());
+
+                                } else if (errMsg.equals("AccountBank not found")) {
+
+                                } else if (errMsg.equals("Provided IdCard is not the same of bank account")) {
+
+                                } else if (errMsg.equals("IdCardNo of account and yours is not the same")) {
+
+                                } else if (errMsg.equals("Your bank account status is not active")) {
+
+                                } else if (errMsg.equals("This account bank is already linked")) {
+
+                                } else {
 
                                 }
                             }

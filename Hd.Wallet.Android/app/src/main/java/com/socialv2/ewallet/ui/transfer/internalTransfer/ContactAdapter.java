@@ -1,16 +1,14 @@
-package com.socialv2.ewallet.ui.transfer;
+package com.socialv2.ewallet.ui.transfer.internalTransfer;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.AvatarView;
-import com.socialv2.ewallet.dtos.accounts.AccountDto;
 
 import java.util.ArrayList;
 import java.util.List;

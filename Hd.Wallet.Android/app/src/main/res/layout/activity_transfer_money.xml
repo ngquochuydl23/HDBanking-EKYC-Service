@@ -81,7 +81,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.socialv2.ewallet.components.AvatarView
-                        android:id="@+id/logoImageView"
+                        android:id="@+id/destLogoImageView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"

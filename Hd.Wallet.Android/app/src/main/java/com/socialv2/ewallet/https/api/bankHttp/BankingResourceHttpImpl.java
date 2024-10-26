@@ -2,6 +2,7 @@ package com.socialv2.ewallet.https.api.bankHttp;
 
 import android.content.Context;
 
+import com.socialv2.ewallet.dtos.CitizenAccountBankDto;
 import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.auth.LoginRequestDto;
 import com.socialv2.ewallet.dtos.auth.LoginResponseDto;
@@ -45,6 +46,15 @@ public class BankingResourceHttpImpl implements IBankingResourceService {
     @Override
     public Observable<HttpResponseDto<BankDto>> getBankByBin(String bin) {
         return mHttpBankingResource.getBankByBin(bin)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<HttpResponseDto<CitizenAccountBankDto>> getCitizenAccountBank(
+            String bin,
+            String accountBankNo) {
+        return mHttpBankingResource.getCitizenAccountBank(bin, accountBankNo)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }
