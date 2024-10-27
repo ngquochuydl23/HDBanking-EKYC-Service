@@ -183,6 +183,7 @@ public class AddLinkingBankActivity extends BaseActivity {
                             String json = new Gson().toJson(bankAccount);
 
                             intent.putExtra("AccountBank-json", json);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
 
                             startActivity(intent);
                             finish();

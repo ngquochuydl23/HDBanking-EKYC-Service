@@ -4,6 +4,7 @@ import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.accounts.AccountBalanceDto;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
+import com.socialv2.ewallet.dtos.transactions.TransactionDto;
 import com.socialv2.ewallet.dtos.transfers.RequestBankTransferDto;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import retrofit2.http.Path;
 public interface IHttpTransfer {
 
     @POST("transaction/Transfer/BankTransfer")
-    Observable<HttpResponseDto<AccountDto>> bankTransfer(
+    Observable<HttpResponseDto<TransactionDto>> bankTransfer(
             @Header("X-EncryptedPin") String encryptedPin,
             @Body RequestBankTransferDto body
     );

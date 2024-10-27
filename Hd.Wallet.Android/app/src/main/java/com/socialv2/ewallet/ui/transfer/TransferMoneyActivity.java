@@ -3,6 +3,8 @@ package com.socialv2.ewallet.ui.transfer;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +25,7 @@ import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.accounts.AccountBankDto;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
+import com.socialv2.ewallet.dtos.transactions.TransactionDto;
 import com.socialv2.ewallet.dtos.transfers.RequestBankTransferDto;
 import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
 import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
@@ -113,7 +116,39 @@ public class TransferMoneyActivity extends BaseActivity {
         });
 
         mSelectSourceBottomSheet.setOnSelectSourceBank(this::onSelectedSource);
+        mAmountMoneyEditText.addTextChangedListener(new TextWatcher() {
 
+            private String current = "";
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+                if (!s.toString().equals(current)) {
+                    mAmountMoneyEditText.removeTextChangedListener(this);
+
+                    // Chuyển text từ EditText thành giá trị double
+                    double parsedValue = VietnameseConcurrency.parseToDouble(s.toString());
+
+                    // Định dạng lại và cập nhật Text
+                    String formatted = VietnameseConcurrency.formatWithoutSymbol(parsedValue);
+                    current = formatted;
+
+                    // Cập nhật lại EditText với văn bản đã định dạng
+                    mAmountMoneyEditText.setText(formatted);
+                    mAmountMoneyEditText.setSelection(formatted.length());
+
+                    mAmountMoneyEditText.addTextChangedListener(this);
+                }
+
+            }
+        });
     }
 
     private void getDestAccountResult() {
@@ -135,14 +170,12 @@ public class TransferMoneyActivity extends BaseActivity {
                 mBankNameTextView.setText(citizenAccountBank.getBankName());
                 return;
             }
-
-
         }
     }
 
     private void onSelectedSource(AccountDto account) {
         mSelectSourceBottomSheet.dismiss();
-        Log.i(TAG, account.toString());
+        Log.d(TAG, account.toString());
 
         mSourceAccount = account;
         mSrcAccountNoBank.setText(mSourceAccount.getAccountBank().getBankAccountId());
@@ -206,7 +239,7 @@ public class TransferMoneyActivity extends BaseActivity {
             if (transferTo.equals("Bank") && intent.hasExtra("CitizenAccount")) {
                 CitizenAccountBankDto citizenAccountBank = new Gson()
                         .fromJson(intent.getStringExtra("CitizenAccount"), CitizenAccountBankDto.class);
-                double amount = Double.parseDouble(mAmountMoneyEditText
+                double amount = VietnameseConcurrency.parseToDouble(mAmountMoneyEditText
                         .getText()
                         .toString());
 
@@ -222,6 +255,17 @@ public class TransferMoneyActivity extends BaseActivity {
                                 amount))
                         .subscribe(response -> {
                                     mLoadingBackdropDialog.setLoading(false);
+
+                                    Log.d(TAG, response.toString());
+                                    TransactionDto transaction = response.getResult();
+                                    String transactionJson = new Gson()
+                                            .toJson(transaction);
+
+                                    Intent forwardIntent = new Intent(this, SuccessfulTransactionActivity.class);
+                                    forwardIntent.putExtra("TransactionResult", transactionJson);
+                                    forwardIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
+                                    startActivity(forwardIntent);
+                                    finish();
                                 },
                                 throwable -> {
                                     mLoadingBackdropDialog.setLoading(false);
@@ -249,7 +293,7 @@ public class TransferMoneyActivity extends BaseActivity {
                                     mLoadingBackdropDialog.setLoading(false);
                                 });
 
-                NavigateUtil.navigateTo(this, SuccessfulTransactionActivity.class);
+
             } else if (transferTo.equals("Internal") && intent.hasExtra("Account")) {
 
 

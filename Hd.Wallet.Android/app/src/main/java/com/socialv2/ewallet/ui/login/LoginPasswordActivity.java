@@ -108,7 +108,7 @@ public class LoginPasswordActivity extends AppCompatActivity {
 
         mAuthService.login(phoneNumber, password)
                 .subscribe(response -> {
-                    Log.i(TAG, response.toString());
+                    Log.d(TAG, response.toString());
 
                     mLoadingBackdropDialog.setLoading(false);
 

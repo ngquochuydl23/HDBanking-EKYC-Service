@@ -54,6 +54,7 @@
                     android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/amountTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
@@ -67,6 +68,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/destOwnerNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -94,6 +96,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/destBankNameTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semibold_font"
@@ -102,6 +105,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/destAccountNoTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semibold_font"
@@ -126,6 +130,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/transferContentTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semibold_font"
@@ -150,6 +155,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/transactionDateTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semibold_font"
@@ -174,6 +180,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/transactionIdTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semibold_font"
@@ -188,7 +195,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/transferButton"
+                android:id="@+id/completeButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

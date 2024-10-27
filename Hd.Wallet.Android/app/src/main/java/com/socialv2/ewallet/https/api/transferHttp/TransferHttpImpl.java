@@ -6,6 +6,7 @@ import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.accounts.AccountBalanceDto;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
+import com.socialv2.ewallet.dtos.transactions.TransactionDto;
 import com.socialv2.ewallet.dtos.transfers.RequestBankTransferDto;
 import com.socialv2.ewallet.https.HttpSettingImpl;
 import com.socialv2.ewallet.https.IHttpSetting;
@@ -31,7 +32,7 @@ public class TransferHttpImpl implements ITransferService {
     }
 
     @Override
-    public Observable<HttpResponseDto<AccountDto>> bankTransfer(String pin, RequestBankTransferDto body) {
+    public Observable<HttpResponseDto<TransactionDto>> bankTransfer(String pin, RequestBankTransferDto body) {
         return mHttpTransfer.bankTransfer(AesEncryptionUtils.encrypt(pin), body)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
