@@ -51,7 +51,6 @@ public class TransferMoneyActivity extends BaseActivity {
     private EditText mAmountMoneyEditText;
     private Button mTransferButton;
     private View mSelectSourceButton;
-    private HdWalletToolbar mToolbar;
     private TextView mSrcAccountNoBank;
     private TextView mBalanceTextView;
     private TextView mDestFullNameTextView;
@@ -66,6 +65,7 @@ public class TransferMoneyActivity extends BaseActivity {
     private AskUserPinBottomSheet mAskUserPinBottomSheet;
 
     private AccountDto mSourceAccount;
+    private boolean mUseLinkingBank = false;
 
     public TransferMoneyActivity() {
         super(R.layout.activity_transfer_money);
@@ -82,7 +82,6 @@ public class TransferMoneyActivity extends BaseActivity {
         mSelectSourceButton = findViewById(R.id.selectSourceButton);
         mAmountMoneyEditText = findViewById(R.id.amountMoneyEditText);
         mSrcAccountNoBank = findViewById(R.id.srcAccountNoBank);
-        mToolbar = findViewById(R.id.toolbar);
         mBalanceTextView = findViewById(R.id.balanceTextView);
         mLogoBankAvatarView = findViewById(R.id.logoBankAvatarView);
         mTransferContentEditText = findViewById(R.id.transferContentEditText);
@@ -181,6 +180,7 @@ public class TransferMoneyActivity extends BaseActivity {
         mSrcAccountNoBank.setText(mSourceAccount.getAccountBank().getBankAccountId());
 
         if (mSourceAccount.getBankLinking()) {
+            mUseLinkingBank = true;
             mBalanceTextView.setVisibility(View.VISIBLE);
             FetchImageUrl.read(mLogoBankAvatarView, BankingResourceLogo.getLogo(mSourceAccount
                     .getAccountBank()
@@ -188,7 +188,7 @@ public class TransferMoneyActivity extends BaseActivity {
 
             mBalanceTextView.setText("Tài khoản liên kết");
         } else {
-
+            mUseLinkingBank = false;
             mBalanceTextView.setVisibility(View.VISIBLE);
             mBalanceTextView.setText("Số dư " + VietnameseConcurrency.format(mSourceAccount.getWalletBalance()));
             mLogoBankAvatarView.setImageDrawable(getDrawable(R.drawable.ic_src_wallet));
@@ -197,8 +197,10 @@ public class TransferMoneyActivity extends BaseActivity {
 
     @SuppressLint("CheckResult")
     private void getPrimaryBalance() {
+        mUseLinkingBank = false;
         mAccountService.getPrimaryAccount()
                 .subscribe(response -> {
+
                     mSourceAccount = response.getResult();
                     onSelectedSource(mSourceAccount);
                     mTransferContentEditText.setText(mSourceAccount
@@ -239,6 +241,7 @@ public class TransferMoneyActivity extends BaseActivity {
             if (transferTo.equals("Bank") && intent.hasExtra("CitizenAccount")) {
                 CitizenAccountBankDto citizenAccountBank = new Gson()
                         .fromJson(intent.getStringExtra("CitizenAccount"), CitizenAccountBankDto.class);
+
                 double amount = VietnameseConcurrency.parseToDouble(mAmountMoneyEditText
                         .getText()
                         .toString());
@@ -252,7 +255,8 @@ public class TransferMoneyActivity extends BaseActivity {
                                 citizenAccountBank.getBin(),
                                 citizenAccountBank.getAccountNo(),
                                 transferContent,
-                                amount))
+                                amount,
+                                mUseLinkingBank))
                         .subscribe(response -> {
                                     mLoadingBackdropDialog.setLoading(false);
 

@@ -25,16 +25,27 @@ public class RequestBankTransferDto {
     private double transferAmount;
 
 
+    @SerializedName("useLinkingBank")
+    @Expose
+    private boolean useLinkingBank;
+
     public RequestBankTransferDto() {
 
     }
 
-    public RequestBankTransferDto(String sourceAccountId, String destBin, String destBankAccountNo, String transferContent, double transferAmount) {
+    public RequestBankTransferDto(
+            String sourceAccountId,
+            String destBin,
+            String destBankAccountNo,
+            String transferContent,
+            double transferAmount,
+            boolean useLinkingBank) {
         this.sourceAccountId = sourceAccountId;
         this.destBin = destBin;
         this.destBankAccountNo = destBankAccountNo;
         this.transferContent = transferContent;
         this.transferAmount = transferAmount;
+        this.useLinkingBank = useLinkingBank;
     }
 
     public String getSourceAccountId() {
@@ -77,14 +88,24 @@ public class RequestBankTransferDto {
         this.transferAmount = transferAmount;
     }
 
+
+    public boolean isUseLinkingBank() {
+        return useLinkingBank;
+    }
+
+    public void setUseLinkingBank(boolean useLinkingBank) {
+        this.useLinkingBank = useLinkingBank;
+    }
+
     @Override
     public String toString() {
-        return "BankTransferDto{" +
+        return "RequestBankTransferDto{" +
                 "sourceAccountId='" + sourceAccountId + '\'' +
                 ", destBin='" + destBin + '\'' +
                 ", destBankAccountNo='" + destBankAccountNo + '\'' +
                 ", transferContent='" + transferContent + '\'' +
-                ", transferAmount='" + transferAmount + '\'' +
+                ", transferAmount=" + transferAmount +
+                ", useLinkingBank=" + useLinkingBank +
                 '}';
     }
 }

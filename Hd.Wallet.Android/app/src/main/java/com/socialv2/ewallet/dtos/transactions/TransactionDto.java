@@ -44,9 +44,17 @@ public class TransactionDto {
     @Expose
     private String createdAt;
 
+    @SerializedName("isBankingTransfer")
+    @Expose
+    private boolean isBankingTransfer;
+
+    @SerializedName("useSourceAsLinkingBank")
+    @Expose
+    private boolean useSourceAsLinkingBank;
+
     public TransactionDto() { }
 
-    public TransactionDto(String id, double amount, TransactionAccountBankDto sourceAccount, TransactionAccountBankDto destAccount, String transactionDate, int transactionType, int transactionStatus, String description, String transferContent, String createdAt) {
+    public TransactionDto(String id, double amount, TransactionAccountBankDto sourceAccount, TransactionAccountBankDto destAccount, String transactionDate, int transactionType, int transactionStatus, String description, String transferContent, String createdAt, boolean isBankingTransfer, boolean useSourceAsLinkingBank) {
         this.id = id;
         this.amount = amount;
         this.sourceAccount = sourceAccount;
@@ -57,6 +65,8 @@ public class TransactionDto {
         this.description = description;
         this.transferContent = transferContent;
         this.createdAt = createdAt;
+        this.isBankingTransfer = isBankingTransfer;
+        this.useSourceAsLinkingBank = useSourceAsLinkingBank;
     }
 
     public String getId() {
@@ -139,6 +149,22 @@ public class TransactionDto {
         this.createdAt = createdAt;
     }
 
+    public boolean isBankingTransfer() {
+        return isBankingTransfer;
+    }
+
+    public void setBankingTransfer(boolean bankingTransfer) {
+        isBankingTransfer = bankingTransfer;
+    }
+
+    public boolean isUseSourceAsLinkingBank() {
+        return useSourceAsLinkingBank;
+    }
+
+    public void setUseSourceAsLinkingBank(boolean useSourceAsLinkingBank) {
+        this.useSourceAsLinkingBank = useSourceAsLinkingBank;
+    }
+
     @Override
     public String toString() {
         return "TransactionDto{" +
@@ -152,6 +178,8 @@ public class TransactionDto {
                 ", description='" + description + '\'' +
                 ", transferContent='" + transferContent + '\'' +
                 ", createdAt='" + createdAt + '\'' +
+                ", isBankingTransfer=" + isBankingTransfer +
+                ", useSourceAsLinkingBank=" + useSourceAsLinkingBank +
                 '}';
     }
 }
