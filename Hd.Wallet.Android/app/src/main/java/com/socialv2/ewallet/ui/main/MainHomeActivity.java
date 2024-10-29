@@ -23,7 +23,7 @@ import com.socialv2.ewallet.singleton.UserSingleton;
 import com.socialv2.ewallet.ui.main.accountTab.AccountTabFragment;
 import com.socialv2.ewallet.ui.main.homeTab.HomeFragment;
 import com.socialv2.ewallet.ui.main.moreTab.ProfileFragment;
-import com.socialv2.ewallet.ui.main.tabs.TransactionHistoryFragment;
+import com.socialv2.ewallet.ui.main.transactionTab.TransactionHistoryFragment;
 
 public class MainHomeActivity extends BaseActivity {
 

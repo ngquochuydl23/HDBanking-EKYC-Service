@@ -26,11 +26,11 @@ public class TransactionDto {
 
     @SerializedName("transactionType")
     @Expose
-    private int transactionType;
+    private String transactionType;
 
     @SerializedName("transactionStatus")
     @Expose
-    private int transactionStatus;
+    private String transactionStatus;
 
     @SerializedName("description")
     @Expose
@@ -54,7 +54,7 @@ public class TransactionDto {
 
     public TransactionDto() { }
 
-    public TransactionDto(String id, double amount, TransactionAccountBankDto sourceAccount, TransactionAccountBankDto destAccount, String transactionDate, int transactionType, int transactionStatus, String description, String transferContent, String createdAt, boolean isBankingTransfer, boolean useSourceAsLinkingBank) {
+    public TransactionDto(String id, double amount, TransactionAccountBankDto sourceAccount, TransactionAccountBankDto destAccount, String transactionDate, String transactionType, String transactionStatus, String description, String transferContent, String createdAt, boolean isBankingTransfer, boolean useSourceAsLinkingBank) {
         this.id = id;
         this.amount = amount;
         this.sourceAccount = sourceAccount;
@@ -109,19 +109,19 @@ public class TransactionDto {
         this.transactionDate = transactionDate;
     }
 
-    public int getTransactionType() {
+    public String getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(int transactionType) {
+    public void setTransactionType(String transactionType) {
         this.transactionType = transactionType;
     }
 
-    public int getTransactionStatus() {
+    public String getTransactionStatus() {
         return transactionStatus;
     }
 
-    public void setTransactionStatus(int transactionStatus) {
+    public void setTransactionStatus(String transactionStatus) {
         this.transactionStatus = transactionStatus;
     }
 

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.AskUserPinBottomSheet;
@@ -120,10 +121,12 @@ public class TransferMoneyActivity extends BaseActivity {
             private String current = "";
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -260,7 +263,7 @@ public class TransferMoneyActivity extends BaseActivity {
                         .subscribe(response -> {
                                     mLoadingBackdropDialog.setLoading(false);
 
-                                    Log.d(TAG, response.toString());
+                                    Log.d(TAG, response.getResult().toString());
                                     TransactionDto transaction = response.getResult();
                                     String transactionJson = new Gson()
                                             .toJson(transaction);
@@ -273,6 +276,12 @@ public class TransferMoneyActivity extends BaseActivity {
                                 },
                                 throwable -> {
                                     mLoadingBackdropDialog.setLoading(false);
+
+                                    if (throwable instanceof JsonSyntaxException) {
+                                        throwable.printStackTrace();
+                                        return;
+                                    }
+
 
                                     int statusCode = ParseHttpError.getStatusCode(throwable);
                                     if (statusCode == 400 || statusCode == 500) {

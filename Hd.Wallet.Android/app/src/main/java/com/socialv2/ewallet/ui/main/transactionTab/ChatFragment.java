@@ -1,4 +1,4 @@
-package com.socialv2.ewallet.ui.main.tabs;
+package com.socialv2.ewallet.ui.main.transactionTab;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

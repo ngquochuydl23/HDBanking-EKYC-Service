@@ -14,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.gson.Gson;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
@@ -38,6 +39,8 @@ public class SuccessfulTransactionActivity extends BaseActivity {
     private TextView mTransactionIdTextView;
     private TextView mTransactionDateTextView;
 
+    private LottieAnimationView mLottieAnimationView;
+
     public SuccessfulTransactionActivity() {
         super(R.layout.activity_successful_transaction);
     }
@@ -54,7 +57,7 @@ public class SuccessfulTransactionActivity extends BaseActivity {
         mTransferContentTextView = findViewById(R.id.transferContentTextView);
         mTransactionIdTextView = findViewById(R.id.transactionIdTextView);
         mTransactionDateTextView = findViewById(R.id.transactionDateTextView);
-
+        mLottieAnimationView = findViewById(R.id.lottieAnimationView);
 
         initView();
         getResultTransfer();
@@ -87,7 +90,7 @@ public class SuccessfulTransactionActivity extends BaseActivity {
             mDestAccountNoTextView.setText(destAccountBank.getAccountNo());
             mTransferContentTextView.setText(transactionResult.getTransferContent());
             mTransactionIdTextView.setText(transactionResult.getId());
-            mTransactionDateTextView.setText(DateFormatter.formatToVietnameseDate(transactionResult.getCreatedAt()));
+            mTransactionDateTextView.setText(DateFormatter.formatToVietnameseDate(transactionResult.getTransactionDate()));
 
         }
     }
