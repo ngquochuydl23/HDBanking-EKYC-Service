@@ -50,39 +50,41 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/regular_font"
-        android:includeFontPadding="false"
+        android:includeFontPadding="true"
         android:text="10:36 - 07/01/2023"
         android:textColor="@color/textColorSecondary"
         android:textSize="13sp"
         app:layout_constraintLeft_toRightOf="@id/avatarCardView"
-        app:layout_constraintRight_toLeftOf="@id/transactionStatusTextView"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
-
-    <TextView
-        android:id="@+id/transactionStatusTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/semibold_font"
-        android:text="Thành công"
-        android:textColor="@color/success"
-        android:textSize="12sp"
-        app:layout_constraintLeft_toRightOf="@id/transactionDateTextView"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
     <TextView
-        android:id="@+id/balanceTextView"
+        android:id="@+id/transactionStatusTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:fontFamily="@font/regular_font"
         android:includeFontPadding="false"
-        android:text="Số dư: ******"
-        android:textColor="@color/textColorSecondary"
+        android:text="Thành công"
+        android:textColor="@color/success"
         android:textSize="13sp"
         app:layout_constraintLeft_toRightOf="@id/avatarCardView"
-        app:layout_constraintRight_toLeftOf="@id/transactionStatusTextView"
+        app:layout_constraintRight_toLeftOf="@id/transactionAmountTextView"
+        app:layout_constraintTop_toBottomOf="@id/transactionDateTextView" />
+
+    <TextView
+        android:id="@+id/transactionAmountTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:fontFamily="@font/semibold_font"
+        android:includeFontPadding="false"
+        android:textAlignment="textEnd"
+        android:text="+1.000.000đ"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@id/transactionStatusTextView"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/transactionDateTextView" />
 
 
@@ -93,7 +95,7 @@
         android:layout_marginBottom="5dp"
         android:background="#d0d0d0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/balanceTextView"
+        app:layout_constraintLeft_toLeftOf="@id/transactionStatusTextView"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/balanceTextView" />
+        app:layout_constraintTop_toBottomOf="@id/transactionStatusTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

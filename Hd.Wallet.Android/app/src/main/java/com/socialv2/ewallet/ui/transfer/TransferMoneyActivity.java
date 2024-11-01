@@ -155,23 +155,44 @@ public class TransferMoneyActivity extends BaseActivity {
 
     private void getDestAccountResult() {
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("TransferTo")) {
+        if (intent != null
+                && intent.hasExtra("TransferTo")
+                && intent.hasExtra("Type")) {
+
+
+            String type = intent.getStringExtra("Type");
             String transferTo = intent.getStringExtra("TransferTo");
 
+            if (type.equals("InternalTransfer")
+                    && transferTo != null
+                    && !transferTo.isEmpty()) {
+                bindInternalTransfer(transferTo, intent);
 
-            if (transferTo.equals("Bank") && intent.hasExtra("CitizenAccount")) {
-                CitizenAccountBankDto citizenAccountBank = new Gson()
-                        .fromJson(intent.getStringExtra("CitizenAccount"), CitizenAccountBankDto.class);
+            } else if (type.equals("BankTransfer")
+                    && transferTo != null
+                    && !transferTo.isEmpty()) {
 
-                FetchImageUrl.read(mDestLogoImageView, BankingResourceLogo.getLogo(citizenAccountBank
-                        .getBank()
-                        .getLogoApp()));
-
-                mDestFullNameTextView.setText(UpperCaseOwnerName.apply(citizenAccountBank.getOwnerName()));
-                mDestAccountNoTextView.setText(citizenAccountBank.getAccountNo());
-                mBankNameTextView.setText(citizenAccountBank.getBankName());
-                return;
+                Log.d(TAG, "Type -> BankTransfer");
+                bindBankTransfer(transferTo, intent);
             }
+        }
+    }
+
+    private void bindInternalTransfer(String transferTo, Intent extraIntents) { }
+
+    private void bindBankTransfer(String transferTo, Intent extraIntents ) {
+        if (transferTo.equals("Bank") && extraIntents.hasExtra("CitizenAccount")) {
+            CitizenAccountBankDto citizenAccountBank = new Gson()
+                    .fromJson(extraIntents.getStringExtra("CitizenAccount"), CitizenAccountBankDto.class);
+
+            FetchImageUrl.read(mDestLogoImageView, BankingResourceLogo.getLogo(citizenAccountBank
+                    .getBank()
+                    .getLogoApp()));
+
+            mDestFullNameTextView.setText(UpperCaseOwnerName.apply(citizenAccountBank.getOwnerName()));
+            mDestAccountNoTextView.setText(citizenAccountBank.getAccountNo());
+            mBankNameTextView.setText(citizenAccountBank.getBankName());
+            return;
         }
     }
 

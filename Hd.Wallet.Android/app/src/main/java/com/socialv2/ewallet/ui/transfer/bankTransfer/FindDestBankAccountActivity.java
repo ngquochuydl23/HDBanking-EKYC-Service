@@ -137,6 +137,7 @@ public class FindDestBankAccountActivity extends BaseActivity {
 
             Intent intent = new Intent(this, TransferMoneyActivity.class);
 
+            intent.putExtra("Type", "BankTransfer");
             intent.putExtra("TransferTo", "Bank");
             intent.putExtra("CitizenAccount", json);
 

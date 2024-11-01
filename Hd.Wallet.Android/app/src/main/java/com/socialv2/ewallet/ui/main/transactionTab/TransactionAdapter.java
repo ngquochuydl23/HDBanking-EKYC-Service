@@ -1,26 +1,19 @@
 package com.socialv2.ewallet.ui.main.transactionTab;
 
-import android.content.Intent;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.socialv2.ewallet.BaseAdapter;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.AvatarView;
-import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.dtos.transactions.TransactionAccountBankDto;
 import com.socialv2.ewallet.dtos.transactions.TransactionDto;
-import com.socialv2.ewallet.ui.main.homeTab.RecentlyTransferDestAdapter;
-import com.socialv2.ewallet.ui.transfer.TransferMoneyActivity;
-import com.socialv2.ewallet.utils.BankingResourceLogo;
 import com.socialv2.ewallet.utils.DateFormatter;
-import com.socialv2.ewallet.utils.DpToPx;
-import com.socialv2.ewallet.utils.FetchImageUrl;
+import com.socialv2.ewallet.utils.VietnameseConcurrency;
 
 public class TransactionAdapter extends BaseAdapter<TransactionDto> {
 
@@ -37,6 +30,7 @@ public class TransactionAdapter extends BaseAdapter<TransactionDto> {
         TransactionAdapter.TransactionViewHolder itemView = (TransactionAdapter.TransactionViewHolder) viewHolder;
 
         itemView.mTransactionDateTextView.setText(DateFormatter.formatToVietnameseDateTime(transaction.getTransactionDate()));
+        itemView.mTransactionAmountTextView.setText(VietnameseConcurrency.format(transaction.getAmount()));
 
         if (transaction.getTransactionStatus().equals("Completed")) {
             itemView.mTransactionStatusTextView.setText("Thành công");
@@ -49,7 +43,7 @@ public class TransactionAdapter extends BaseAdapter<TransactionDto> {
                 itemView.mTitleTextView.setText(String.format(
                         "Chuyển tiền/Thanh toán đến %s (%s)",
                         destAccountBank.getOwnerName(),
-                        destAccountBank.getShortName()
+                        destAccountBank.getBankName()
                 ));
 
 
@@ -65,6 +59,7 @@ public class TransactionAdapter extends BaseAdapter<TransactionDto> {
         private AvatarView mAvatarView;
         private TextView mTransactionDateTextView;
         private TextView mTransactionStatusTextView;
+        private TextView mTransactionAmountTextView;
 
         public TransactionViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +67,7 @@ public class TransactionAdapter extends BaseAdapter<TransactionDto> {
             mTransactionDateTextView = itemView.findViewById(R.id.transactionDateTextView);
             mTransactionStatusTextView = itemView.findViewById(R.id.transactionStatusTextView);
             mAvatarView = itemView.findViewById(R.id.avatarView);
+            mTransactionAmountTextView = itemView.findViewById(R.id.transactionAmountTextView);
         }
     }
 }

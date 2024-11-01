@@ -285,6 +285,7 @@ public class QrTransferActivity extends BaseActivity {
                     String json = new Gson().toJson(account);
 
                     Intent intent = new Intent(this, TransferMoneyActivity.class);
+                    intent.putExtra("Type", "InternalTransfer");
                     intent.putExtra("AccountJsonResult", json);
                     startActivity(intent);
                 },throwable -> {
