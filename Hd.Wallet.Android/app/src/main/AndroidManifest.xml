@@ -27,6 +27,9 @@
         android:theme="@style/Theme.OCRBanking_MobileApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.main.transactionTab.TransactionDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.transfer.bankTransfer.FindDestBankAccountActivity"
             android:exported="false" />
         <activity
