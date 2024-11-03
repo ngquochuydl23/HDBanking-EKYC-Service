@@ -84,6 +84,12 @@ public class SuccessfulTransactionActivity extends BaseActivity {
                 return;
             }
 
+            if (transactionResult.isBankingTransfer()) {
+                mDestBankNameTextView.setText(destAccountBank.getBankName());
+            } else {
+                mDestBankNameTextView.setText("Ví điện tử HD");
+            }
+
             mAmountTextView.setText(VietnameseConcurrency.formatWithoutSymbol(transactionResult.getAmount()));
             mDestOwnerNameTextView.setText("Tới " + destAccountBank.getOwnerName());
             mDestBankNameTextView.setText(destAccountBank.getBankName());

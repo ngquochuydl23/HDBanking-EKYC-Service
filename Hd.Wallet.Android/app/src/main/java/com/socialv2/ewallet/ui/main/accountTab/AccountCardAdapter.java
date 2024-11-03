@@ -1,12 +1,15 @@
 package com.socialv2.ewallet.ui.main.accountTab;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.socialv2.ewallet.BaseAdapter;
@@ -41,7 +44,11 @@ public class AccountCardAdapter extends BaseAdapter<AccountDto> {
                 .getAccountBank()
                 .getLogoUrl();
 
-        if (!logo.isEmpty()) {
+        itemView.mAvatarView.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.foregroundColor)));
+
+        if (!account.getBankLinking()) {
+            itemView.mAvatarView.setImageDrawable(getContext().getDrawable(R.drawable.image_hd_logo));
+        } else {
             FetchImageUrl.read(itemView.mAvatarView, BankingResourceLogo.getLogo(logo));
         }
 
@@ -56,7 +63,7 @@ public class AccountCardAdapter extends BaseAdapter<AccountDto> {
 
     public class AccountCardViewHolder extends RecyclerView.ViewHolder {
 
-        private AvatarView mAvatarView;
+        private ImageView mAvatarView;
         private TextView mBankFullNameTextView;
         private View mContainerLayout;
 

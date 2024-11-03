@@ -28,6 +28,7 @@ import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
 import com.socialv2.ewallet.dtos.transactions.TransactionDto;
 import com.socialv2.ewallet.dtos.transfers.RequestBankTransferDto;
+import com.socialv2.ewallet.dtos.transfers.RequestInternalTransferDto;
 import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
 import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
 import com.socialv2.ewallet.https.api.transferHttp.TransferHttpImpl;
@@ -105,6 +106,7 @@ public class TransferMoneyActivity extends BaseActivity {
     private void initView() {
         WindowUtils.applyPadding(findViewById(R.id.main));
 
+        mAmountMoneyEditText.setText("");
         mAmountMoneyEditText.requestFocus();
         mTransferButton.setOnClickListener(view -> {
             getBottomSheet();
@@ -134,18 +136,13 @@ public class TransferMoneyActivity extends BaseActivity {
 
                 if (!s.toString().equals(current)) {
                     mAmountMoneyEditText.removeTextChangedListener(this);
-
-                    // Chuyển text từ EditText thành giá trị double
                     double parsedValue = VietnameseConcurrency.parseToDouble(s.toString());
 
-                    // Định dạng lại và cập nhật Text
                     String formatted = VietnameseConcurrency.formatWithoutSymbol(parsedValue);
                     current = formatted;
 
-                    // Cập nhật lại EditText với văn bản đã định dạng
                     mAmountMoneyEditText.setText(formatted);
                     mAmountMoneyEditText.setSelection(formatted.length());
-
                     mAmountMoneyEditText.addTextChangedListener(this);
                 }
 
@@ -155,33 +152,38 @@ public class TransferMoneyActivity extends BaseActivity {
 
     private void getDestAccountResult() {
         Intent intent = getIntent();
-        if (intent != null
-                && intent.hasExtra("TransferTo")
-                && intent.hasExtra("Type")) {
-
+        if (intent != null && intent.hasExtra("Type")) {
 
             String type = intent.getStringExtra("Type");
-            String transferTo = intent.getStringExtra("TransferTo");
 
-            if (type.equals("InternalTransfer")
-                    && transferTo != null
-                    && !transferTo.isEmpty()) {
-                bindInternalTransfer(transferTo, intent);
+            if (type.equals("InternalTransfer")) {
+                Log.d(TAG, "Type -> InternalTransfer");
+                bindInternalTransfer(type, intent);
 
-            } else if (type.equals("BankTransfer")
-                    && transferTo != null
-                    && !transferTo.isEmpty()) {
+            } else if (type.equals("BankTransfer")) {
 
                 Log.d(TAG, "Type -> BankTransfer");
-                bindBankTransfer(transferTo, intent);
+                bindBankTransfer(type, intent);
             }
         }
     }
 
-    private void bindInternalTransfer(String transferTo, Intent extraIntents) { }
+    private void bindInternalTransfer(String type, Intent extraIntents) {
+        if (type.equals("InternalTransfer") && extraIntents.hasExtra("TransferTo")) {
+            String json = extraIntents.getStringExtra("TransferTo");
+            AccountDto account = new Gson()
+                    .fromJson(json, AccountDto.class);
+            Log.d(TAG, account.toString());
 
-    private void bindBankTransfer(String transferTo, Intent extraIntents ) {
-        if (transferTo.equals("Bank") && extraIntents.hasExtra("CitizenAccount")) {
+            mDestLogoImageView.setImageDrawable(getDrawable(R.drawable.image_hd_logo));
+            mDestFullNameTextView.setText(UpperCaseOwnerName.apply(account.getAccountBank().getBankOwnerName()));
+            mDestAccountNoTextView.setText(account.getAccountBank().getBankAccountId());
+            mBankNameTextView.setText(account.getAccountBank().getBankFullName());
+        }
+    }
+
+    private void bindBankTransfer(String type, Intent extraIntents) {
+        if (type.equals("BankTransfer") && extraIntents.hasExtra("CitizenAccount")) {
             CitizenAccountBankDto citizenAccountBank = new Gson()
                     .fromJson(extraIntents.getStringExtra("CitizenAccount"), CitizenAccountBankDto.class);
 
@@ -226,14 +228,14 @@ public class TransferMoneyActivity extends BaseActivity {
                 .subscribe(response -> {
 
                     mSourceAccount = response.getResult();
-                    onSelectedSource(mSourceAccount);
-                    mTransferContentEditText.setText(mSourceAccount
-                            .getAccountBank()
-                            .getBankOwnerName() + " chuyen khoan");
+                    Log.d(TAG, mSourceAccount.toString());
 
-                    Log.i(TAG, mSourceAccount.toString());
+                    mUseLinkingBank = false;
+                    mBalanceTextView.setVisibility(View.VISIBLE);
+                    mBalanceTextView.setText("Số dư " + VietnameseConcurrency.format(mSourceAccount.getWalletBalance()));
+                    mLogoBankAvatarView.setImageDrawable(getDrawable(R.drawable.ic_src_wallet));
                 }, throwable -> {
-
+                    throwable.printStackTrace();
                 }, () -> {
 
                 });
@@ -248,7 +250,6 @@ public class TransferMoneyActivity extends BaseActivity {
 
                 hideKeyboard();
                 mAskUserPinBottomSheet.dismiss();
-                mLoadingBackdropDialog.setLoading(true);
 
                 transfer(pin);
             });
@@ -259,10 +260,10 @@ public class TransferMoneyActivity extends BaseActivity {
     @SuppressLint("CheckResult")
     private void transfer(String pin) {
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("TransferTo")) {
-            String transferTo = intent.getStringExtra("TransferTo");
+        if (intent != null && intent.hasExtra("Type")) {
+            String type = intent.getStringExtra("Type");
 
-            if (transferTo.equals("Bank") && intent.hasExtra("CitizenAccount")) {
+            if (type.equals("BankTransfer") && intent.hasExtra("CitizenAccount")) {
                 CitizenAccountBankDto citizenAccountBank = new Gson()
                         .fromJson(intent.getStringExtra("CitizenAccount"), CitizenAccountBankDto.class);
 
@@ -273,7 +274,7 @@ public class TransferMoneyActivity extends BaseActivity {
                 String transferContent = mTransferContentEditText
                         .getText()
                         .toString();
-
+                mLoadingBackdropDialog.setLoading(true);
                 mTransferService.bankTransfer(pin, new RequestBankTransferDto(
                                 mSourceAccount.getId(),
                                 citizenAccountBank.getBin(),
@@ -303,7 +304,6 @@ public class TransferMoneyActivity extends BaseActivity {
                                         return;
                                     }
 
-
                                     int statusCode = ParseHttpError.getStatusCode(throwable);
                                     if (statusCode == 400 || statusCode == 500) {
                                         HttpResponseDto<?> errorBody = ParseHttpError.parse(throwable);
@@ -328,10 +328,72 @@ public class TransferMoneyActivity extends BaseActivity {
                                 });
 
 
-            } else if (transferTo.equals("Internal") && intent.hasExtra("Account")) {
+            } else if (type.equals("InternalTransfer") && intent.hasExtra("TransferTo")) {
+                String json = intent.getStringExtra("TransferTo");
+                AccountDto account = new Gson()
+                        .fromJson(json, AccountDto.class);
 
 
-                NavigateUtil.navigateTo(this, SuccessfulTransactionActivity.class);
+                double amount = VietnameseConcurrency.parseToDouble(mAmountMoneyEditText
+                        .getText()
+                        .toString());
+
+                String transferContent = mTransferContentEditText
+                        .getText()
+                        .toString();
+                mLoadingBackdropDialog.setLoading(true);
+
+
+                mTransferService
+                        .internalTransfer(pin, new RequestInternalTransferDto(
+                                mSourceAccount.getId(),
+                                account.getAccountBank().getBankAccountId(),
+                                transferContent,
+                                amount,
+                                mUseLinkingBank
+                        ))
+                        .subscribe(response -> {
+                            mLoadingBackdropDialog.setLoading(false);
+
+                            Log.d(TAG, response.getResult().toString());
+                            TransactionDto transaction = response.getResult();
+                            String transactionJson = new Gson()
+                                    .toJson(transaction);
+
+                            Intent forwardIntent = new Intent(this, SuccessfulTransactionActivity.class);
+                            forwardIntent.putExtra("TransactionResult", transactionJson);
+                            forwardIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
+                            startActivity(forwardIntent);
+                            finish();
+                        }, throwable -> {
+                            mLoadingBackdropDialog.setLoading(false);
+
+                            if (throwable instanceof JsonSyntaxException) {
+                                throwable.printStackTrace();
+                                return;
+                            }
+
+                            int statusCode = ParseHttpError.getStatusCode(throwable);
+                            if (statusCode == 400 || statusCode == 500) {
+                                HttpResponseDto<?> errorBody = ParseHttpError.parse(throwable);
+                                String errMsg = errorBody.getError();
+                                Log.e(TAG, errMsg, throwable);
+
+
+                                if (errMsg.equals("Pin is incorrect")) {
+                                    getBottomSheet();
+
+                                    mAskUserPinBottomSheet.setOnShowListener(() -> {
+                                        mAskUserPinBottomSheet.setPinIncorrect();
+                                    });
+
+                                    mAskUserPinBottomSheet.show(getSupportFragmentManager(), AskUserPinBottomSheet.class.getName());
+
+                                }
+                            }
+                        }, () -> {
+
+                        });
             }
         }
 

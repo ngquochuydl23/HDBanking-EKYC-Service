@@ -6,6 +6,7 @@ import com.socialv2.ewallet.dtos.accounts.AccountDto;
 import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
 import com.socialv2.ewallet.dtos.transactions.TransactionDto;
 import com.socialv2.ewallet.dtos.transfers.RequestBankTransferDto;
+import com.socialv2.ewallet.dtos.transfers.RequestInternalTransferDto;
 
 import java.util.List;
 
@@ -22,5 +23,11 @@ public interface IHttpTransfer {
     Observable<HttpResponseDto<TransactionDto>> bankTransfer(
             @Header("X-EncryptedPin") String encryptedPin,
             @Body RequestBankTransferDto body
+    );
+
+    @POST("transaction/Transfer/InternalTransfer")
+    Observable<HttpResponseDto<TransactionDto>> internalTransfer(
+            @Header("X-EncryptedPin") String encryptedPin,
+            @Body RequestInternalTransferDto body
     );
 }

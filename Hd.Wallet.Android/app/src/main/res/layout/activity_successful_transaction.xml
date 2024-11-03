@@ -125,7 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/regular_font"
-                    android:text="Tài khoản nhận"
+                    android:text="Nội dung chuyển khoản"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="14sp" />
 

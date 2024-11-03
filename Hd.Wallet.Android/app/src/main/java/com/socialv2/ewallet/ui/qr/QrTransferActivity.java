@@ -279,14 +279,14 @@ public class QrTransferActivity extends BaseActivity {
         mAccountService.getAccountById(accountId)
                 .subscribe(response -> {
 
-                    Log.e(TAG, "GetAccountById successfully");
+                    Log.d(TAG, "GetAccountById successfully");
 
                     AccountDto account = response.getResult();
                     String json = new Gson().toJson(account);
 
                     Intent intent = new Intent(this, TransferMoneyActivity.class);
                     intent.putExtra("Type", "InternalTransfer");
-                    intent.putExtra("AccountJsonResult", json);
+                    intent.putExtra("TransferTo", json);
                     startActivity(intent);
                 },throwable -> {
 
