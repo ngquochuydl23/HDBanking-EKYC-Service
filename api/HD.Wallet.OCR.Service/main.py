@@ -24,7 +24,7 @@ id_card_extract = OcrExtractIdCard()
 face_verification = FaceVerification()
 
 
-os.makedirs('uploads/identity-cart/', exist_ok=True)
+os.makedirs('uploads/identity-card/', exist_ok=True)
 os.makedirs('uploads/faces/', exist_ok=True)
 
 app = FastAPI(title="EKYC Service", lifespan=lifespan)
@@ -68,7 +68,7 @@ async def verification_test(
         id_card: UploadFile = File(...),
         face: UploadFile = File(...)
 ):
-    id_card_path = os.path.join('uploads/identity-cart/', create_unique_filename(id_card))
+    id_card_path = os.path.join('uploads/identity-card/', create_unique_filename(id_card))
     face_path = os.path.join('uploads/faces/', create_unique_filename(face))
 
     if not check_file_extension(id_card):
@@ -132,8 +132,8 @@ async def extract_id_card(
         database = request.app.state.database
         collection = database["IDCards"]
 
-        front_save_path = os.path.join('uploads/identity-cart/', create_unique_filename(front_id_card))
-        back_save_path = os.path.join('uploads/identity-cart/', create_unique_filename(back_id_card))
+        front_save_path = os.path.join('uploads/identity-card/', create_unique_filename(front_id_card))
+        back_save_path = os.path.join('uploads/identity-card/', create_unique_filename(back_id_card))
 
         with open(front_save_path, "wb") as buffer:
             shutil.copyfileobj(front_id_card.file, buffer)
