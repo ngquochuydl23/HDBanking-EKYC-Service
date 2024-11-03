@@ -9,5 +9,5 @@ services:
     volumes:
       - ./api/HD.Wallet.OCR.Service/uploads:/app/uploads
     ports:
-      - 8000:8000
+      - 8900:8000
     restart: always
