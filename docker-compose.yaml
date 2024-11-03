@@ -7,20 +7,7 @@ services:
       context: ./api/HD.Wallet.OCR.Service
       dockerfile: Dockerfile
     volumes:
-      - ./api/HD.Wallet.OCR.Service/uploads:/app/uploads  
+      - ./api/HD.Wallet.OCR.Service/uploads:/app/uploads
     ports:
       - 8000:8000
     restart: always
-  
-  hd-wallet.transaction.service:
-    image: hd-wallet.transaction.service
-    container_name: hd-wallet.transaction.service
-    build:
-      context: ./api/Hd.Wallet.TransactionService
-      dockerfile: Dockerfile
-    ports:
-      - 8200:8200
-    restart: always
-
-
-

@@ -19,3 +19,5 @@ api/HD.Wallet.BankingApi/HD.Wallet.Shared/obj
 
 api/HD.Wallet.BankingApi/Gateways/Clothes.GatewayApi/bin
 api/HD.Wallet.BankingApi/Gateways/Clothes.GatewayApi/obj
+
+.idea
