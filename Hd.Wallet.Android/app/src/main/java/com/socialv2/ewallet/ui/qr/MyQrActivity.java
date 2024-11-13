@@ -100,31 +100,7 @@ public class MyQrActivity extends BaseActivity {
             AccountDto account,
             UserDto user,
             MyQrActivity.OnQrCodeGeneratedListener listener) {
-        user.setAvatar("https://avatars.githubusercontent.com/u/141327415?v=4");
-        Glide.with(this)
-                .load(user.getAvatar())
-                .into(new CustomTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(
-                            @NonNull Drawable resource,
-                            @Nullable Transition<? super Drawable> transition) {
-
-                        QrData data = new QrData.Text(account.getId());
-                        Drawable qrCodeDrawable = QrCodeDrawableKt.QrCodeDrawable(
-                                data,
-                                getQrStyle(MyQrActivity.this, resource),
-                                null);
-
-
-                        if (listener != null) {
-                            listener.onQrCodeGenerated(qrCodeDrawable);
-                        }
-                    }
-
-                    @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
-                    }
-                });
+        listener.onQrCodeGenerated(getDrawable(R.drawable.image_hd_logo));
     }
 
     private void saveQrPicture() {
