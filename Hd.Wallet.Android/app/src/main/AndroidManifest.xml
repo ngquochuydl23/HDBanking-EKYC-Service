@@ -27,6 +27,9 @@
         android:theme="@style/Theme.OCRBanking_MobileApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.dev.WriteNfcActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.transactionTab.TransactionDetailActivity"
             android:exported="false" />
         <activity

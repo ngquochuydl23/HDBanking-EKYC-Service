@@ -12,11 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.tabs.TabLayout;
 import com.socialv2.ewallet.BaseFragment;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.dtos.transactions.TransactionDto;
 import com.socialv2.ewallet.https.api.transactionHttp.IHttpTransaction;
 import com.socialv2.ewallet.https.api.transactionHttp.ITransactionService;
 import com.socialv2.ewallet.https.api.transactionHttp.TransactionHttpImpl;
 import com.socialv2.ewallet.ui.statistic.StatisticActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
+
+import java.util.List;
 
 public class TransactionHistoryFragment extends BaseFragment {
 
@@ -90,10 +93,14 @@ public class TransactionHistoryFragment extends BaseFragment {
                         amountIn
                 )
                 .subscribe(response -> {
-                    mTransactionAdapter.setItems(response.getResult());
+                    groupTransactionsByMonth(response.getResult());
                 }, throwable -> {
                 }, () -> {
 
                 });
+    }
+
+    private List<Object> groupTransactionsByMonth(List<TransactionDto> transactions) {
+        return null;
     }
 }

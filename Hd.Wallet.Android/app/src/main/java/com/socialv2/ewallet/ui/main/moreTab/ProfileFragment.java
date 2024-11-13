@@ -18,6 +18,7 @@ import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.AvatarView;
 import com.socialv2.ewallet.dtos.MenuAppDto;
 import com.socialv2.ewallet.singleton.UserSingleton;
+import com.socialv2.ewallet.ui.dev.WriteNfcActivity;
 import com.socialv2.ewallet.ui.nfcScan.IdCardNfcScanActivity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
@@ -72,6 +73,12 @@ public class ProfileFragment extends BaseFragment {
         menuAppItems.add(new MenuAppDto("Quyền riêng tư", null, R.drawable.ic_privacy, 0, null));
         menuAppItems.add(new MenuAppDto("Thông báo", null, R.drawable.ic_menu_notification, 0, null));
         menuAppItems.add(new MenuAppDto("Ngôn ngữ", "Hệ thống mặc định", R.drawable.ic_language, 0, null));
+
+
+        menuAppItems.add(new MenuAppDto("Ghi NFC", "Dành cho nhà phát triển", R.drawable.ic_language, 0, WriteNfcActivity.class));
+
+
+
 
         mMenuAppRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mMenuAppRecyclerView.setAdapter(mMenuAppAdapter);
