@@ -21,6 +21,7 @@ import com.socialv2.ewallet.singleton.UserSingleton;
 import com.socialv2.ewallet.ui.dev.WriteNfcActivity;
 import com.socialv2.ewallet.ui.nfcScan.IdCardNfcScanActivity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
+import com.socialv2.ewallet.ui.settings.notifications.NotificationSettingActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 
 import java.util.ArrayList;
@@ -71,13 +72,11 @@ public class ProfileFragment extends BaseFragment {
         List<MenuAppDto> menuAppItems = new ArrayList<>();
         menuAppItems.add(new MenuAppDto("Tài khoản", "Xác minh", R.drawable.icon_profile_unactive, 0, null));
         menuAppItems.add(new MenuAppDto("Quyền riêng tư", null, R.drawable.ic_privacy, 0, null));
-        menuAppItems.add(new MenuAppDto("Thông báo", null, R.drawable.ic_menu_notification, 0, null));
+        menuAppItems.add(new MenuAppDto("Thông báo", null, R.drawable.ic_menu_notification, 0, NotificationSettingActivity.class));
         menuAppItems.add(new MenuAppDto("Ngôn ngữ", "Hệ thống mặc định", R.drawable.ic_language, 0, null));
 
 
         menuAppItems.add(new MenuAppDto("Ghi NFC", "Dành cho nhà phát triển", R.drawable.ic_language, 0, WriteNfcActivity.class));
-
-
 
 
         mMenuAppRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -97,14 +96,12 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void observeUserData() {
-        UserSingleton.getInstance()
-                .getData()
-                .observe(getViewLifecycleOwner(), user -> {
+        UserSingleton.getInstance().getData().observe(getViewLifecycleOwner(), user -> {
 
-                    mAvatarImageView.setSrcWithGender(user.getAvatar(), true);
-                    mFullnameTextView.setText(user.getFullName());
-                    mPhoneNumberTextView.setText(user.getPhoneNumber());
-                });
+            mAvatarImageView.setSrcWithGender(user.getAvatar(), true);
+            mFullnameTextView.setText(user.getFullName());
+            mPhoneNumberTextView.setText(user.getPhoneNumber());
+        });
     }
 
     private void checkNFCSupport() {

@@ -20,6 +20,7 @@ import com.socialv2.ewallet.BaseFragment;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.users.UserDto;
 import com.socialv2.ewallet.ui.contacts.ContactActivity;
+import com.socialv2.ewallet.ui.funds.FundActivity;
 import com.socialv2.ewallet.ui.main.NotificationActivity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
 import com.socialv2.ewallet.ui.qr.QrTransferActivity;
@@ -104,7 +105,7 @@ public class HomeFragment extends BaseFragment {
         }
 
         mFundButton.setOnClickListener(view -> {
-
+            NavigateUtil.navigateTo(getContext(), FundActivity.class);
         });
 
         mTransferButton.setOnClickListener(view -> {

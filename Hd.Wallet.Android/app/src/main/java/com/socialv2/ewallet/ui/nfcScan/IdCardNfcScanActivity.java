@@ -27,6 +27,7 @@ import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.permissions.Permissions;
 import com.socialv2.ewallet.utils.IdCardUtils;
+import com.socialv2.ewallet.utils.NfcUtils;
 import com.socialv2.ewallet.utils.WindowUtils;
 
 import java.io.IOException;
@@ -100,23 +101,12 @@ public class IdCardNfcScanActivity extends BaseActivity {
 //            handleTag(tag);
 //        }
 
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
-            Parcelable[] rawMessages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-
-            if (rawMessages != null) {
-                for (Parcelable message : rawMessages) {
-                    NdefMessage ndefMessage = (NdefMessage) message;
-                    processNdefMessage(ndefMessage);
-                }
-            } else {
-                Log.d(TAG, "No NDEF messages found in the intent.");
-                // Optionally handle raw tag data if needed
-                Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-                if (tag != null) {
-                    handleTag(tag); // Handle raw tag if needed
-                }
-            }
+        try {
+            NfcUtils.readJsonFromTag(intent.getParcelableExtra(NfcAdapter.EXTRA_TAG));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     private void processNdefMessage(NdefMessage ndefMessage) {

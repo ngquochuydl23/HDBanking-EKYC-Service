@@ -11,6 +11,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primaryColor">#121212</color>
     <color name="secondaryColor">#662AB2</color>
+    <color name="secondaryColor300">#f5f0fc</color>
     <color name="foregroundColor">#fff</color>
     <color name="backgroundColor">#f5f5f5</color>
     <color name="inputBackgroundColor">#f5f5f5</color>

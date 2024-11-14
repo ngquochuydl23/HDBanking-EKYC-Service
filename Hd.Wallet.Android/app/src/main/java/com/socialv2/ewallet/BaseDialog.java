@@ -14,15 +14,17 @@ public abstract class BaseDialog {
     private Context mContext;
     private MaterialDialog mMaterialDialog;
     private DialogStyle mDialogStyle;
-
+    private View mView;
 
     public BaseDialog(Context context, @LayoutRes int layout) {
         mContext = context;
-        mMaterialDialog = new MaterialDialog(mContext, MaterialDialog.getDEFAULT_BEHAVIOR());
-
-        onDialogCreated(LayoutInflater
+        mView = LayoutInflater
                 .from(context)
-                .inflate(layout, null));
+                .inflate(layout, null);
+
+        mMaterialDialog = new MaterialDialog(mContext, MaterialDialog.getDEFAULT_BEHAVIOR());
+        mMaterialDialog.setContentView(mView);
+        onDialogCreated(mView);
     }
 
     public void show() {
