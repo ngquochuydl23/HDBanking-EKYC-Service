@@ -84,8 +84,6 @@ public class FundActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
-
                 if (!s.toString().equals(current)) {
                     if (selectedFaceValue != null) {
                         // reset
