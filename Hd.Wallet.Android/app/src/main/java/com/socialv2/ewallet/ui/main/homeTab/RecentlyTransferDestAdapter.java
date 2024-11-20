@@ -1,6 +1,7 @@
 package com.socialv2.ewallet.ui.main.homeTab;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +15,16 @@ import com.socialv2.ewallet.BaseAdapter;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.AvatarView;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
+import com.socialv2.ewallet.dtos.transactions.RecentlyDestinationDto;
 import com.socialv2.ewallet.dtos.users.UserDto;
+import com.socialv2.ewallet.s3.S3Service;
 import com.socialv2.ewallet.ui.transfer.TransferMoneyActivity;
 import com.socialv2.ewallet.utils.BankingResourceLogo;
 import com.socialv2.ewallet.utils.DpToPx;
 import com.socialv2.ewallet.utils.FetchImageUrl;
 import com.socialv2.ewallet.utils.NavigateUtil;
 
-public class RecentlyTransferDestAdapter extends BaseAdapter<AccountDto> {
+public class RecentlyTransferDestAdapter extends BaseAdapter<RecentlyDestinationDto> {
 
     private boolean isHorizontalView;
 
@@ -45,17 +48,10 @@ public class RecentlyTransferDestAdapter extends BaseAdapter<AccountDto> {
     }
 
     @Override
-    protected void bind(@NonNull RecyclerView.ViewHolder viewHolder, AccountDto account) {
+    protected void bind(@NonNull RecyclerView.ViewHolder viewHolder, RecentlyDestinationDto destination) {
         ContactRecentlyViewHolder itemView = (ContactRecentlyViewHolder) viewHolder;
 
-        itemView.mContainerLayout.setOnClickListener(view -> {
-            String json = "";
-            Intent intent = new Intent(getContext(), TransferMoneyActivity.class);
-            intent.putExtra("AccountJsonResult", json);
-            getContext().startActivity(intent);
-        });
-
-        if (account.getBankLinking()) {
+        if (!destination.getBin().equals("999999.0")) {
 
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) itemView.mAvatarView.getLayoutParams();
             int margin10dp = DpToPx.convert(getContext(), 10);
@@ -64,17 +60,22 @@ public class RecentlyTransferDestAdapter extends BaseAdapter<AccountDto> {
 
 
             itemView.mAvatarView.setLayoutParams(layoutParams);
-            itemView.mSrcAccountNoBankTextView.setText("190 319 0512 3456");
-            itemView.mOwnerNameTextView.setText("NGUYEN QUOC HUY");
-            FetchImageUrl.read(itemView.mAvatarView, BankingResourceLogo.getLogo("Uploads/vcb.png"));
+            itemView.mSrcAccountNoBankTextView.setText(destination.getAccountNo());
+            itemView.mOwnerNameTextView.setText(destination.getOwnerName());
+
+            FetchImageUrl.read(itemView.mAvatarView, BankingResourceLogo.getLogo(destination.getLogoUrl()));
+            itemView.mIsBankLinkingView.setVisibility(View.VISIBLE);
+
         } else {
 
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) itemView.mAvatarView.getLayoutParams();
             layoutParams.setMargins(0, 0, 0, 0);
             itemView.mAvatarView.setLayoutParams(layoutParams);
-            itemView.mSrcAccountNoBankTextView.setText("0328532043");
-            itemView.mOwnerNameTextView.setText("Hồ Thị Thu Trầm");
-            FetchImageUrl.read(itemView.mAvatarView, "https://avatars.githubusercontent.com/u/36536025?v=4");
+
+            itemView.mIsBankLinkingView.setVisibility(View.GONE);
+            itemView.mSrcAccountNoBankTextView.setText(destination.getAccountNo());
+            itemView.mOwnerNameTextView.setText(destination.getOwnerName());
+            FetchImageUrl.read(itemView.mAvatarView, S3Service.getUrl(destination.getUserAvatar()));
         }
     }
 
@@ -84,6 +85,7 @@ public class RecentlyTransferDestAdapter extends BaseAdapter<AccountDto> {
         private AvatarView mAvatarView;
         private TextView mSrcAccountNoBankTextView;
         private TextView mOwnerNameTextView;
+        private View mIsBankLinkingView;
 
         public ContactRecentlyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -91,6 +93,7 @@ public class RecentlyTransferDestAdapter extends BaseAdapter<AccountDto> {
             mAvatarView = itemView.findViewById(R.id.avatarView);
             mContainerLayout = itemView.findViewById(R.id.containerLayout);
             mOwnerNameTextView = itemView.findViewById(R.id.ownerNameTextView);
+            mIsBankLinkingView = itemView.findViewById(R.id.isBankLinkingView);
         }
     }
 }

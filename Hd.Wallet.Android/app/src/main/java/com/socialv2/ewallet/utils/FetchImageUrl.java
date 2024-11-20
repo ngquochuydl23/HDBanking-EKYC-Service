@@ -13,7 +13,7 @@ public class FetchImageUrl {
         Context context = imageView.getContext();
 
         Glide.with(context)
-                .load(context.getString(R.string.storage_host) + url)
+                .load(url)
                 .error(errorResourceId == -1 ? null : context.getDrawable(errorResourceId))
                 .into(imageView);
     }

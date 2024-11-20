@@ -3,6 +3,7 @@ package com.socialv2.ewallet.https.api.transactionHttp;
 import android.content.Context;
 
 import com.socialv2.ewallet.dtos.HttpResponseDto;
+import com.socialv2.ewallet.dtos.transactions.RecentlyDestinationDto;
 import com.socialv2.ewallet.dtos.transactions.TransactionDto;
 import com.socialv2.ewallet.https.HttpSettingImpl;
 import com.socialv2.ewallet.https.IHttpSetting;
@@ -37,6 +38,13 @@ public class TransactionHttpImpl implements ITransactionService {
                         transactionDateMax,
                         amountIn
                 )
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<HttpResponseDto<List<RecentlyDestinationDto>>> getRecentlyDestinations(int limit, int offset) {
+        return mHttpTransaction.getRecentlyDestinations(limit <= 0 ? 10 : limit, Integer.max(0, offset))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }

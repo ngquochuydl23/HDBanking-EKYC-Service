@@ -1,5 +1,6 @@
 package com.socialv2.ewallet.ui.main.homeTab;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +21,8 @@ import android.widget.TextView;
 import com.socialv2.ewallet.BaseFragment;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.users.UserDto;
+import com.socialv2.ewallet.https.api.transactionHttp.ITransactionService;
+import com.socialv2.ewallet.https.api.transactionHttp.TransactionHttpImpl;
 import com.socialv2.ewallet.ui.contacts.ContactActivity;
 import com.socialv2.ewallet.ui.funds.FundActivity;
 import com.socialv2.ewallet.ui.main.NotificationActivity;
@@ -43,8 +47,10 @@ public class HomeFragment extends BaseFragment {
     private Toolbar mHomeTabToolbar;
     private View mToggleVisibilityButton;
     private RecyclerView mRecentlyContactRecyclerView;
-    private RecentlyTransferDestAdapter mContactRecentlyAdapter;
+    private RecentlyTransferDestAdapter mRecentlyDestAdapter;
     private View mSeeMoreContactButton;
+
+    private ITransactionService mTransactionService;
 
     private boolean balanceVisible;
     private double balance;
@@ -57,7 +63,8 @@ public class HomeFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mContactRecentlyAdapter = new RecentlyTransferDestAdapter();
+        mTransactionService = new TransactionHttpImpl(getContext());
+        mRecentlyDestAdapter = new RecentlyTransferDestAdapter(true);
 
         mHomeTabToolbarContainer = view.findViewById(R.id.homeTabToolbarContainer);
         mAvatarView = view.findViewById(R.id.avatarView);
@@ -91,7 +98,7 @@ public class HomeFragment extends BaseFragment {
         getActivity().setTitle("");
 
         mRecentlyContactRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        mRecentlyContactRecyclerView.setAdapter(mContactRecentlyAdapter);
+        mRecentlyContactRecyclerView.setAdapter(mRecentlyDestAdapter);
 
         mToggleVisibilityButton.setBackgroundResource(R.drawable.ic_visibility_off_balance);
 
@@ -156,16 +163,17 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
+    @SuppressLint("CheckResult")
     private void getRecentlyContacts() {
-        List<UserDto> contacts = new ArrayList<UserDto>();
-//        contacts.add(new UserDto());
-//        contacts.add(new UserDto());
-//        contacts.add(new UserDto());
-//        contacts.add(new UserDto());
-//        contacts.add(new UserDto());
-//        contacts.add(new UserDto());
-//        contacts.add(new UserDto());
-//
-//        mContactRecentlyAdapter.setItems(contacts);
+
+        mTransactionService.getRecentlyDestinations(10, 0)
+                .subscribe(response -> {
+
+                    mRecentlyDestAdapter.setItems(response.getResult());
+                }, throwable -> {
+
+                });
+
+
     }
 }

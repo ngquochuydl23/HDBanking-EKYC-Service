@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.accounts.AccountDto;
+import com.socialv2.ewallet.https.api.transactionHttp.ITransactionService;
+import com.socialv2.ewallet.https.api.transactionHttp.TransactionHttpImpl;
 import com.socialv2.ewallet.ui.main.homeTab.RecentlyTransferDestAdapter;
 import com.socialv2.ewallet.ui.qr.QrTransferActivity;
 import com.socialv2.ewallet.ui.transfer.bankTransfer.FindBankActivity;
@@ -29,6 +31,7 @@ public class MenuTransferActivity extends BaseActivity {
     private View mInternalTransferButton;
 
     private FindFriendBottomSheet mFindFriendBottomSheet;
+    private ITransactionService mTransactionService;
 
     public MenuTransferActivity() {
         super(R.layout.activity_menu_transfer);
@@ -40,7 +43,7 @@ public class MenuTransferActivity extends BaseActivity {
 
         mRecentlyTransferDestAdapter = new RecentlyTransferDestAdapter(true);
         mFindFriendBottomSheet = new FindFriendBottomSheet();
-
+        mTransactionService = new TransactionHttpImpl(this);
 
         mInternalTransferButton = findViewById(R.id.internalTransferButton);
         mRecentlyTransferDestRecyclerView = findViewById(R.id.recentlyTransferDestRecyclerView);
@@ -48,7 +51,7 @@ public class MenuTransferActivity extends BaseActivity {
         mBankingTransferButton = findViewById(R.id.bankingTransferButton);
 
         initView();
-        getRecentlyTransferDest();
+        getRecentlyTransferDests();
     }
 
     private void initView() {
@@ -71,21 +74,14 @@ public class MenuTransferActivity extends BaseActivity {
 
     }
 
-    private void getRecentlyTransferDest() {
-        List<AccountDto> accounts = new ArrayList<>();
+    private void getRecentlyTransferDests() {
+        mTransactionService.getRecentlyDestinations(10, 0)
+                .subscribe(response -> {
 
-        AccountDto bankAccount = new AccountDto();
-        bankAccount.setBankLinking(true);
+                    mRecentlyTransferDestAdapter.setItems(response.getResult());
+                }, throwable -> {
 
+                });
 
-        AccountDto walletAccount = new AccountDto();
-        walletAccount.setBankLinking(false);
-
-        accounts.add(bankAccount);
-        accounts.add(walletAccount);
-        accounts.add(bankAccount);
-        accounts.add(bankAccount);
-        accounts.add(walletAccount);
-        mRecentlyTransferDestAdapter.setItems(accounts);
     }
 }

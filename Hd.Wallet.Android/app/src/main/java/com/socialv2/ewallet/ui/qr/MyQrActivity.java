@@ -91,7 +91,7 @@ public class MyQrActivity extends BaseActivity {
 
         });
 
-        mSaveButton.setOnClickListener(view -> {
+        mSaveButton.setOnClickListener(view  -> {
             saveQrPicture();
         });
     }
@@ -100,7 +100,13 @@ public class MyQrActivity extends BaseActivity {
             AccountDto account,
             UserDto user,
             MyQrActivity.OnQrCodeGeneratedListener listener) {
-        listener.onQrCodeGenerated(getDrawable(R.drawable.image_hd_logo));
+
+        QrData data = new QrData.Text(account.getId());
+        Drawable qrCodeDrawable = QrCodeDrawableKt.QrCodeDrawable(
+                data,
+                getQrStyle(MyQrActivity.this, getDrawable(R.drawable.image_hd_logo)),
+                null);
+        listener.onQrCodeGenerated(qrCodeDrawable);
     }
 
     private void saveQrPicture() {
