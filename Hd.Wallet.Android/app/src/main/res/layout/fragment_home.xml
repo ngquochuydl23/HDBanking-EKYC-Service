@@ -39,8 +39,7 @@
                             android:id="@+id/avatarView"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:layout_marginLeft="20dp"
-                            android:src="@drawable/default_avatar_men" />
+                            android:layout_marginLeft="20dp" />
 
                         <androidx.appcompat.widget.Toolbar
                             android:id="@+id/homeTabToolbar"

@@ -35,6 +35,10 @@ public class BankDto {
 
     public BankDto() {}
 
+    public BankDto(String logoApp) {
+        this.logoApp = logoApp;
+    }
+
     public BankDto(String shortName, String androidAppId, String logoApp, String name, String code, String bin, String top) {
         this.shortName = shortName;
         this.androidAppId = androidAppId;

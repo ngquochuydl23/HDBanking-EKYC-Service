@@ -172,7 +172,7 @@ public class FindDestBankAccountActivity extends BaseActivity {
     }
 
     @SuppressLint("CheckResult")
-    private void getDestBank(String bin, String accountBankNo) {
+    private void  getDestBank(String bin, String accountBankNo) {
         Log.d(TAG, String.format("getDestBank - %s - %s", bin, accountBankNo));
 
         mAccountBankNoEditText.setEnabled(false);

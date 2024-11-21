@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.socialv2.ewallet.BaseFragment;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.components.AvatarView;
 import com.socialv2.ewallet.dtos.users.UserDto;
 import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
 import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
@@ -48,7 +49,7 @@ public class HomeFragment extends BaseFragment {
     private View mTransferButton;
     private View mWithdrawalButton;
     private View mQrButton;
-    private View mAvatarView;
+    private AvatarView mAvatarView;
     private TextView mBalanceTextView;
     private Toolbar mHomeTabToolbar;
     private View mToggleVisibilityButton;
@@ -181,26 +182,18 @@ public class HomeFragment extends BaseFragment {
 
     @SuppressLint("CheckResult")
     private void getRecentlyContacts() {
-
         mTransactionService.getRecentlyDestinations(10, 0)
                 .subscribe(response -> {
 
                    mRecentlyDestAdapter.setItems(response.getResult());
                 }, throwable -> {
-
+                    throwable.printStackTrace();
                 });
-
-
     }
 
     private void getUserInfo() {
-         UserDto user = UserSingleton
-                .getInstance()
-                .getData()
-                .getValue();
-
-         if (user != null) {
-             FetchImageUrl.read((ImageView) mAvatarView, S3Service.getUrl(user.getAvatar()));
-         }
+        UserSingleton.getInstance().getData().observe(getViewLifecycleOwner(), user -> {
+            mAvatarView.setSrc(S3Service.getUrl(user.getAvatar()));
+        });
     }
 }

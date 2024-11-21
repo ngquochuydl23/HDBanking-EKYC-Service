@@ -17,6 +17,8 @@ import com.socialv2.ewallet.BaseFragment;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.AvatarView;
 import com.socialv2.ewallet.dtos.MenuAppDto;
+import com.socialv2.ewallet.dtos.users.UserDto;
+import com.socialv2.ewallet.s3.S3Service;
 import com.socialv2.ewallet.singleton.UserSingleton;
 import com.socialv2.ewallet.ui.dev.WriteNfcActivity;
 import com.socialv2.ewallet.ui.nfcScan.IdCardNfcScanActivity;
@@ -98,9 +100,9 @@ public class ProfileFragment extends BaseFragment {
     private void observeUserData() {
         UserSingleton.getInstance().getData().observe(getViewLifecycleOwner(), user -> {
 
-            mAvatarImageView.setSrcWithGender(user.getAvatar(), true);
             mFullnameTextView.setText(user.getFullName());
             mPhoneNumberTextView.setText(user.getPhoneNumber());
+            mAvatarImageView.setSrc(S3Service.getUrl(user.getAvatar()));
         });
     }
 

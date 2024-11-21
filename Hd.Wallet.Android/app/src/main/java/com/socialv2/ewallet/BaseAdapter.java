@@ -22,7 +22,7 @@ public abstract class BaseAdapter<TModel extends Object> extends RecyclerView.Ad
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext();
+
         return getViewHolder(parent, viewType);
     }
 
@@ -32,10 +32,16 @@ public abstract class BaseAdapter<TModel extends Object> extends RecyclerView.Ad
 
     }
 
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        context = recyclerView.getContext();
+    }
+
     protected void bind(@NonNull RecyclerView.ViewHolder viewHolder, TModel model, int position) {
         bind(viewHolder, list.get(position));
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {

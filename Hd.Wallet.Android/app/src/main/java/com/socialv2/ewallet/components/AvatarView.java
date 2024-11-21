@@ -35,8 +35,15 @@ public class AvatarView extends CircleImageView {
         setBackgroundTintList(getResources().getColorStateList(R.color.backgroundColor));
     }
 
+    public void setSrc(String url) {
+        FetchImageUrl.read(AvatarView.this, url);
+
+        setPadding(0, 0, 0, 0);
+        invalidate();
+    }
+
     public void setSrcWithGender(String url, Boolean gender) {
-        FetchImageUrl.readUrlAsAvatar(AvatarView.this, url, gender);
+        FetchImageUrl.read(AvatarView.this, url);
 
         setPadding(0, 0, 0, 0);
         invalidate();
