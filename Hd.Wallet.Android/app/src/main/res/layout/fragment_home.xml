@@ -276,7 +276,7 @@
                     android:paddingLeft="15dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/title1TextView"
-                    tools:listitem="@layout/item_contact_recently" />
+                    tools:listitem="@layout/item_recently_transfer_dest_horizontal" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

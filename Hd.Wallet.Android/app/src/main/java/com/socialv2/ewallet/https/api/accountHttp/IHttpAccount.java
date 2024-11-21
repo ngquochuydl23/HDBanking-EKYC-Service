@@ -32,7 +32,7 @@ public interface IHttpAccount {
     @GET("account/Account/Primary")
     Observable<HttpResponseDto<AccountDto>> getPrimaryAccount();
 
-    @GET("account/Account/Balance")
+    @GET("account/Account/Wallet/Balance")
     Observable<HttpResponseDto<AccountBalanceDto>> getAccountBalance();
 
     @POST("account/Account/{accountId}/Unlink")

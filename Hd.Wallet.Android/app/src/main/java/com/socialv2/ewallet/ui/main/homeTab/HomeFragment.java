@@ -16,19 +16,25 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.socialv2.ewallet.BaseFragment;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.dtos.users.UserDto;
+import com.socialv2.ewallet.https.api.accountHttp.AccountHttpImpl;
+import com.socialv2.ewallet.https.api.accountHttp.IAccountService;
 import com.socialv2.ewallet.https.api.transactionHttp.ITransactionService;
 import com.socialv2.ewallet.https.api.transactionHttp.TransactionHttpImpl;
+import com.socialv2.ewallet.s3.S3Service;
+import com.socialv2.ewallet.singleton.UserSingleton;
 import com.socialv2.ewallet.ui.contacts.ContactActivity;
 import com.socialv2.ewallet.ui.funds.FundActivity;
 import com.socialv2.ewallet.ui.main.NotificationActivity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
 import com.socialv2.ewallet.ui.qr.QrTransferActivity;
 import com.socialv2.ewallet.ui.transfer.MenuTransferActivity;
+import com.socialv2.ewallet.utils.FetchImageUrl;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.VietnameseConcurrency;
 
@@ -50,6 +56,7 @@ public class HomeFragment extends BaseFragment {
     private RecentlyTransferDestAdapter mRecentlyDestAdapter;
     private View mSeeMoreContactButton;
 
+    private IAccountService mAccountService;
     private ITransactionService mTransactionService;
 
     private boolean balanceVisible;
@@ -63,6 +70,7 @@ public class HomeFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mAccountService = new AccountHttpImpl(getContext());
         mTransactionService = new TransactionHttpImpl(getContext());
         mRecentlyDestAdapter = new RecentlyTransferDestAdapter(true);
 
@@ -88,6 +96,7 @@ public class HomeFragment extends BaseFragment {
         super.onResume();
         balanceVisible = false;
 
+        getUserInfo();
         getBalance();
         getRecentlyContacts();
     }
@@ -139,11 +148,18 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
+    @SuppressLint("CheckResult")
     private void getBalance() {
-
-        balance = 1000000;
-        mBalanceTextView.setText(VietnameseConcurrency.format(balance));
-        mBalanceTextView.setText("*** **");
+        mAccountService.getAccountBalance()
+                .subscribe(response -> {
+                    balance = response
+                            .getResult()
+                            .getBalance();
+                    mBalanceTextView.setText(VietnameseConcurrency.format(balance));
+                    mBalanceTextView.setText("*** **");
+                }, throwable -> {
+                    throwable.printStackTrace();
+                });
     }
 
     @Override
@@ -169,11 +185,22 @@ public class HomeFragment extends BaseFragment {
         mTransactionService.getRecentlyDestinations(10, 0)
                 .subscribe(response -> {
 
-                    mRecentlyDestAdapter.setItems(response.getResult());
+                   mRecentlyDestAdapter.setItems(response.getResult());
                 }, throwable -> {
 
                 });
 
 
+    }
+
+    private void getUserInfo() {
+         UserDto user = UserSingleton
+                .getInstance()
+                .getData()
+                .getValue();
+
+         if (user != null) {
+             FetchImageUrl.read((ImageView) mAvatarView, S3Service.getUrl(user.getAvatar()));
+         }
     }
 }

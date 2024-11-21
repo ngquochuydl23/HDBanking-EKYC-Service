@@ -41,7 +41,7 @@ public class MenuTransferActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mRecentlyTransferDestAdapter = new RecentlyTransferDestAdapter(true);
+        mRecentlyTransferDestAdapter = new RecentlyTransferDestAdapter();
         mFindFriendBottomSheet = new FindFriendBottomSheet();
         mTransactionService = new TransactionHttpImpl(this);
 
