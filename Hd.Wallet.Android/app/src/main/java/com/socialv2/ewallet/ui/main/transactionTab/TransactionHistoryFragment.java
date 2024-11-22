@@ -90,7 +90,9 @@ public class TransactionHistoryFragment extends BaseFragment {
                         transactionStatus,
                         transactionDateMin,
                         transactionDateMax,
-                        amountIn
+                        amountIn,
+                        5,
+                        0
                 )
                 .subscribe(response -> {
                     groupTransactionsByMonth(response.getResult());

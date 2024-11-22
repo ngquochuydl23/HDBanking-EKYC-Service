@@ -52,9 +52,17 @@ public class TransactionDto {
     @Expose
     private boolean useSourceAsLinkingBank;
 
+    @SerializedName("senderUserId")
+    private String senderUserId;
+
+
+    @SerializedName("receiverUserId")
+    private String receiverUserId;
+
+
     public TransactionDto() { }
 
-    public TransactionDto(String id, double amount, TransactionAccountBankDto sourceAccount, TransactionAccountBankDto destAccount, String transactionDate, String transactionType, String transactionStatus, String description, String transferContent, String createdAt, boolean isBankingTransfer, boolean useSourceAsLinkingBank) {
+    public TransactionDto(String id, double amount, TransactionAccountBankDto sourceAccount, TransactionAccountBankDto destAccount, String transactionDate, String transactionType, String transactionStatus, String description, String transferContent, String createdAt, boolean isBankingTransfer, boolean useSourceAsLinkingBank, String senderUserId, String receiverUserId) {
         this.id = id;
         this.amount = amount;
         this.sourceAccount = sourceAccount;
@@ -67,6 +75,8 @@ public class TransactionDto {
         this.createdAt = createdAt;
         this.isBankingTransfer = isBankingTransfer;
         this.useSourceAsLinkingBank = useSourceAsLinkingBank;
+        this.senderUserId = senderUserId;
+        this.receiverUserId = receiverUserId;
     }
 
     public String getId() {
@@ -165,6 +175,22 @@ public class TransactionDto {
         this.useSourceAsLinkingBank = useSourceAsLinkingBank;
     }
 
+    public String getSenderUserId() {
+        return senderUserId;
+    }
+
+    public void setSenderUserId(String senderUserId) {
+        this.senderUserId = senderUserId;
+    }
+
+    public String getReceiverUserId() {
+        return receiverUserId;
+    }
+
+    public void setReceiverUserId(String receiverUserId) {
+        this.receiverUserId = receiverUserId;
+    }
+
     @Override
     public String toString() {
         return "TransactionDto{" +
@@ -173,13 +199,15 @@ public class TransactionDto {
                 ", sourceAccount=" + sourceAccount +
                 ", destAccount=" + destAccount +
                 ", transactionDate='" + transactionDate + '\'' +
-                ", transactionType=" + transactionType +
-                ", transactionStatus=" + transactionStatus +
+                ", transactionType='" + transactionType + '\'' +
+                ", transactionStatus='" + transactionStatus + '\'' +
                 ", description='" + description + '\'' +
                 ", transferContent='" + transferContent + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 ", isBankingTransfer=" + isBankingTransfer +
                 ", useSourceAsLinkingBank=" + useSourceAsLinkingBank +
+                ", senderUserId='" + senderUserId + '\'' +
+                ", receiverUserId='" + receiverUserId + '\'' +
                 '}';
     }
 }

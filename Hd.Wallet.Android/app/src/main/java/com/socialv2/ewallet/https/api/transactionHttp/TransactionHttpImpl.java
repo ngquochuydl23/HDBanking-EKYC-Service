@@ -30,13 +30,15 @@ public class TransactionHttpImpl implements ITransactionService {
     }
 
     @Override
-    public Observable<HttpResponseDto<List<TransactionDto>>> getTransactions(String transactionType, String transactionStatus, String transactionDateMin, String transactionDateMax, Double amountIn) {
+    public Observable<HttpResponseDto<List<TransactionDto>>> getTransactions(String transactionType, String transactionStatus, String transactionDateMin, String transactionDateMax, Double amountIn, int limit, int offset) {
         return mHttpTransaction.getTransactions(
                         transactionType,
                         transactionStatus,
                         transactionDateMin,
                         transactionDateMax,
-                        amountIn
+                        amountIn,
+                        limit,
+                        offset
                 )
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());

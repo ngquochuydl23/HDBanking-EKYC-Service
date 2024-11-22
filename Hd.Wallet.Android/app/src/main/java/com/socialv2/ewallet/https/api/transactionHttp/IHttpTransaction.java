@@ -18,7 +18,10 @@ public interface IHttpTransaction {
             @Query("TransactionStatus") String transactionStatus,
             @Query("TransactionDateMin") String transactionDateMin,
             @Query("TransactionDateMax") String transactionDateMax,
-            @Query("AmountIn") Double amountIn);
+            @Query("AmountIn") Double amountIn,
+            @Query("limit") int limit,
+            @Query("offset") int offset
+    );
 
 
     @GET("transaction/Transaction/RecentlyDestinations")

@@ -2,6 +2,7 @@ package com.socialv2.ewallet.https.api.userHttp;
 
 import com.socialv2.ewallet.dtos.HttpResponseDto;
 import com.socialv2.ewallet.dtos.checkOtp.CheckPhoneDto;
+import com.socialv2.ewallet.dtos.users.RequestUpdateAvatarDto;
 import com.socialv2.ewallet.dtos.users.UserDto;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -16,4 +17,7 @@ public interface IHttpUser {
 
     @GET("account/User/UserInfo")
     Observable<HttpResponseDto<UserDto>> getUserInfo();
+
+    @POST("account/User/UpdateAvatar")
+    Observable<HttpResponseDto<UserDto>> updateAvatar(@Body RequestUpdateAvatarDto body);
 }

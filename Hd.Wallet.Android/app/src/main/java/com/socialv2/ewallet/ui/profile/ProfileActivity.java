@@ -34,28 +34,5 @@ public class ProfileActivity extends AppCompatActivity {
             return insets;
         });
 
-        uploadFile();
-    }
-
-    private void uploadFile() {
-        String fileName = "huyndaitucson";
-        File fakeFile = new File(getApplication().getCacheDir(), fileName);
-
-        try (FileOutputStream fos = new FileOutputStream(fakeFile)) {
-            fos.write("kia K3".getBytes());
-            fos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        S3Service.getInstance(this)
-                .upload(fileName, fakeFile)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        result -> Log.d("S3 Upload", "Upload successful, ETag: " + result.getETag()),
-                        error -> Log.e("S3 Upload Error", "Failed to upload: " + error.getMessage())
-                );
     }
 }

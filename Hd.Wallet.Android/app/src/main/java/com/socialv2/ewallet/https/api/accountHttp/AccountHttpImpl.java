@@ -73,4 +73,11 @@ public class AccountHttpImpl implements IAccountService {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }
+
+    @Override
+    public Observable<HttpResponseDto<AccountDto>> getWalletAccountByPhone(String accountId) {
+        return mHttpAccount.getWalletAccountByPhone(accountId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
 }

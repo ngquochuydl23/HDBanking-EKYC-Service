@@ -2,6 +2,7 @@ package com.socialv2.ewallet.dtos.accounts;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.socialv2.ewallet.dtos.users.PublicUserDto;
 
 import java.util.Objects;
 
@@ -37,6 +38,10 @@ public class AccountDto {
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
+
+    @SerializedName("user")
+    @Expose
+    private PublicUserDto user;
 
     public AccountDto() {
 
@@ -117,6 +122,19 @@ public class AccountDto {
         this.createdAt = createdAt;
     }
 
+    public boolean isBankLinking() {
+        return isBankLinking;
+    }
+
+    public PublicUserDto getUser() {
+        return user;
+    }
+
+    public void setUser(PublicUserDto user) {
+        this.user = user;
+    }
+
+
     @Override
     public String toString() {
         return "AccountDto{" +
@@ -128,6 +146,7 @@ public class AccountDto {
                 ", accountType=" + accountType +
                 ", accountBank=" + accountBank +
                 ", createdAt='" + createdAt + '\'' +
+                ", user=" + user +
                 '}';
     }
 

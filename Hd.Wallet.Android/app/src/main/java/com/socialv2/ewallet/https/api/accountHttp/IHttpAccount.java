@@ -16,6 +16,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface IHttpAccount {
     @GET("account/Account/{accountId}")
@@ -31,6 +32,9 @@ public interface IHttpAccount {
 
     @GET("account/Account/Primary")
     Observable<HttpResponseDto<AccountDto>> getPrimaryAccount();
+
+    @GET("account/Account/Wallet/{accountNo}")
+    Observable<HttpResponseDto<AccountDto>> getWalletAccountByPhone(@Path("accountNo") String accountNo);
 
     @GET("account/Account/Wallet/Balance")
     Observable<HttpResponseDto<AccountBalanceDto>> getAccountBalance();

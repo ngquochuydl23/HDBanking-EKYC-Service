@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.socialv2.ewallet.dtos.HttpResponseDto;
+import com.socialv2.ewallet.dtos.users.RequestUpdateAvatarDto;
 import com.socialv2.ewallet.dtos.users.UserDto;
 import com.socialv2.ewallet.https.HttpSettingImpl;
 import com.socialv2.ewallet.https.IHttpSetting;
@@ -36,6 +37,13 @@ public class UserHttpImpl implements IUserService {
     @Override
     public Observable<HttpResponseDto<UserDto>> getUserInfo() {
         return mHttpUser.getUserInfo()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<HttpResponseDto<UserDto>> updateAvatar(String url) {
+        return mHttpUser.updateAvatar(new RequestUpdateAvatarDto(url))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }

@@ -28,6 +28,11 @@ public class Permissions {
         mPermissions = permissions;
     }
 
+    public Permissions(Context context, String[] permissions) {
+        mContext = context;
+        mPermissions = permissions;
+    }
+
     public void request() {
         if (!checkIsGranted()) {
             ActivityCompat.requestPermissions((Activity) mContext, mPermissions, PERMISSION_REQUEST_CODE);

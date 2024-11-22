@@ -32,6 +32,7 @@ import com.socialv2.ewallet.singleton.UserSingleton;
 import com.socialv2.ewallet.ui.contacts.ContactActivity;
 import com.socialv2.ewallet.ui.funds.FundActivity;
 import com.socialv2.ewallet.ui.main.NotificationActivity;
+import com.socialv2.ewallet.ui.main.transactionTab.RecentTransactionAdapter;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
 import com.socialv2.ewallet.ui.qr.QrTransferActivity;
 import com.socialv2.ewallet.ui.transfer.MenuTransferActivity;
@@ -53,13 +54,13 @@ public class HomeFragment extends BaseFragment {
     private TextView mBalanceTextView;
     private Toolbar mHomeTabToolbar;
     private View mToggleVisibilityButton;
+    private RecyclerView mRecentTransactionRecyclerView;
     private RecyclerView mRecentlyContactRecyclerView;
     private RecentlyTransferDestAdapter mRecentlyDestAdapter;
+    private RecentTransactionAdapter mRecentTransactionAdapter;
     private View mSeeMoreContactButton;
-
     private IAccountService mAccountService;
     private ITransactionService mTransactionService;
-
     private boolean balanceVisible;
     private double balance;
 
@@ -74,7 +75,10 @@ public class HomeFragment extends BaseFragment {
         mAccountService = new AccountHttpImpl(getContext());
         mTransactionService = new TransactionHttpImpl(getContext());
         mRecentlyDestAdapter = new RecentlyTransferDestAdapter(true);
+        mRecentTransactionAdapter = new RecentTransactionAdapter();
 
+
+        mRecentTransactionRecyclerView = view.findViewById(R.id.recentTransactionRecyclerView);
         mHomeTabToolbarContainer = view.findViewById(R.id.homeTabToolbarContainer);
         mAvatarView = view.findViewById(R.id.avatarView);
         mFundButton = view.findViewById(R.id.fundButton);
@@ -100,12 +104,16 @@ public class HomeFragment extends BaseFragment {
         getUserInfo();
         getBalance();
         getRecentlyContacts();
+        getRecentTransactions();
     }
 
     private void initView() {
         setHasOptionsMenu(true);
         ((AppCompatActivity)getActivity()).setSupportActionBar(mHomeTabToolbar);
         getActivity().setTitle("");
+
+        mRecentTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecentTransactionRecyclerView.setAdapter(mRecentTransactionAdapter);
 
         mRecentlyContactRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mRecentlyContactRecyclerView.setAdapter(mRecentlyDestAdapter);
@@ -195,5 +203,23 @@ public class HomeFragment extends BaseFragment {
         UserSingleton.getInstance().getData().observe(getViewLifecycleOwner(), user -> {
             mAvatarView.setSrc(S3Service.getUrl(user.getAvatar()));
         });
+    }
+
+    @SuppressLint("CheckResult")
+    private void getRecentTransactions() {
+        mTransactionService.getTransactions(
+                null,
+                null,
+                null,
+                null,
+                null,
+                10,
+                0)
+                .subscribe(response -> {
+                    mRecentTransactionAdapter.setItems(response.getResult());
+                }, throwable -> {
+
+                });
+
     }
 }

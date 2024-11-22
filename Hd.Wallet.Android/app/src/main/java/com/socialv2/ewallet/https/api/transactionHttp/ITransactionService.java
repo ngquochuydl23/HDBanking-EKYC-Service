@@ -14,7 +14,9 @@ public interface ITransactionService {
             String transactionStatus,
             String transactionDateMin,
             String transactionDateMax,
-            Double amountIn);
+            Double amountIn,
+            int limit,
+            int offset);
 
     Observable<HttpResponseDto<List<RecentlyDestinationDto>>> getRecentlyDestinations(
             int limit,

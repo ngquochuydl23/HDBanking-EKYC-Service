@@ -9,6 +9,7 @@ import com.socialv2.ewallet.dtos.accounts.RequestLinkingAccount;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import retrofit2.http.Query;
 
 public interface IAccountService {
     Observable<HttpResponseDto<AccountDto>> getAccountById(String accountId);
@@ -22,4 +23,7 @@ public interface IAccountService {
     Observable<HttpResponseDto<AccountDto>> getPrimaryAccount();
 
     Observable<HttpResponseDto<AccountDto>> unlinkAccount(String pin, String accountId);
+
+    Observable<HttpResponseDto<AccountDto>> getWalletAccountByPhone(String accountId);
+
 }
