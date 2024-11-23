@@ -2,5 +2,5 @@
 <font-family xmlns:android="http://schemas.android.com/apk/res/android">
     <font
         android:fontWeight="700"
-        android:font="@font/poppins_bold" />
+        android:font="@font/googlesans_bold" />
 </font-family>

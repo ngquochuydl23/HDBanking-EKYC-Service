@@ -27,6 +27,9 @@
         android:theme="@style/Theme.OCRBanking_MobileApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.privacyAndSecurity.PrivacyAndSecurityActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.funds.FundActivity"
             android:exported="false" />
         <activity
