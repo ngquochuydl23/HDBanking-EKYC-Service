@@ -103,4 +103,12 @@ public class BackdropLoadingDialogFragment extends DialogFragment {
             });
         }
     }
+
+    public static BackdropLoadingDialogFragment getInstance(FragmentManager supportFragmentManager) {
+        BackdropLoadingDialogFragment dialog = new BackdropLoadingDialogFragment();
+        dialog.setFragmentManager(supportFragmentManager);
+
+        return dialog;
+
+    }
 }

@@ -135,6 +135,10 @@
         <item name="shapeAppearanceOverlay">@style/MaterialFieldShapeAppearance</item>
     </style>
 
+    <style name="LabelFontStyle">
+        <item name="android:fontFamily">@font/regular_font</item>
+    </style>
+
     <style name="MaterialFieldShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10dp</item>
@@ -161,7 +165,7 @@
         <item name="itemIconSize">30dp</item> <!-- Set the desired icon size here -->
     </style>
     
-    <style name="PopupTheme">
-        <item name="android:background">@color/white</item>
+    <style name="PopupTheme" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:background">@drawable/drawable_common_dropdown_popup</item>
     </style>
 </resources>

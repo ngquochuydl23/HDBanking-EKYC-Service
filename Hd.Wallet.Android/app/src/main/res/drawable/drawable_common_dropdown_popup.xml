@@ -1,0 +1,6 @@
+<!-- res/drawable/rounded_dropdown_bg.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF" /> <!-- Background color -->
+    <corners android:radius="8dp" /> <!-- Border radius -->
+    <!-- Border color and width -->
+</shape>

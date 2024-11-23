@@ -3,9 +3,9 @@
     android:id="@android:id/text1"
     style="?android:attr/dropDownItemStyle"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:layout_height="45dp"
     android:ellipsize="marquee"
     android:singleLine="true"
-    android:background="@color/white"
+    android:background="@drawable/drawable_filled_r10"
     android:fontFamily="@font/regular_font"
     android:textAppearance="?android:attr/textAppearanceLargePopupMenu" />

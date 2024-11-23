@@ -63,5 +63,112 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="jobs">
+        <item>Bác sỹ/y tá, điều dưỡng</item>
+        <item>Bảo hiểm</item>
+        <item>Bất động sản</item>
+        <item>Giảng viên/Giáo viên</item>
+        <item>Học sinh/sinh viên</item>
+        <item>Kinh Doanh/Tự doanh</item>
+        <item>Bảo hiểm</item>
+        <item>Nhà hàng/Khách sạn</item>
+        <item>Nhân viên văn phòng</item>
+        <item>Tài chính/ngân hàng</item>
+        <item>Ủy thác đầu tư/Chứng khoán</item>
+        <item>Khác</item>
+    </string-array>
 
+    <string-array name="study_level">
+        <item>Phổ thông</item>
+        <item>Trung cấp</item>
+        <item>Cao đẳng</item>
+        <item>Đại học</item>
+        <item>Thạc sỹ</item>
+        <item>Tiến sỹ</item>
+    </string-array>
+
+    <string-array name="marriage_status">
+        <item>Độc thân</item>
+        <item>Kết hôn</item>
+        <item>Ly hôn</item>
+        <item>Góa</item>
+        <item>Đang chung sống</item>
+    </string-array>
+
+    <string-array name="job_positions">
+        <item>Chủ doanh nghiệp</item>
+        <item>Giám đốc</item>
+        <item>Nhân Viên</item>
+        <item>Trưởng phòng</item>
+        <item>Khác</item>
+    </string-array>
+
+    <string-array name="genders">
+        <item>Nữ</item>
+        <item>Nam</item>
+    </string-array>
+
+    <string-array name="vietnam_provinces">
+        <item>Hà Nội</item>
+        <item>Hải Phòng</item>
+        <item>Hồ Chí Minh</item>
+        <item>Đà Nẵng</item>
+        <item>Cần Thơ</item>
+        <item>An Giang</item>
+        <item>Bà Rịa - Vũng Tàu</item>
+        <item>Bắc Giang</item>
+        <item>Bắc Kạn</item>
+        <item>Bạc Liêu</item>
+        <item>Bắc Ninh</item>
+        <item>Ben Tre</item>
+        <item>Biên Hòa</item>
+        <item>Bình Định</item>
+        <item>Bình Dương</item>
+        <item>Bình Phước</item>
+        <item>Bình Thuận</item>
+        <item>Cà Mau</item>
+        <item>Cao Bằng</item>
+        <item>Cần Thơ</item>
+        <item>Đắk Lắk</item>
+        <item>Đắk Nông</item>
+        <item>Đồng Nai</item>
+        <item>Đồng Tháp</item>
+        <item>Gia Lai</item>
+        <item>Hà Giang</item>
+        <item>Hà Nam</item>
+        <item>Hà Tĩnh</item>
+        <item>Hải Dương</item>
+        <item>Hậu Giang</item>
+        <item>Hòa Bình</item>
+        <item>Hưng Yên</item>
+        <item>Khánh Hòa</item>
+        <item>Kiên Giang</item>
+        <item>Kontum</item>
+        <item>Lai Châu</item>
+        <item>Lạng Sơn</item>
+        <item>Lào Cai</item>
+        <item>Lâm Đồng</item>
+        <item>Long An</item>
+        <item>Lạng Sơn</item>
+        <item>Nghệ An</item>
+        <item>Ninh Bình</item>
+        <item>Ninh Thuận</item>
+        <item>Phú Thọ</item>
+        <item>Quảng Bình</item>
+        <item>Quảng Nam</item>
+        <item>Quảng Ngãi</item>
+        <item>Quảng Ninh</item>
+        <item>Quảng Trị</item>
+        <item>Sóc Trăng</item>
+        <item>Sơn La</item>
+        <item>Tây Ninh</item>
+        <item>Tỉnh Điện Biên</item>
+        <item>Thái Bình</item>
+        <item>Thái Nguyên</item>
+        <item>Thanh Hóa</item>
+        <item>Thừa Thiên Huế</item>
+        <item>Tuyên Quang</item>
+        <item>Vĩnh Long</item>
+        <item>Vĩnh Phúc</item>
+    </string-array>
 </resources>

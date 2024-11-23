@@ -28,7 +28,7 @@ public class UserDto {
 
     @SerializedName("sex")
     @Expose
-    private int sex;
+    private Integer sex;
 
     @SerializedName("idCardNo")
     @Expose
@@ -73,6 +73,11 @@ public class UserDto {
     @SerializedName("avatar")
     @Expose
     private String avatar;
+
+    @SerializedName("work")
+    @Expose
+    private WorkDto work;
+
 
     public UserDto() { }
 
@@ -136,7 +141,7 @@ public class UserDto {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getSex() {
+    public Integer getSex() {
         return sex;
     }
 
@@ -230,6 +235,18 @@ public class UserDto {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public WorkDto getWork() {
+        return work;
+    }
+
+    public void setWork(WorkDto work) {
+        this.work = work;
     }
 
     @Override

@@ -1,6 +1,12 @@
 package com.socialv2.ewallet.dtos.users;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class RequestUpdateAvatarDto {
+
+    @SerializedName("id")
+    @Expose
     public String avatar;
 
     public RequestUpdateAvatarDto() {}

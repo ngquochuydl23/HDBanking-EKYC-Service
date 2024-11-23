@@ -21,14 +21,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="20dp"
+                android:fontFamily="@font/semibold_font"
+                android:text="Thông tin cá nhân"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="16sp" />
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailTextInputLayout"
+                android:id="@+id/jobTextInputLayout"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="16dp"
                 android:hint="Nghề nghiệp"
                 android:labelFor="@id/jobAutoCompleteTextView"
                 app:boxCornerRadiusBottomEnd="10dp"
@@ -42,10 +49,10 @@
                 app:errorEnabled="false"
                 app:errorTextColor="@color/error"
                 app:helperTextEnabled="false"
-
                 app:helperTextTextAppearance="@style/MaterialFieldHelperTextTextAppearance"
                 app:helperTextTextColor="@color/textColorSecondary"
-                app:hintTextColor="@color/primaryColor">
+                app:hintTextColor="@color/primaryColor"
+                app:labelStyle="@style/LabelFontStyle">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/jobAutoCompleteTextView"
@@ -54,8 +61,8 @@
                     android:fontFamily="@font/regular_font"
                     android:importantForAccessibility="yes"
                     android:inputType="none"
+                    android:popupBackground="@drawable/drawable_common_dropdown_popup"
                     android:popupTheme="@style/PopupTheme"
-                    android:popupBackground="@color/white"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,7 +89,8 @@
                 app:helperTextEnabled="false"
                 app:helperTextTextAppearance="@style/MaterialFieldHelperTextTextAppearance"
                 app:helperTextTextColor="@color/textColorSecondary"
-                app:hintTextColor="@color/primaryColor">
+                app:hintTextColor="@color/primaryColor"
+                app:labelStyle="@style/LabelFontStyle">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/positionAutoCompleteTextView"
@@ -91,6 +99,80 @@
                     android:fontFamily="@font/regular_font"
                     android:importantForAccessibility="yes"
                     android:inputType="none"
+                    android:popupBackground="@drawable/drawable_common_dropdown_popup"
+                    android:popupTheme="@style/PopupTheme"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dateOfBirthTextInputLayout"
+                style="@style/MaterialFieldLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="16dp"
+                android:hint="Ngày sinh"
+                android:labelFor="@id/dateOfBirthEditText"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="@color/primaryColor"
+                app:boxStrokeWidth="1dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/MaterialFieldErrorTextAppearance"
+                app:errorTextColor="@color/error"
+                app:helperTextEnabled="true"
+                app:hintTextColor="@color/primaryColor"
+                app:labelStyle="@style/LabelFontStyle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dateOfBirthEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:fontFamily="@font/regular_font"
+                    android:importantForAccessibility="yes"
+                    android:inputType="text"
+                    android:text="14/02/2003"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/genderTextInputLayout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="16dp"
+                android:hint="Giới tính"
+                android:labelFor="@id/provinceAutoCompleteTextView"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="@color/primaryColor"
+                app:boxStrokeWidth="1dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:endIconMode="dropdown_menu"
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/MaterialFieldErrorTextAppearance"
+                app:errorTextColor="@color/error"
+                app:helperTextEnabled="false"
+                app:helperTextTextAppearance="@style/MaterialFieldHelperTextTextAppearance"
+                app:helperTextTextColor="@color/textColorSecondary"
+                app:hintTextColor="@color/primaryColor"
+                app:labelStyle="@style/LabelFontStyle">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/genderAutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular_font"
+                    android:importantForAccessibility="yes"
+                    android:inputType="none"
+                    android:popupBackground="@drawable/drawable_common_dropdown_popup"
+                    android:popupTheme="@style/PopupTheme"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,7 +199,8 @@
                 app:helperTextEnabled="false"
                 app:helperTextTextAppearance="@style/MaterialFieldHelperTextTextAppearance"
                 app:helperTextTextColor="@color/textColorSecondary"
-                app:hintTextColor="@color/primaryColor">
+                app:hintTextColor="@color/primaryColor"
+                app:labelStyle="@style/LabelFontStyle">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/provinceAutoCompleteTextView"
@@ -126,6 +209,8 @@
                     android:fontFamily="@font/regular_font"
                     android:importantForAccessibility="yes"
                     android:inputType="none"
+                    android:popupBackground="@drawable/drawable_common_dropdown_popup"
+                    android:popupTheme="@style/PopupTheme"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -151,7 +236,8 @@
                 app:helperTextEnabled="false"
                 app:helperTextTextAppearance="@style/MaterialFieldHelperTextTextAppearance"
                 app:helperTextTextColor="@color/textColorSecondary"
-                app:hintTextColor="@color/primaryColor">
+                app:hintTextColor="@color/primaryColor"
+                app:labelStyle="@style/LabelFontStyle">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/marriageStatusAutoCompleteTextView"
@@ -160,7 +246,10 @@
                     android:fontFamily="@font/regular_font"
                     android:importantForAccessibility="yes"
                     android:inputType="none"
-                    android:textSize="14sp" />
+                    android:popupBackground="@drawable/drawable_common_dropdown_popup"
+                    android:popupTheme="@style/PopupTheme"
+                    android:textSize="14sp"
+                    app:dropDownBackgroundTint="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -170,7 +259,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="16dp"
-                android:hint="Tình trạng hôn nhân"
+                android:hint="Trình độ học vấn"
                 android:labelFor="@id/provinceAutoCompleteTextView"
                 app:boxCornerRadiusBottomEnd="10dp"
                 app:boxCornerRadiusBottomStart="10dp"
@@ -180,13 +269,14 @@
                 app:boxStrokeWidth="1dp"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="dropdown_menu"
-                app:errorEnabled="true"
+                app:errorEnabled="false"
                 app:errorTextAppearance="@style/MaterialFieldErrorTextAppearance"
                 app:errorTextColor="@color/error"
                 app:helperTextEnabled="false"
                 app:helperTextTextAppearance="@style/MaterialFieldHelperTextTextAppearance"
                 app:helperTextTextColor="@color/textColorSecondary"
-                app:hintTextColor="@color/primaryColor">
+                app:hintTextColor="@color/primaryColor"
+                app:labelStyle="@style/LabelFontStyle">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/studyLevelAutoCompleteTextView"
@@ -195,8 +285,112 @@
                     android:fontFamily="@font/regular_font"
                     android:importantForAccessibility="yes"
                     android:inputType="none"
+                    android:popupBackground="@drawable/drawable_common_dropdown_popup"
+                    android:popupTheme="@style/PopupTheme"
+                    android:textSize="14sp"
+                    app:dropDownBackgroundTint="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/hometownTextInputLayout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="16dp"
+                android:hint="Quê quán"
+                android:labelFor="@id/hometownAutoCompleteTextView"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="@color/primaryColor"
+                app:boxStrokeWidth="1dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:endIconMode="dropdown_menu"
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/MaterialFieldErrorTextAppearance"
+                app:errorTextColor="@color/error"
+                app:helperTextEnabled="false"
+                app:helperTextTextAppearance="@style/MaterialFieldHelperTextTextAppearance"
+                app:helperTextTextColor="@color/textColorSecondary"
+                app:hintTextColor="@color/primaryColor"
+                app:labelStyle="@style/LabelFontStyle">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/hometownAutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular_font"
+                    android:importantForAccessibility="yes"
+                    android:inputType="none"
+                    android:popupBackground="@drawable/drawable_common_dropdown_popup"
+                    android:popupTheme="@style/PopupTheme"
+                    android:textSize="14sp"
+                    app:dropDownBackgroundTint="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="20dp"
+                android:fontFamily="@font/semibold_font"
+                android:text="Thông tin liên hệ"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="16sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailTextInputLayout"
+                style="@style/MaterialFieldLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:hint="Địa chỉ email"
+                android:labelFor="@id/dateOfBirthEditText"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="@color/primaryColor"
+                app:boxStrokeWidth="1dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/MaterialFieldErrorTextAppearance"
+                app:errorTextColor="@color/error"
+                app:helperText="Bạn cần xác thực email để nhận được thông báo quan trọng từ HD."
+                app:helperTextEnabled="true"
+                app:helperTextTextAppearance="@style/MaterialFieldErrorTextAppearance"
+                app:hintTextColor="@color/primaryColor"
+                app:labelStyle="@style/LabelFontStyle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:fontFamily="@font/regular_font"
+                    android:importantForAccessibility="yes"
+                    android:inputType="textEmailAddress"
+                    android:text="nguyenquochuydl123@gmail.com"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/drawable_filled_r10"
+                android:backgroundTint="@color/primaryColor"
+                android:fontFamily="@font/medium_font"
+                android:text="Lưu thông tin"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
