@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface IHttpUser {
@@ -22,7 +23,6 @@ public interface IHttpUser {
     @POST("account/User/UpdateAvatar")
     Observable<HttpResponseDto<UserDto>> updateAvatar(@Body RequestUpdateAvatarDto body);
 
-
-    @GET("account/User/UserInfo")
+    @PUT("account/User/UserInfo")
     Observable<HttpResponseDto<UserDto>> updateUserInfo(@Body RequestUpdateUserDto body);
 }

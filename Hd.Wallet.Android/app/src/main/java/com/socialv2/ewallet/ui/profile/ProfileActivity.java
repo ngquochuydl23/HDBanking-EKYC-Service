@@ -1,28 +1,23 @@
 package com.socialv2.ewallet.ui.profile;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Order;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.BackdropLoadingDialogFragment;
 import com.socialv2.ewallet.dtos.users.RequestUpdateUserDto;
-import com.socialv2.ewallet.s3.S3Service;
+import com.socialv2.ewallet.https.api.userHttp.IUserService;
+import com.socialv2.ewallet.https.api.userHttp.UserHttpImpl;
 import com.socialv2.ewallet.singleton.UserSingleton;
 import com.socialv2.ewallet.utils.DateFormatter;
 import com.socialv2.ewallet.utils.WindowUtils;
@@ -55,6 +50,8 @@ public class ProfileActivity extends BaseActivity {
 
     private Button mSaveButton;
 
+    private IUserService mUserService;
+
     public ProfileActivity() {
         super(R.layout.activity_profile);
     }
@@ -62,6 +59,8 @@ public class ProfileActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mUserService = new UserHttpImpl(this);
 
         mJobAutoCompleteTextView = findViewById(R.id.jobAutoCompleteTextView);
         mStudyLevelAutoCompleteTextView = findViewById(R.id.studyLevelAutoCompleteTextView);
@@ -154,12 +153,30 @@ public class ProfileActivity extends BaseActivity {
                 });
     }
 
+    @SuppressLint("CheckResult")
     private void save() {
-        Log.d(TAG, getDataFields().toString());
+        Log.d(TAG, "Updating user information");
+
         BackdropLoadingDialogFragment loadingDialog = BackdropLoadingDialogFragment.getInstance(getSupportFragmentManager());
 
-
         loadingDialog.setLoading(true);
+        mUserService.updateUserInfo(getDataFields())
+                .subscribe(response -> {
+
+                    Log.d(TAG, "Update user information successfully");
+                    loadingDialog.setLoading(false);
+
+                    UserSingleton
+                            .getInstance()
+                            .setData(response.getResult());
+
+                    Toast.makeText(this, "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
+                }, throwable -> {
+                    Log.e(TAG, "Update user failed", throwable);
+
+                    Toast.makeText(this, "Cập nhật thông tin thất bại", Toast.LENGTH_SHORT).show();
+                    loadingDialog.setLoading(false);
+                });
     }
 
     private RequestUpdateUserDto getDataFields() {
