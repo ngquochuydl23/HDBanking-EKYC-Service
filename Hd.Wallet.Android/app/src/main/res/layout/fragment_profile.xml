@@ -114,7 +114,7 @@
                 android:src="@drawable/image_idcard_profile"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
+<!--dasd-->
             <TextView
                 android:id="@+id/idCardNotiTitle"
                 android:layout_width="0dp"

@@ -6,13 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.privacyAndSecurity.PrivacyAndSecurityActivity">
+    tools:context=".ui.privacyAndSecurity.PrivacyAndSecurity1Activity">
 
     <com.socialv2.ewallet.components.HdWalletToolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:title="Quyền riêng tư vào bảo mật" />
-
+    <!--sdasd-->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -21,6 +21,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/menuAppRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_menu_app" />
+
+
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

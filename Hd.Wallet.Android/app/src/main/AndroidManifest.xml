@@ -27,6 +27,15 @@
         android:theme="@style/Theme.OCRBanking_MobileApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.privacyAndSecurity.ChangePincodeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.privacyAndSecurity.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.privacyAndSecurity.PrivacyAndSecurity1Activity"
+            android:exported="false" />
+        <activity
             android:name=".ui.privacyAndSecurity.PrivacyAndSecurityActivity"
             android:exported="false" />
         <activity

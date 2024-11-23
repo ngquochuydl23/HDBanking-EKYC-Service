@@ -37,7 +37,7 @@ import com.socialv2.ewallet.s3.S3Service;
 import com.socialv2.ewallet.singleton.UserSingleton;
 import com.socialv2.ewallet.ui.dev.WriteNfcActivity;
 import com.socialv2.ewallet.ui.nfcScan.IdCardNfcScanActivity;
-import com.socialv2.ewallet.ui.privacyAndSecurity.PrivacyAndSecurityActivity;
+import com.socialv2.ewallet.ui.privacyAndSecurity.PrivacyAndSecurity1Activity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
 import com.socialv2.ewallet.ui.settings.notifications.NotificationSettingActivity;
 import com.socialv2.ewallet.utils.LocalFile;
@@ -100,17 +100,18 @@ public class ProfileFragment extends BaseFragment {
     private void initView() {
         List<MenuAppDto> menuAppItems = new ArrayList<>();
         menuAppItems.add(new MenuAppDto("Tài khoản", "Xác minh", R.drawable.icon_profile_unactive, 0, null));
-        menuAppItems.add(new MenuAppDto("Quyền riêng tư", null, R.drawable.ic_privacy, 0, PrivacyAndSecurityActivity.class));
+        menuAppItems.add(new MenuAppDto("Quyền riêng tư", null, R.drawable.ic_privacy, 0, PrivacyAndSecurity1Activity.class));
         menuAppItems.add(new MenuAppDto("Thông báo", null, R.drawable.ic_menu_notification, 0, NotificationSettingActivity.class));
         menuAppItems.add(new MenuAppDto("Ngôn ngữ", "Hệ thống mặc định", R.drawable.ic_language, 0, null));
-
-
         menuAppItems.add(new MenuAppDto("Ghi NFC", "Dành cho nhà phát triển", R.drawable.ic_language, 0, WriteNfcActivity.class));
 
 
         mMenuAppRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mMenuAppRecyclerView.setAdapter(mMenuAppAdapter);
         mMenuAppAdapter.setItems(menuAppItems);
+
+
+
         mUserInfoContainerView.setOnClickListener(view -> {
             NavigateUtil.navigateTo(getContext(), ProfileActivity.class);
         });
