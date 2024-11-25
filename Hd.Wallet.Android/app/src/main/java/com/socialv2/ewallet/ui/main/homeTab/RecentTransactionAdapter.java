@@ -49,7 +49,9 @@ public class RecentTransactionAdapter extends BaseAdapter<TransactionDto> {
                 .getData()
                 .getValue();
 
-
+        if (loggingUser == null) {
+            return;
+        }
         RecentTransactionAdapter.RecentTransactionViewHolder itemView = (RecentTransactionAdapter.RecentTransactionViewHolder) viewHolder;
 
         itemView.mTransactionDateTextView.setText(DateFormatter.formatToVietnameseDateTime(transaction.getTransactionDate()));
