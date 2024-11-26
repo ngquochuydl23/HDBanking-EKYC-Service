@@ -48,6 +48,15 @@ public abstract class BaseDialog {
         return this;
     }
 
+    public BaseDialog setGravity(int gravity) {
+        if (mMaterialDialog != null && mMaterialDialog.getWindow() != null) {
+            mMaterialDialog
+                    .getWindow()
+                    .setGravity(gravity);
+        }
+        return this;
+    }
+
     public class DialogStyle {
 
         private float borderRadius;

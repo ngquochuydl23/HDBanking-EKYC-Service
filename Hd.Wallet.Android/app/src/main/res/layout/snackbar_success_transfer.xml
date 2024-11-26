@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginBottom="5dp"
+    app:cardCornerRadius="10dp"
+    android:elevation="4dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/drawable_filled_r10"
+        android:padding="16dp">
+        <!-- Icon -->
+        <ImageView
+            android:id="@+id/snackbarIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_success_filled_small"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Text -->
+        <TextView
+            android:id="@+id/snackbarText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="@font/bold_font"
+            android:text="Giao dịch thành công!"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/snackbarIcon"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/snackbarIcon" />
+
+        <TextView
+            android:id="@+id/snackbarDescriptionTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/regular_font"
+            android:maxLines="2"
+            android:text="Bạn đã chuyển tiền thành công số tiền 1.000.000đ đến VU HOANG UYEN NHI (Vietcombank), số tài khoản 0868684961"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@id/snackbarIcon"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/snackbarText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
