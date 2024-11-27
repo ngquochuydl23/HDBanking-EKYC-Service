@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class RequestUpdateAvatarDto {
 
-    @SerializedName("id")
+    @SerializedName("avatar")
     @Expose
     public String avatar;
 
