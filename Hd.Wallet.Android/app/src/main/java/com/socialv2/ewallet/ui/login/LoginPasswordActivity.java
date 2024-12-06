@@ -29,6 +29,8 @@ import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.ParseHttpError;
 import com.socialv2.ewallet.utils.WindowUtils;
 
+import java.net.ConnectException;
+
 
 public class LoginPasswordActivity extends AppCompatActivity {
 
@@ -130,6 +132,11 @@ public class LoginPasswordActivity extends AppCompatActivity {
                 }, throwable -> {
                     mLoadingBackdropDialog.setLoading(false);
 
+                    if (throwable instanceof ConnectException) {
+                        Log.e(TAG, "No internet", throwable);
+                        return;
+                    }
+
                     int statusCode = ParseHttpError.getStatusCode(throwable);
                     HttpResponseDto<?> errorBody = ParseHttpError.parse(throwable);
 
@@ -141,6 +148,7 @@ public class LoginPasswordActivity extends AppCompatActivity {
                             // ít xảy trường hợp này.
                         } else if (errorBody.getError().equals("Password is incorrect")) {
                             // cảnh báo sai mật khẩu.
+                            LoginFailedBottomSheet.makeAndShow(getSupportFragmentManager(), "Sai mật khẩu");
                         }
                     } else if (statusCode == 500) {
                         Log.e(TAG, errorBody.getError());

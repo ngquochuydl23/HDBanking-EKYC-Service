@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/BottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="30dp">
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/ic_sad" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/semibold_font"
+        android:text="Đăng nhập thất bại"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/errorMsgTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/regular_font"
+        android:text="Số điện thoại 0868684961 chưa đăng ký dịch vụ ví HDWallet. Vui lòng bấm 'Đăng ký' để mở tài khoản trực tuyến và Đăng ký sử dụng ứng dụng ngay."
+        android:textColor="@color/textColorSecondary"
+        android:textSize="14sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/retryButton"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:elevation="0dp"
+        android:fontFamily="@font/semibold_font"
+        android:text="Thử lại"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/primaryColor"
+        app:cornerRadius="20dp"
+        app:strokeColor="@color/borderWidthColor"
+        app:strokeWidth="1dp" />
+</LinearLayout>

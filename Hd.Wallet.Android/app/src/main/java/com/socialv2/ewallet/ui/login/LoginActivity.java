@@ -32,6 +32,7 @@ import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.ParseHttpError;
 import com.socialv2.ewallet.utils.WindowUtils;
 
+import java.net.ConnectException;
 import java.util.regex.Pattern;
 
 
@@ -119,13 +120,20 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
 
                         Log.i(TAG, response.toString());
 
-                        new KeyValueSharedPreferences(this,"PhoneNumberLogin")
+                        new KeyValueSharedPreferences(this, "PhoneNumberLogin")
                                 .setData(phoneNumber);
                         Intent intent = new Intent(LoginActivity.this, LoginPasswordActivity.class);
                         intent.putExtra("PhoneNumberLogin", phoneNumber); // Pass the phone number
                         startActivity(intent);
                         finish();
                     }, throwable -> {
+                        mLoadingBackdropDialog.setLoading(false);
+
+                        if (throwable instanceof ConnectException) {
+                            Log.e(TAG, "No internet", throwable);
+                            return;
+                        }
+
                         int statusCode = ParseHttpError.getStatusCode(throwable);
                         HttpResponseDto<?> errorBody = ParseHttpError.parse(throwable);
 

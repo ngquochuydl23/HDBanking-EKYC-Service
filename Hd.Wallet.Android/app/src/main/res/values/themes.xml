@@ -149,6 +149,11 @@
         <item name="android:fontFamily">@font/regular_font</item>
     </style>
 
+
+    <style name="MaterialFieldHelperTextAppearance">
+        <item name="android:fontFamily">@font/regular_font</item>
+    </style>
+
     <style name="MaterialFieldHelperTextTextAppearance">
         <item name="android:padding">0dp</item> <!-- Remove padding -->
         <item name="android:layout_margin">0dp</item> <!-- Remove margin -->

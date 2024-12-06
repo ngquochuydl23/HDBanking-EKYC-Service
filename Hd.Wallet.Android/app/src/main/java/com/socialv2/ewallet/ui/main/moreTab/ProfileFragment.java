@@ -116,7 +116,7 @@ public class ProfileFragment extends BaseFragment {
         });
 
         mLogOutButton.setOnClickListener(view -> {
-
+            logout();
         });
 
         mUpdateButton.setOnClickListener(view -> {
@@ -205,5 +205,9 @@ public class ProfileFragment extends BaseFragment {
                     }, throwable -> {
                     Toast.makeText(getContext(), "Cập nhật ảnh đại diện thất bại", Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    private void logout() {
+
     }
 }
