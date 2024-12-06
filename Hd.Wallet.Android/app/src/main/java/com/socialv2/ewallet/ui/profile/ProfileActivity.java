@@ -118,6 +118,7 @@ public class ProfileActivity extends BaseActivity {
                 getResources().getStringArray(R.array.job_positions)
         ));
 
+
         mProvinceAutoCompleteTextView.setAdapter(new ArrayAdapter<String>(
                 this,
                 R.layout.item_common_option,
@@ -150,6 +151,16 @@ public class ProfileActivity extends BaseActivity {
                     } else {
                         mGenderAutoCompleteTextView.setEnabled(true);
                     }
+
+
+                    if (user.getWork() != null && user.getWork().getOccupation() != null) {
+                        mJobAutoCompleteTextView.setText(user.getWork().getOccupation(),false);
+                    }
+
+                    if (user.getWork() != null && user.getWork().getPosition() != null) {
+                        mPositionAutoCompleteTextView.setText(user.getWork().getPosition(),false);
+                    }
+
                 });
     }
 
