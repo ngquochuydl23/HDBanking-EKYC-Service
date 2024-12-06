@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.utils.WindowUtils;
 
 public class UpdatePasswordActivity extends BaseActivity {
 
@@ -21,6 +22,7 @@ public class UpdatePasswordActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowUtils.applyPadding(findViewById(R.id.main));
 
     }
 
