@@ -21,7 +21,7 @@ import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.WindowUtils;
 
 public class Main1Activity extends AppCompatActivity {
-    private Button mLogIn, mSignUp;
+    private Button mLogIn, mSignUp , mHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,9 @@ public class Main1Activity extends AppCompatActivity {
 
         mLogIn = findViewById(R.id.btn_login);
         mSignUp = findViewById(R.id.btn_signup);
+        mHome = findViewById(R.id.btn_home);
+
+
 
         setupListeners();
     }
@@ -41,10 +44,15 @@ public class Main1Activity extends AppCompatActivity {
     private void setupListeners() {
         mLogIn.setOnClickListener(v -> navigateToLoginActivity());
         mSignUp.setOnClickListener(v -> navigateToSignUpActivity());
+        mHome.setOnClickListener(v -> navigateToHomeActivity());
     }
 
     private void navigateToSignUpActivity() {
-        NavigateUtil.navigateTo(this, WelcomeActivity.class); // Chuyển hướng đến màn hình đăng ký
+        NavigateUtil.navigateTo(this, WelcomeActivity.class);
+    }
+
+    private void navigateToHomeActivity() {
+        NavigateUtil.navigateTo(this, MainHomeActivity.class);
     }
 
     private void navigateToLoginActivity() {
@@ -58,7 +66,7 @@ public class Main1Activity extends AppCompatActivity {
             intent.putExtra("PhoneNumberLogin", phone); // Pass the phone number
             startActivity(intent);
         } else {
-            NavigateUtil.navigateTo(this, LoginActivity.class); // Chuyển hướng đến màn hình đăng nhập
+            NavigateUtil.navigateTo(this, LoginActivity.class);
         }
     }
 }

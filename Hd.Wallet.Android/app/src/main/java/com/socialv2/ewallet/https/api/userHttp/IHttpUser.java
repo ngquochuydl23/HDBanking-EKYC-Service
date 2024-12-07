@@ -25,4 +25,6 @@ public interface IHttpUser {
 
     @PUT("account/User/UserInfo")
     Observable<HttpResponseDto<UserDto>> updateUserInfo(@Body RequestUpdateUserDto body);
+
+
 }
