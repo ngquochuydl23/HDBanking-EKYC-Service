@@ -55,4 +55,5 @@ public class UserHttpImpl implements IUserService {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }
+
 }

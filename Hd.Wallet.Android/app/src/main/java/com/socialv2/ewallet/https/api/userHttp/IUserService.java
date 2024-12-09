@@ -16,4 +16,7 @@ public interface IUserService {
     Observable<HttpResponseDto<UserDto>> updateAvatar(String url);
 
     Observable<HttpResponseDto<UserDto>> updateUserInfo(RequestUpdateUserDto body);
+
+
+
 }

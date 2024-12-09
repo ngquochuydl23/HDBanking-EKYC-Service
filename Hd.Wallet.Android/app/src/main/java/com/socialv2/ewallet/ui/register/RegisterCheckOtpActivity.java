@@ -1,6 +1,7 @@
 package com.socialv2.ewallet.ui.register;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,10 +22,16 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.chaos.view.PinView;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.dtos.HttpResponseDto;
+import com.socialv2.ewallet.https.api.optHttp.IOtpService;
+import com.socialv2.ewallet.https.api.optHttp.OtpServiceImpl;
 import com.socialv2.ewallet.ui.idCardTaken.GettingTakenIdCardActivity;
 import com.socialv2.ewallet.utils.DpToPx;
 import com.socialv2.ewallet.utils.NavigateUtil;
+import com.socialv2.ewallet.utils.ParseHttpError;
 import com.socialv2.ewallet.utils.WindowUtils;
+
+import java.net.ConnectException;
 
 public class RegisterCheckOtpActivity extends AppCompatActivity {
 
@@ -34,12 +41,13 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
     private PinView mOtpTextView;
     private Button mContinueButton;
     private ProgressBar mLoadingProgressBar;
-    private TextView mErrorTextView ;
+    private TextView mErrorTextView;
     private View mResendButton;
     private TextView mCountDownTextView;
     private CountDownTimer countDownTimer;
-    private TextView  mNumberPhoneTextView;
-
+    private TextView mNumberPhoneTextView;
+    private String token;
+    private String phoneNumber;
 
 
     @Override
@@ -48,7 +56,8 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register_check_otp);
 
-
+        token = getIntent().getStringExtra("token");
+        phoneNumber = getIntent().getStringExtra("phone_number");
         mOtpTextView = findViewById(R.id.otpTextView);
         mContinueButton = findViewById(R.id.continueButton);
         mLoadingProgressBar = findViewById(R.id.loadingProgressBar);
@@ -89,7 +98,7 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
                 if (s.length() == N_PIN_ITEMS) {
                     new Handler().postDelayed(() -> {
                         onOtpCompleted();
-                    }, 500); // 500ms delay
+                    }, 500);
                 }
             }
 
@@ -99,7 +108,7 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
         });
 
         mResendButton.setOnClickListener(view -> {
-            startResendOtpCountdown();
+            resentOtp();
         });
 
         mContinueButton.setOnClickListener(view -> {
@@ -107,12 +116,24 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
         });
     }
 
+    private void resentOtp() {
+        IOtpService otpService = new OtpServiceImpl(this);
+
+        otpService.requestProvideOtp(phoneNumber, "phone")
+                .subscribe(response -> {
+                    token = response.getResult().getToken();
+                    Log.d(TAG, "Requested otp successfully");
+                    startResendOtpCountdown();
+                }, error -> {
+                    error.printStackTrace();
+                });
+    }
+
+
     private void getPhoneNumber() {
-        String phoneNumber = getIntent().getStringExtra("phone_number");
         if (phoneNumber != null) {
-            // Mask the first 6 digits with asterisks
             String maskedPhoneNumber = phoneNumber.replaceAll("\\d(?=\\d{3})", "*");
-            mNumberPhoneTextView.setText(maskedPhoneNumber); // Set the masked phone number to TextView
+            mNumberPhoneTextView.setText(maskedPhoneNumber);
         }
     }
 
@@ -127,25 +148,64 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
                 .toString();
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @SuppressLint("CheckResult")
             @Override
             public void run() {
                 mLoadingProgressBar.setVisibility(View.GONE);
                 mOtpTextView.setEnabled(true);
                 mContinueButton.setEnabled(true);
 
-                if (otpCode.equals("123456")) {
-                    countDownTimer.cancel();
-                    finish();
-                    NavigateUtil.navigateTo(RegisterCheckOtpActivity.this, GettingTakenIdCardActivity.class);
-                } else {
-                    mErrorTextView.setVisibility(View.VISIBLE);
-                    mErrorTextView.setText("Xác thực OTP thất bại. Vui lòng thử lại");
-                    mOtpTextView.requestFocus();
-                    mOtpTextView.setEnabled(true);
-                    mContinueButton.setEnabled(false);
-                    mOtpTextView.setText("");
-                    mOtpTextView.setLineColor(ResourcesCompat.getColorStateList(getResources(), R.color.error, getTheme()));
-                }
+                IOtpService otpService = new OtpServiceImpl(RegisterCheckOtpActivity.this);
+
+                otpService.verifyOtp(token, otpCode)
+                        .subscribe(response -> {
+                            Log.d(TAG, "Verified otp successfully");
+                            countDownTimer.cancel();
+                            finish();
+                            NavigateUtil.navigateTo(RegisterCheckOtpActivity.this, GettingTakenIdCardActivity.class);
+
+                        }, throwable -> {
+                            throwable.printStackTrace();
+                            if (throwable instanceof ConnectException) {
+                                Log.e(TAG, "No internet", throwable);
+                                return;
+                            }
+
+                            int statusCode = ParseHttpError.getStatusCode(throwable);
+                            HttpResponseDto<?> errorBody = ParseHttpError.parse(throwable);
+
+                            if (errorBody != null) {
+                                Log.e(TAG, errorBody.getError());
+                                if (statusCode == 400) {
+                                    mErrorTextView.setVisibility(View.VISIBLE);
+                                    mOtpTextView.requestFocus();
+                                    mOtpTextView.setEnabled(true);
+                                    mContinueButton.setEnabled(false);
+                                    mOtpTextView.setText("");
+                                    mOtpTextView.setLineColor(ResourcesCompat.getColorStateList(getResources(), R.color.error, getTheme()));
+
+                                    if (errorBody.getError().equals("Otp is incorrect")) {
+                                        mErrorTextView.setText("Xác thực OTP thất bại. Sai mật khẩu");
+                                    }
+
+                                    if (errorBody.getError().equals("Otp not found") || errorBody.getError().equals("Token has expired.")) {
+                                        mErrorTextView.setText("Xác thực OTP thất bại. OTP hết hạn");
+                                    }
+
+                                } else if (statusCode == 500) {
+                                    mErrorTextView.setVisibility(View.VISIBLE);
+                                    mErrorTextView.setText("Xác thực OTP thất bại. Vui lòng thử lại");
+                                    mOtpTextView.requestFocus();
+                                    mOtpTextView.setEnabled(true);
+                                    mContinueButton.setEnabled(false);
+                                    mOtpTextView.setText("");
+                                    mOtpTextView.setLineColor(ResourcesCompat.getColorStateList(getResources(), R.color.error, getTheme()));
+
+                                }
+                            }
+
+
+                        });
             }
         }, 2000);
 
@@ -155,11 +215,9 @@ public class RegisterCheckOtpActivity extends AppCompatActivity {
         mCountDownTextView.setVisibility(View.VISIBLE);
         mResendButton.setVisibility(View.GONE);
 
-        // 60 seconds countdown (60000 milliseconds), updating every 1 second (1000 milliseconds)
         countDownTimer = new CountDownTimer(60000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                // Update the countdown text
                 long second = millisUntilFinished / 1000;
                 mCountDownTextView.setText(second + " giây");
             }

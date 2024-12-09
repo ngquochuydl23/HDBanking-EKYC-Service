@@ -34,8 +34,12 @@ import com.socialv2.ewallet.https.api.userHttp.IUserService;
 import com.socialv2.ewallet.https.api.userHttp.UserHttpImpl;
 import com.socialv2.ewallet.permissions.Permissions;
 import com.socialv2.ewallet.s3.S3Service;
+import com.socialv2.ewallet.sharedReferences.KeyValueSharedPreferences;
+import com.socialv2.ewallet.sharedReferences.SaveTokenSharedPreference;
 import com.socialv2.ewallet.singleton.UserSingleton;
 import com.socialv2.ewallet.ui.dev.WriteNfcActivity;
+import com.socialv2.ewallet.ui.login.LoginActivity;
+import com.socialv2.ewallet.ui.main.MainHomeActivity;
 import com.socialv2.ewallet.ui.nfcScan.IdCardNfcScanActivity;
 import com.socialv2.ewallet.ui.privacyAndSecurity.PrivacyAndSecurityActivity;
 import com.socialv2.ewallet.ui.profile.ProfileActivity;
@@ -122,6 +126,21 @@ public class ProfileFragment extends BaseFragment {
         mUpdateButton.setOnClickListener(view -> {
             NavigateUtil.navigateTo(getContext(), IdCardNfcScanActivity.class);
         });
+
+
+        mLogOutButton.setOnClickListener(view -> {
+            // Xóa token và các dữ liệu đã lưu
+            new SaveTokenSharedPreference(getContext()).clear();
+            new KeyValueSharedPreferences(getContext(), "PhoneNumberLogin").clear();
+
+
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+
+            getContext().startActivity(intent);
+        });
+
 
 
         galleryLauncher = registerForActivityResult(

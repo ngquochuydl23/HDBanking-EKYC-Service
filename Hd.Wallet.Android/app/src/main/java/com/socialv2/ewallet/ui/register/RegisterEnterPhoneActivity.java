@@ -1,21 +1,27 @@
 package com.socialv2.ewallet.ui.register;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.socialv2.ewallet.R;
+import com.socialv2.ewallet.https.api.optHttp.IOtpService;
+import com.socialv2.ewallet.https.api.optHttp.OtpServiceImpl;
 import com.socialv2.ewallet.sharedReferences.KeyValueSharedPreferences;
 import com.socialv2.ewallet.utils.DpToPx;
 import com.socialv2.ewallet.utils.NavigateUtil;
@@ -24,12 +30,14 @@ import java.util.regex.Pattern;
 
 public class RegisterEnterPhoneActivity extends AppCompatActivity {
 
+    private static final String TAG = RegisterEnterPhoneActivity.class.getSimpleName();
     private static final Pattern VIETNAM_PHONE_PATTERN = Pattern.compile("^0[3|5|7|8|9]\\d{8}$");
 
     private Button mContinueButton;
     private TextInputEditText mEditTextPhoneNumber;
     private TextInputLayout mPhoneNumberTextInputLayout;
     private TextView mTextConsentTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,22 +54,33 @@ public class RegisterEnterPhoneActivity extends AppCompatActivity {
         initPhoneNumberValidation();
     }
 
-    private void getPhoneNumber() {
-        mContinueButton.setOnClickListener(view -> {
-            String phoneNumber = mEditTextPhoneNumber.getText().toString();
+        @SuppressLint("CheckResult")
+        private void getPhoneNumber() {
+            mContinueButton.setOnClickListener(view -> {
+                String phoneNumber = mEditTextPhoneNumber.getText().toString();
+                if (isValidVietnamPhoneNumber(phoneNumber)) {
+                    new KeyValueSharedPreferences(this, "PhoneNumberRegister").setData(phoneNumber);
+                    IOtpService otpService = new OtpServiceImpl(this);
+                    otpService.requestProvideOtp(phoneNumber, "phone")
+                            .subscribe(response -> {
 
-            if (isValidVietnamPhoneNumber(phoneNumber)) {
-                Intent intent = new Intent(RegisterEnterPhoneActivity.this, RegisterCheckOtpActivity.class);
-                intent.putExtra("phone_number", phoneNumber); // Pass the phone number
-                startActivity(intent);
+                                String token = response.getResult().getToken();
+                                Log.d(TAG, "Requested otp successfully");
 
-                new KeyValueSharedPreferences(this, "PhoneNumberRegister").setData(phoneNumber);
+                                // Pass both phone number and token to the next activity
+                                Intent intent = new Intent(RegisterEnterPhoneActivity.this, RegisterCheckOtpActivity.class);
+                                intent.putExtra("phone_number", phoneNumber); // Pass the phone number
+                                intent.putExtra("token", token); // Pass the token
+                                startActivity(intent);
+                            }, error -> {
+                                error.printStackTrace();
+                            });
+                } else {
+                    Toast.makeText(this, "Số điện thoại không hợp lệ!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
-            } else {
-                Toast.makeText(this, "Số điện thoại không hợp lệ!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void initView() {
         setMarginTopTextConsent(0);
@@ -73,21 +92,6 @@ public class RegisterEnterPhoneActivity extends AppCompatActivity {
             return insets;
         });
 
-        mContinueButton.setOnClickListener(view -> {
-            String phoneNumber = mEditTextPhoneNumber
-                    .getText()
-                    .toString();
-
-            if (isValidVietnamPhoneNumber(phoneNumber)) {
-                NavigateUtil.navigateTo(this, RegisterCheckOtpActivity.class);
-
-                new KeyValueSharedPreferences(this, "PhoneNumberRegister")
-                        .setData(phoneNumber);
-
-            } else {
-                Toast.makeText(this, "Số điện thoại không hợp lệ!", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private boolean isValidVietnamPhoneNumber(String phoneNumber) {
@@ -122,7 +126,7 @@ public class RegisterEnterPhoneActivity extends AppCompatActivity {
 
     private void setMarginTopTextConsent(int dp) {
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) mTextConsentTextView.getLayoutParams();
-        layoutParams.setMargins(0, DpToPx.convert(this, dp),0,0);
+        layoutParams.setMargins(0, DpToPx.convert(this, dp), 0, 0);
         mTextConsentTextView.setLayoutParams(layoutParams);
     }
 }
