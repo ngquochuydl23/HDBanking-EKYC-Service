@@ -54,7 +54,7 @@ public class AskUserPinBottomSheet extends BaseBottomSheetDialog {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setCancelable(false);
+        setCancelable(true);
 
         mOtpTextView = view.findViewById(R.id.otpTextView);
         mErrorTextView = view.findViewById(R.id.errorTextView);

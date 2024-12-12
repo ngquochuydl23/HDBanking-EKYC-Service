@@ -35,16 +35,22 @@ import com.google.gson.Gson;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.BackdropLoadingDialogFragment;
 import com.socialv2.ewallet.dtos.HttpResponseDto;
+import com.socialv2.ewallet.dtos.RequestSignUpDto;
+import com.socialv2.ewallet.dtos.idCard.IdCardDto;
 import com.socialv2.ewallet.dtos.idCard.IdCardExtractDto;
 import com.socialv2.ewallet.https.api.ekycHttp.IEkycService;
 import com.socialv2.ewallet.https.api.ekycHttp.EkycServiceImpl;
 import com.socialv2.ewallet.permissions.Permissions;
 import com.socialv2.ewallet.sharedReferences.KeyValueSharedPreferences;
+import com.socialv2.ewallet.singleton.RegisterDataSingleton;
 import com.socialv2.ewallet.ui.register.ConfirmInformationActivity;
+import com.socialv2.ewallet.ui.register.SignUpAccountActivity;
 import com.socialv2.ewallet.utils.CropImageUtils;
 import com.socialv2.ewallet.utils.ImageToBitmap;
 import com.socialv2.ewallet.utils.ParseHttpError;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -147,7 +153,7 @@ public class IdCardTakenActivity extends AppCompatActivity {
                         mUserCheckIdCardBottomSheet.dismiss();
                     });
 
-                } else if (mStep == 2){
+                } else if (mStep == 2) {
                     runOnUiThread(() -> mLoadingBackdropDialog.setLoading(true));
 
                     mBitmaps.add(bitmap);
@@ -330,16 +336,46 @@ public class IdCardTakenActivity extends AppCompatActivity {
                         intent.putExtra("IdCardExtract", json);
                         startActivity(intent);
 
+                        IdCardDto idCard = idCardExtract.getIdCard();
+                        RequestSignUpDto signUpBody = RegisterDataSingleton
+                                .getInstance()
+                                .getData()
+                                .getValue();
+
+                        if (idCardExtract.getType().equals("CCCD")) {
+                            signUpBody.setSex(idCard.getSex().equals("Nam") ? 1 : 0);
+                        } else {
+                            signUpBody.setSex(-1);
+                        }
+
+                        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        LocalDate date = LocalDate.parse(idCard.getDateOfBirth(), inputFormatter);
+
+
+                        signUpBody.setIdCardNo(idCard.getId());
+                        signUpBody.setFullName(idCard.getFullName());
+                        signUpBody.setDateOfBirth(date.toString());
+                        signUpBody.setAddress(new RequestSignUpDto.Address(
+                                idCard.getPlaceOfResidence(),
+                                null,
+                                null,
+                                null
+                        ));
+                        RegisterDataSingleton
+                                .getInstance()
+                                .setData(signUpBody);
+
+
                     }, throwable -> {
                         if (throwable instanceof HttpException) {
 
-                            HttpResponseDto<?> errorResponse =  ParseHttpError.parse(throwable);
+                            HttpResponseDto<?> errorResponse = ParseHttpError.parse(throwable);
                             int statusCode = ParseHttpError.getStatusCode(throwable);
 
                             Log.e(TAG, errorResponse.toString());
                             String errorMsg = errorResponse.getError();
 
-                            if (statusCode== 400) {
+                            if (statusCode == 400) {
                                 if (errorMsg.equals(getString(R.string.cannot_recognize_idcard))) {
                                     runOnUiThread(() -> Toast.makeText(this, "Nhận dạng thất bại", Toast.LENGTH_LONG).show());
                                 }

@@ -1,5 +1,7 @@
 package com.socialv2.ewallet.ui.register;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -22,6 +24,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Checked;
@@ -33,6 +36,11 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 import com.socialv2.ewallet.BaseActivity;
 import com.socialv2.ewallet.R;
 import com.socialv2.ewallet.components.BackdropLoadingDialogFragment;
+import com.socialv2.ewallet.dtos.RequestSignUpDto;
+import com.socialv2.ewallet.dtos.idCard.IdCardExtractDto;
+import com.socialv2.ewallet.https.api.registerHttp.IRegisterService;
+import com.socialv2.ewallet.https.api.registerHttp.RegisterHttpImpl;
+import com.socialv2.ewallet.singleton.RegisterDataSingleton;
 import com.socialv2.ewallet.ui.idCardTaken.IdCardTakenActivity;
 import com.socialv2.ewallet.utils.NavigateUtil;
 import com.socialv2.ewallet.utils.WindowUtils;
@@ -90,7 +98,6 @@ public class SignUpAccountActivity extends BaseActivity implements
         mValidator = new Validator(this);
         mLoadingBackdropDialog = new BackdropLoadingDialogFragment();
         mLoadingBackdropDialog.setFragmentManager(getSupportFragmentManager());
-
 
 
         mEmailEditText = findViewById(R.id.emailEditText);
@@ -176,6 +183,7 @@ public class SignUpAccountActivity extends BaseActivity implements
         }
     }
 
+    @SuppressLint("CheckResult")
     private void signUp() {
         mLoadingBackdropDialog.setLoading(true);
         mSignUpButton.setEnabled(false);
@@ -184,10 +192,54 @@ public class SignUpAccountActivity extends BaseActivity implements
         mPasswordEditText.setEnabled(false);
         mConfirmPasswordEditText.setEnabled(false);
 
-        new Handler().postDelayed(() -> {
-            NavigateUtil.navigateTo(this, RegistrationSuccessfulActivity.class);
-            finish();
-        }, 1000); // 500ms delay
+
+        String email = mEmailEditText
+                .getText()
+                .toString()
+                .trim();
+
+        String password = mPasswordEditText
+                .getText()
+                .toString()
+                .trim();
+
+        RequestSignUpDto body = RegisterDataSingleton
+                .getInstance()
+                .getData()
+                .getValue();
+
+        body.setEmail(email);
+        body.setPassword(password);
+
+        Log.d(TAG, body.toString());
+        IRegisterService registerService = new RegisterHttpImpl(this);
+
+        registerService.signUp(body)
+                .subscribe(response -> {
+                            Log.d(TAG, response.getResult().toString());
+
+                            Intent intent = new Intent(this, RegistrationSuccessfulActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+                        },
+                        throwable -> {
+                            throwable.printStackTrace();
+                        });
+
+    }
+
+    private IdCardExtractDto getIdCard() {
+        Bundle bundle = getIntent()
+                .getExtras();
+
+        if (bundle == null) {
+            return null;
+        }
+        String json = bundle.getString("IdCardExtract");
+
+        Gson gson = new Gson();
+        return gson.fromJson(json, IdCardExtractDto.class);
     }
 
     @Override
