@@ -33,7 +33,7 @@ public class Main1Activity extends AppCompatActivity {
 
         mLogIn = findViewById(R.id.btn_login);
         mSignUp = findViewById(R.id.btn_signup);
-        mHome = findViewById(R.id.btn_home);
+        //mHome = findViewById(R.id.btn_home);
 
 
 
@@ -44,7 +44,7 @@ public class Main1Activity extends AppCompatActivity {
     private void setupListeners() {
         mLogIn.setOnClickListener(v -> navigateToLoginActivity());
         mSignUp.setOnClickListener(v -> navigateToSignUpActivity());
-        mHome.setOnClickListener(v -> navigateToHomeActivity());
+        //mHome.setOnClickListener(v -> navigateToHomeActivity());
     }
 
     private void navigateToSignUpActivity() {

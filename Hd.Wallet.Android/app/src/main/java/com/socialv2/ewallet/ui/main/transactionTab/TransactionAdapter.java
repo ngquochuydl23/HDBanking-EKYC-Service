@@ -1,11 +1,13 @@
 package com.socialv2.ewallet.ui.main.transactionTab;
 
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.socialv2.ewallet.BaseAdapter;
 import com.socialv2.ewallet.R;
@@ -13,6 +15,8 @@ import com.socialv2.ewallet.components.AvatarView;
 import com.socialv2.ewallet.dtos.transactions.TransactionAccountBankDto;
 import com.socialv2.ewallet.dtos.transactions.TransactionDto;
 import com.socialv2.ewallet.dtos.transactions.TransactionMonthSectionDto;
+import com.socialv2.ewallet.dtos.users.UserDto;
+import com.socialv2.ewallet.singleton.UserSingleton;
 import com.socialv2.ewallet.ui.transfer.internalTransfer.ContactAdapter;
 import com.socialv2.ewallet.utils.DateFormatter;
 import com.socialv2.ewallet.utils.NavigateUtil;
@@ -25,25 +29,30 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
-    private List<Object> transactions;
+    private List<TransactionDto> transactions;
+
+    private boolean isContact;
 
     public TransactionAdapter() {
         transactions = new ArrayList<>();
+        this.isContact = false;
         notifyDataSetChanged();
     }
 
-    public void setItems(List<Object> data)  {
+    public TransactionAdapter(boolean isContact) {
+        transactions = new ArrayList<>();
+        this.isContact = isContact;
+        notifyDataSetChanged();
+    }
+
+    public void setItems(List<TransactionDto> data)  {
         this.transactions = data;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (transactions.get(position) instanceof TransactionMonthSectionDto) {
-            return TYPE_HEADER;
-        } else {
-            return TYPE_ITEM;
-        }
+        return TYPE_ITEM;
     }
 
 
@@ -57,12 +66,22 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_transaction, parent, false);
-            return new ContactAdapter.ContactViewHolder(view);
+            if (isContact) {
+
+                return new ContactAdapter.ContactViewHolder(view);
+            }
+
+            return new TransactionAdapter.TransactionViewHolder(view);
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        UserDto loggingUser = UserSingleton
+                .getInstance()
+                .getData()
+                .getValue();
+        Context context = holder.itemView.getContext();
         if (holder instanceof TransactionAdapter.TransactionMonthSectionViewHolder) {
 
             TransactionMonthSectionViewHolder itemViewHolder = (TransactionMonthSectionViewHolder) holder;
@@ -74,6 +93,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             itemView.mTransactionDateTextView.setText(DateFormatter.formatToVietnameseDateTime(transaction.getTransactionDate()));
             itemView.mTransactionAmountTextView.setText(VietnameseConcurrency.format(transaction.getAmount()));
+
+
+            if (loggingUser.getId().equals(transaction.getSenderUserId())) {
+                itemView.mTransactionAmountTextView.setTextColor(ContextCompat.getColor(context, R.color.red));
+                itemView.mTransactionAmountTextView.setText("-" + VietnameseConcurrency.format(transaction.getAmount()));
+            } else if (loggingUser.getId().equals(transaction.getReceiverUserId())) {
+
+                itemView.mTransactionAmountTextView.setTextColor(ContextCompat.getColor(context, R.color.green));
+                itemView.mTransactionAmountTextView.setText("+" + VietnameseConcurrency.format(transaction.getAmount()));
+            }
 
             if (transaction.getTransactionStatus().equals("Completed")) {
                 itemView.mTransactionStatusTextView.setText("Thành công");

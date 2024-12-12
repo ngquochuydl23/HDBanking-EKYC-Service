@@ -95,7 +95,8 @@ public class TransactionHistoryFragment extends BaseFragment {
                         0
                 )
                 .subscribe(response -> {
-                    groupTransactionsByMonth(response.getResult());
+                    mTransactionAdapter.setItems(response.getResult());
+                    //groupTransactionsByMonth(response.getResult());
                 }, throwable -> {
                 }, () -> {
 
