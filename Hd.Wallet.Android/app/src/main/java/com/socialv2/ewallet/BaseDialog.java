@@ -39,6 +39,10 @@ public abstract class BaseDialog {
         }
     }
 
+    protected View getView() {
+        return mView;
+    }
+
     protected abstract void onDialogCreated(View view);
 
     public BaseDialog setupStyle(DialogStyle style) {

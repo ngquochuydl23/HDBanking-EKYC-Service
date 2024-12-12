@@ -1,5 +1,6 @@
 package com.socialv2.ewallet.ui.register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -56,7 +57,12 @@ public class ConfirmInformationActivity extends BaseActivity {
         WindowUtils.applyPadding(findViewById(R.id.main));
 
         mContinueButton.setOnClickListener(view -> {
-            NavigateUtil.navigateTo(this, IntroduceFacialRecognitionActivity.class);
+            //NavigateUtil.navigateTo(this, IntroduceFacialRecognitionActivity.class);
+            Bundle bundle = getIntent()
+                    .getExtras();
+            Intent newintent = new Intent(this, SignUpAccountActivity .class);
+            newintent.putExtra("IdCardExtract", bundle.getString("IdCardExtract"));
+            startActivity(newintent);
         });
 
         mRetakeButton.setOnClickListener(view -> {
